@@ -338,7 +338,7 @@ exit();
                                         
                         if(isset ($_POST['gender'])){
                         foreach ($gender_range as $pri_gender){
-                        $sel_gender = ($pri_gender==$_POST['gender'])?"Selected='selected'":"";
+                        $sel_gender = ($pri_gender==$_POST['gender'])?"selected='selected'":"";
                         echo "<option $sel_gender>$pri_gender</option>";}
                         }else{
                         foreach ($gender_range as $pri_gender){
