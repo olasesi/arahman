@@ -9,6 +9,24 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 	exit();
 }
 ?>
+<?php
+if($_SESSION['admin_type'] == ADMIN || $_SESSION['admin_type'] == HEADMASTER || $_SESSION['admin_type'] == ACCOUNTANT|| $_SESSION['admin_type'] == ADMISSION ){
+$ban_query = mysqli_query($connect, "SELECT admin_active FROM admin WHERE admin_active = '0' AND admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error); 
+
+if(mysqli_num_rows($ban_query) == 1){
+  mysqli_query($connect,"UPDATE admin SET admin_cookie_session = '' WHERE admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error);	
+  session_destroy();
+  setcookie("admin_remember_me", "", time() - 31104000);		
+
+header("Location:".GEN_WEBSITE."/admin");
+exit();
+
+}
+}
+?>
+            
+
+
 
 
 <?php require_once ('../../incs-arahman/dashboard.php');?>
@@ -373,22 +391,30 @@ echo '  </div>
                 
                     echo '<div class="row">
                       <div class="col-12">
+                      
                         <div class="preview-list">
+                      
+
                           <div class="preview-item border-bottom">
                             <div class="preview-thumbnail">
                               <div class="preview-icon bg-primary">
                                 <i class="mdi mdi-file-document"></i>
                               </div>
                             </div>
+
+                     
                             <div class="preview-item-content d-sm-flex flex-grow">
                               <div class="flex-grow">
-                                <h6 class="preview-subject">'.$row['admin_lastname'].' '.$row['admin_firstname'].'</h6>
+                              <a href="'.GEN_WEBSITE.'/admin/show-admins.php"><h6 class="preview-subject">'.$row['admin_firstname'].' '.$row['admin_lastname'].'</h6>  </a>
                                 
                               </div>
                               <div class="me-auto text-sm-right pt-2 pt-sm-0">
+
                               <p class="text-muted mb-0">'.$row['type'].'</p>
                               </div>
+                             
                             </div>
+                          
                           </div>
                          </div>
                       </div>
@@ -430,7 +456,8 @@ echo '  </div>
                 $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active,  primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_sex, primary_teacher_qualification, primary_class_id, primary_class FROM primary_teachers, primary_school_classes WHERE primary_class_id = primary_teacher_class_id ORDER BY primary_teacher_id ASC LIMIT 3") or die(db_conn_error); 
                 
                 
-                
+       
+
                 
                 
                 echo '<div class="col-md-8 grid-margin stretch-card">

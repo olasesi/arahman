@@ -25,9 +25,14 @@ session_start();
 
 /*PRIMARY SCHOOL ADMIN ROLES*/
 define("OWNER","owner");
+define("ADMIN","admin");
 define("ADMISSION","admission");
 define('HEADMASTER', 'headmaster');
 define('ACCOUNTANT', 'accountant');
+
+
+/*SECONDARY SCHOOL ADMIN ROLES*/
+define('PRINCIPAL', 'principal');
 $now = new DateTime();					
 
 

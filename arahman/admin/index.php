@@ -19,10 +19,10 @@ include ('../../incs-arahman/header-admin.php');
 $signup_errors = array();
 if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
 
-  if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+  if(preg_match('/^[0-9a-z_]{3,30}$/i',$_POST['email'])){
 	$email = mysqli_real_escape_string($connect,$_POST['email']);
 }else{
-	$signup_errors['email'] = "Enter a valid email address";
+	$signup_errors['email'] = "Enter a valid username";
 }
 
 
@@ -59,6 +59,7 @@ $_SESSION['admin_type'] = $row[2];
 $_SESSION['admin_firstname'] = $row[3];
 $_SESSION['admin_surname'] = $row[4];
 $_SESSION['admin_email'] = $row[5];
+$_SESSION['admin_password'] = $row[6];
 
  
 
@@ -111,7 +112,7 @@ header("Location:dashboard.php");
                   <div class="col-lg-4">
                   <?php if(array_key_exists('email', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['email'].'</small>';}?>   
                   <fieldset>
-                    <input name="email" type="text" id="email" placeholder="Email address" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>">
+                    <input name="email" type="text" id="email" placeholder="Username" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>">
                   </fieldset>
                   </div>
                   

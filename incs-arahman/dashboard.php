@@ -231,7 +231,7 @@
  <div class="collapse" id="ui-teachers">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/show-admins.php">Show admins</a></li>
-                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/create-admins.php">Add admins</a></li>
+                
               </ul>
             </div>
           </li>

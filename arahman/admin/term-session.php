@@ -22,13 +22,7 @@ if($_SESSION['admin_type'] != OWNER){
 
                   
                     <?php
-           /*$year_session = date("Y")."/".(date("Y") + 1); 
-              $term = mysqli_query($connect, "SELECT term_start, term_end FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error); 
-              while($row_term_loop = mysqli_fetch_array($term)){
-                $start_term = $row_term_loop['term_start'];
-                $start_end = $row_term_loop['term_end'];
-              }*/
-
+         
               if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['end_term'])){
                 
                 $q_end_term = mysqli_query($connect,"UPDATE term_start_end SET term_end = '".$now->format('Y-m-d H:i:s')."' WHERE term_start_end_id = '".$_POST['hidden_start_end']."' LIMIT 1") or die(db_conn_error);
@@ -96,26 +90,6 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
 
               ?>
            
-<?php
-            //  if(isset($_POST['end_term'])){
-              //  if(!empty($start_term) AND empty($start_end)){
-                //  $q = mysqli_query($connect,"UPDATE term_start_end SET term_end = '".$now->format('Y-m-d H:i:s')."'  ORDER BY term_start_end_id DESC
-                  //LIMIT 1") or die(db_conn_error);
-                 
-                //}
-
-              //}
-
-
-            
-              
-              /*if(isset($_POST['start_end_term']) OR isset($_POST['end_term'])){
-              $term = mysqli_query($connect, "SELECT term_start, term_end FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error); 
-              while($row_term_loop = mysqli_fetch_array($term)){
-                $start_term = $row_term_loop['term_start'];
-                $start_end = $row_term_loop['term_end'];
-              }}*/
-              ?>
 
 
               <?php require_once('../../incs-arahman/dashboard.php'); ?>
@@ -130,29 +104,7 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
               <!-- partial -->
               <div class="main-panel">
                 <div class="content-wrapper">
-                  <div class="row">
-                    <div class="col-12 grid-margin stretch-card">
-                      <div class="card corona-gradient-card">
-                        <div class="card-body py-0 px-0 px-sm-3">
-                          <div class="row align-items-center">
-                            <div class="col-4 col-sm-3 col-xl-2">
-                              <img src="assets/images/dashboard/Group126@2x.png" class="gradient-corona-img img-fluid" alt="">
-                            </div>
-                            <div class="col-5 col-sm-7 col-xl-8 p-0">
-                              <h4 class="mb-1 mb-sm-0">Want even more features?</h4>
-                              <p class="mb-0 font-weight-normal d-none d-sm-block">Check out our Pro version with 5 unique layouts!</p>
-                            </div>
-                            <div class="col-3 col-sm-2 col-xl-2 ps-0 text-center">
-                              <span>
-                                <a href="https://www.bootstrapdash.com/product/corona-admin-template/" target="_blank" class="btn btn-outline-light btn-rounded get-started-btn">Upgrade to PRO</a>
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-      
+                      
 
                           <?php         
                           if(isset($_GET['confirm_file']) AND $_GET['confirm_file'] = 1){
@@ -228,7 +180,11 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
                       <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
-                        <h4 class="card-title text-danger text-center">WARNING!!! The portal runs on changes made here, so ensure you enter the correct values. Changes made here cannot be reversed </h4>
+                     
+                    
+                     
+                     
+                     <h4 class="card-title text-danger text-center" id="Foo">WARNING!!! The portal runs on changes made here, so ensure you enter the correct values. Changes made here cannot be reversed </h4>
                       
                   
                             
@@ -245,15 +201,15 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
                   <div class="col-md-6 grid-margin stretch-card">
                       <div class="card">
                         <div class="card-body">
-                          <h4 class="card-title">Begin/End Primary School Term</h4>
-
+                          <h4 class="card-title">Primary School</h4>
+                          <p class="card-title">To begin a term, type the session to begin with and select the term. And to end the term, only click the end term button </p>
 
            
                 <form action="" method="POST">
                 
                       
                           <div class="form-group">
-                                  <label for="exampleInputName1">Primary school session</label>
+                                  <label for="exampleInputName1">Session</label>
                                   <?php if (array_key_exists('pri_session', $errors)) {
                   echo '<p class="text-danger">'.$errors['pri_session'].'</p>';}?>
                                   <input type="text" class="form-control" id="exampleInputName1" placeholder="e.g 2001/2002" value="<?php if(isset($_POST['pri_session'])){echo $_POST['pri_session'];}?>" name="pri_session">
@@ -338,7 +294,8 @@ echo '<hr>
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Begin/End Secondary School Term</h4>
+                    <h4 class="card-title">Secondary School</h4>
+                    <h4 class="card-title">Begin or End</h4>
                     <div class="form-group">
                       <label>Select </label>
                       <select class="js-example-basic-single" style="width:100%">
@@ -383,7 +340,15 @@ echo '<hr>
 
 
 
+            <script>
+                     window.addEventListener("load", function() {
+    var f = document.getElementById('Foo');
+    setInterval(function() {
+        f.style.display = (f.style.display == 'none' ? '' : 'none');
+    }, 1000);
 
+}, false);
+</script>                 
 
 
 
