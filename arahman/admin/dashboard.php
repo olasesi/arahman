@@ -459,7 +459,7 @@ echo '  </div>
               
               ?>    
            
-           <?php    
+            <?php    
               if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == HEADMASTER){
                 
                 if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['ban_teacher'])){
@@ -470,13 +470,9 @@ echo '  </div>
 
                 }
 
-
                 $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active,  primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_sex, primary_teacher_qualification, primary_class_id, primary_class FROM primary_teachers, primary_school_classes WHERE primary_class_id = primary_teacher_class_id ORDER BY primary_teacher_id ASC LIMIT 3") or die(db_conn_error); 
                 
-                
-       
-
-                
+                 
                 
                 echo '<div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
@@ -488,10 +484,10 @@ echo '  </div>
 
 
                 if (mysqli_num_rows($results) != 0){
-                   while ($row = mysqli_fetch_array($results)) {
-                 
+                  while ($row = mysqli_fetch_array($results)) {
                 
-                    echo '<div class="row">
+                    echo '
+                    <div class="row">
                       <div class="col-12">
                         <div class="preview-list">
                           <a href="'.GEN_WEBSITE.'/admin/show-teachers.php" style="text-decoration:none; color:inherit;"><div class="preview-item border-bottom">
@@ -505,35 +501,31 @@ echo '  </div>
                                 <h6 class="preview-subject">'.$row['primary_teacher_firstname'].' '.$row['primary_teacher_surname'].'</h6>
                                 <p class="text-muted mb-0">'.$row['primary_class'].', '.$row['primary_teacher_sex'].'</p>
                               </div>
-                             
                             </div>
 
                             <td>
-                            <form action="'.GEN_WEBSITE.'/admin/edit-teacher-data.php" method="GET">
-                           
-                            <button type="submit" class="btn btn-success me-2" name="id" value="'.$row['primary_teacher_id'].'">Edit</button>
-                            </form>
-                           </td>
+                              <form action="'.GEN_WEBSITE.'/admin/edit-teacher-data.php" method="GET">
+                                <button type="submit" class="btn btn-success me-2" name="id" value="'.$row['primary_teacher_id'].'">Edit</button>
+                              </form>
+                            </td>
         
-                           <td>';
-                            
-                           
-                          if($row['primary_teacher_active'] == 1){
-                          echo '<form action="" method="POST">
-                           
-                            <button type="submit" class="btn btn-danger me-2" name="ban_teacher" value="'.$row['primary_teacher_id'].'">Ban</button>
-                            </form>';
-                   }elseif($row['primary_teacher_active'] == 0){
-                    echo '<form action="" method="POST">
-                     
-                      <button type="submit" class="btn btn-danger me-2" name="unban_teacher" value="'.$row['primary_teacher_id'].'">Unban</button>
-                      </form>';}
-                            
-                          echo  '</td>
-
-
-                          </div></a>
-                         </div>
+                            <td>';
+                              if($row['primary_teacher_active'] == 1){
+                                echo '
+                                <form action="" method="POST">
+                                  <button type="submit" class="btn btn-danger me-2" name="ban_teacher" value="'.$row['primary_teacher_id'].'">Ban</button>
+                                </form>';
+                              } elseif($row['primary_teacher_active'] == 0){
+                                echo '
+                                <form action="" method="POST">
+                                  <button type="submit" class="btn btn-danger me-2" name="unban_teacher" value="'.$row['primary_teacher_id'].'">Unban</button>
+                                </form>';
+                              } 
+                              echo  '
+                            </td>
+                            </div>
+                          </a>
+                        </div>
                       </div>
                     </div>
                     
@@ -567,25 +559,20 @@ echo '  </div>
 
                 }
 
+              }else{
+                
+                echo '<h3 class="text-center">No primary school teacher</h3>';
+              } 
 
+              echo '  
+              </div>
+              </div>
+              </div>
+              ';
 
-                }else{
-                  
-                  echo '<h3 class="text-center">No primary school teacher</h3>';
-                } 
-
-
-echo '  </div>
-</div>
-</div>
-';
-
- }
+              }
               
-              ?> 
-
-
-
+            ?>
 
 
             </div>
