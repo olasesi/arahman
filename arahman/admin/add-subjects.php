@@ -33,25 +33,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
 	 
    
 if (empty($errors)){
-        $query = mysqli_query($connect, "SELECT primary_subjects_id FROM primary_subjects WHERE primary_subjects_name='".$subjectname."'") or die(db_conn_error);
-        if(mysqli_num_rows($query)== 0){
+      $query = mysqli_query($connect, "SELECT primary_subjects_id FROM primary_subjects WHERE primary_subjects_name='".$subjectname."'") or die(db_conn_error);
+      if(mysqli_num_rows($query)== 0){
 
-            mysqli_query($connect, "INSERT INTO primary_subjects (primary_subjects_name) VALUES ('".$subjectname."')") or die(db_conn_error);
-            $done = $subjectname;
-            $_POST = array();		
+          mysqli_query($connect, "INSERT INTO primary_subjects (primary_subjects_name) VALUES ('".$subjectname."')") or die(db_conn_error);
+          $done = $subjectname;
+          $_POST = array();		
 
-        }else{
-            $errors['subject_used'] = 'Subject has already been added';
+      }else{
+          $errors['subject_used'] = 'Subject has already been added';
 
-        }	
-	
-
-
-
-
+      }	
  }
  
 }	
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['delete-subject'])) {
+  mysqli_query($connect, "DELETE FROM primary_subjects WHERE primary_subjects_id ='".$_POST['delete-subject']."'") or die(db_conn_error);
+  $delete_errors = $_POST['delete-name'];
+
+  mysqli_query($connect, "DELETE FROM primary_class_subjects WHERE primary_subject_id_subject ='".$_POST['delete-subject']."'") or die(db_conn_error);
+  $delete_errors = $_POST['delete-name'];
+
+}
 
  
 ?>
@@ -91,9 +95,6 @@ if (empty($errors)){
    <div class="card">
      <div class="card-body">
        <h4 class="card-title">'.$done.' has been added</h4>
-     
-
-          
               
                     </form>
                   </div>
@@ -102,6 +103,23 @@ if (empty($errors)){
 
             </div>';
 }
+if(isset($delete_errors)){
+           
+  echo '<div class="row">
+
+<div class="col-12 grid-margin stretch-card">
+<div class="card">
+<div class="card-body">
+ <h4 class="card-title">'.$delete_errors.' has been deleted</h4>
+        
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>';
+}
+
           
             ?>
           
@@ -113,16 +131,31 @@ if (empty($errors)){
                     <h4 class="card-title">Subjects taught in Primary school</h4>
                    <?php 
                    
-                   $querysubject = mysqli_query($connect, "SELECT DISTINCT primary_subjects_name FROM primary_subjects ORDER BY primary_subjects_timestamp DESC ") or die(db_conn_error);
+                   $querysubject = mysqli_query($connect, "SELECT  primary_subjects_name,primary_subjects_id FROM primary_subjects ORDER BY primary_subjects_timestamp DESC ") or die(db_conn_error);
                    ?>
                     <div class="template-demo">
+                    <?php
+                      if(isset($_GET['confirm_delete']) AND $_GET['confirm_delete'] == 1 ){
+                      echo ' <h3><span class="badge bg-primary">Product has been deleted</span></h3>';
+                      }
+                    ?>
                      <?php
                      if(mysqli_num_rows($querysubject) == 0){
 echo '<h2 class="text-center">No subject has been added yet</h2>';
 
                      }else{
 while($rows = mysqli_fetch_array($querysubject)){
-   echo '<button type="button" class="btn btn-info btn-fw disabled">'.$rows['primary_subjects_name'].'</button>';
+   echo '<div class="dropdown">
+          <button class="btn btn-info btn-fw dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          '.$rows['primary_subjects_name'].'
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <form action="" method="POST">
+              <button type="submit" name="delete-subject" value="'.$rows['primary_subjects_id'].'" class="btn btn-danger btn-lg">Delete</button>
+              <input type="hidden" name="delete-name" value="'.$rows['primary_subjects_name'].'">
+            </form>
+          </div>
+        </div>';
 }
                      }
                      ?>
@@ -138,15 +171,6 @@ while($rows = mysqli_fetch_array($querysubject)){
 
 
 
-
-
-
-
-
-
-
-
-
             <div class="row">
 
              <div class="col-12 grid-margin stretch-card">
@@ -154,16 +178,7 @@ while($rows = mysqli_fetch_array($querysubject)){
                   <div class="card-body">
                     <h4 class="card-title">Add Primary school subject</h4>
                     <p class="card-description"></p>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
                     <form class="forms-sample" method="POST" action="">
                       <div class="form-group">
                         <label for="exampleInputName1">Subject name</label>

@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
         
         if(mysqli_num_rows($notlinkquery) == 0){
 
-            mysqli_query($connect, "INSERT INTO primary_class_subjects (primary_class_id_class, primary_subject_id_subject) VALUES ('".$class."', '".$subject."')") or die(db_conn_error);
+            mysqli_query($connect, "INSERT INTO primary_class_subjects (primary_class_id_class, primary_subject_id_subject) VALUES ('".$class."', '".$subject."')") or die(mysqli_error($connect));
    
             $done = $class;
             $_POST = array();
