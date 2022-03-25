@@ -15,10 +15,6 @@ if($_SESSION['admin_type'] != HEADMASTER){
 }
 
 ?>
-
-
-
-
 <?php
 
 if (!isset($errors)){$errors = array();}
