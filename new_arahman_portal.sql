@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 24, 2022 at 03:28 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.4.19
+-- Host: localhost:3306
+-- Generation Time: Mar 25, 2022 at 05:41 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,14 +29,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
-  `admin_active` int(1) NOT NULL DEFAULT 1,
+  `admin_active` int(1) NOT NULL DEFAULT '1',
   `type` varchar(10) NOT NULL DEFAULT 'admin' COMMENT 'Possible values are: admin, owner, accountant, principal, head teacher, admission, teacher',
   `admin_firstname` varchar(20) NOT NULL,
   `admin_lastname` varchar(20) NOT NULL,
   `admin_email` varchar(30) NOT NULL,
   `admin_password` varchar(255) NOT NULL,
   `admin_cookie_session` varchar(255) NOT NULL,
-  `admin_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `admin_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -44,8 +44,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
-(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', 'eb31e9e82e448cc2eba5db9ba9709b37', '2022-01-03 09:49:31'),
-(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '18d386759c1b337a42183c25bf3e538f', '2022-01-08 14:00:53');
+(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', '', '2022-01-03 09:49:31'),
+(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '19504c08f6b3d202f27b598733da5e41', '2022-01-08 14:00:53');
 
 -- --------------------------------------------------------
 
@@ -57,7 +57,7 @@ CREATE TABLE `primary_activities_confirm` (
   `primary_activities_confirm_id` int(11) NOT NULL,
   `primary_activities_confirmation` int(1) NOT NULL,
   `primary_activities_students` int(11) NOT NULL,
-  `primary_activities_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_activities_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -67,11 +67,11 @@ CREATE TABLE `primary_activities_confirm` (
 --
 
 CREATE TABLE `primary_activities_payment` (
-  `primary_activities_payment` int(11) NOT NULL,
+  `primary_activities_payment_id` int(11) NOT NULL,
   `primary_activities_payment_name` varchar(50) NOT NULL,
   `primary_activities_payment_price` varchar(11) NOT NULL,
   `primary_activities_payment_deadline` varchar(30) NOT NULL,
-  `primary_activities_payment_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_activities_payment_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -85,18 +85,6 @@ CREATE TABLE `primary_class_subjects` (
   `primary_class_id_class` int(11) NOT NULL,
   `primary_subject_id_subject` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `primary_class_subjects`
---
-
-INSERT INTO `primary_class_subjects` (`primary_class_subjects_id`, `primary_class_id_class`, `primary_subject_id_subject`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 3, 0),
-(4, 6, 0),
-(5, 3, 1),
-(6, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -112,7 +100,7 @@ CREATE TABLE `primary_payment` (
   `primary_payment_session` varchar(10) NOT NULL,
   `primary_payment_fees` varchar(50) NOT NULL,
   `primary_payment_status` varchar(10) NOT NULL DEFAULT '0',
-  `primary_payment_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_payment_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -169,7 +157,7 @@ CREATE TABLE `primary_school_exam` (
   `primary_school_exam_year` varchar(4) NOT NULL,
   `primary_school_session` varchar(11) NOT NULL,
   `primary_school_exam_class_id` int(11) NOT NULL,
-  `primary_school_exam_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_school_exam_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -180,10 +168,10 @@ CREATE TABLE `primary_school_exam` (
 
 CREATE TABLE `primary_school_students` (
   `primary_id` int(11) NOT NULL,
-  `pri_active_email` int(1) NOT NULL DEFAULT 0,
+  `pri_active_email` int(1) NOT NULL DEFAULT '0',
   `pri_active` varchar(1) NOT NULL DEFAULT '0',
-  `pri_paid` int(1) NOT NULL DEFAULT 0,
-  `pri_admit` int(1) NOT NULL DEFAULT 0,
+  `pri_paid` int(1) NOT NULL DEFAULT '0',
+  `pri_admit` int(1) NOT NULL DEFAULT '0',
   `pri_class_id` varchar(20) NOT NULL,
   `pri_school_term` varchar(20) NOT NULL DEFAULT 'choose term',
   `pri_year` varchar(15) NOT NULL,
@@ -198,7 +186,7 @@ CREATE TABLE `primary_school_students` (
   `pri_password` varchar(255) NOT NULL,
   `pri_email_hash` varchar(255) NOT NULL,
   `pri_cookie_session` varchar(255) NOT NULL,
-  `pri_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `pri_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -224,7 +212,7 @@ INSERT INTO `primary_school_students` (`primary_id`, `pri_active_email`, `pri_ac
 CREATE TABLE `primary_subjects` (
   `primary_subjects_id` int(11) NOT NULL,
   `primary_subjects_name` varchar(30) NOT NULL,
-  `primary_subjects_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_subjects_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -232,11 +220,9 @@ CREATE TABLE `primary_subjects` (
 --
 
 INSERT INTO `primary_subjects` (`primary_subjects_id`, `primary_subjects_name`, `primary_subjects_timestamp`) VALUES
-(1, 'Mathematics', '2022-02-02 11:55:14'),
-(2, 'English Language', '2022-02-02 11:55:14'),
-(3, 'Social studies', '2022-02-11 15:06:13'),
-(4, 'Basic studies', '2022-02-11 14:35:45'),
-(5, 'Art', '2022-02-11 15:07:52');
+(2, 'English', '2022-03-25 09:39:30'),
+(3, 'Mathematics', '2022-03-25 09:39:35'),
+(4, 'French', '2022-03-25 09:39:40');
 
 -- --------------------------------------------------------
 
@@ -246,7 +232,7 @@ INSERT INTO `primary_subjects` (`primary_subjects_id`, `primary_subjects_name`, 
 
 CREATE TABLE `primary_teachers` (
   `primary_teacher_id` int(11) NOT NULL,
-  `primary_teacher_active` int(1) NOT NULL DEFAULT 1,
+  `primary_teacher_active` int(1) NOT NULL DEFAULT '1',
   `primary_teacher_class_id` varchar(15) NOT NULL,
   `primary_teacher_firstname` varchar(30) NOT NULL,
   `primary_teacher_surname` varchar(30) NOT NULL,
@@ -259,7 +245,7 @@ CREATE TABLE `primary_teachers` (
   `primary_teacher_address` varchar(255) NOT NULL,
   `primary_teacher_image` varchar(255) NOT NULL,
   `primary_teacher_cookie` varchar(255) NOT NULL,
-  `primary_teacher_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `primary_teacher_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -269,7 +255,7 @@ CREATE TABLE `primary_teachers` (
 INSERT INTO `primary_teachers` (`primary_teacher_id`, `primary_teacher_active`, `primary_teacher_class_id`, `primary_teacher_firstname`, `primary_teacher_surname`, `primary_teacher_email`, `primary_teacher_password`, `primary_teacher_sex`, `primary_teacher_age`, `primary_teacher_phone`, `primary_teacher_qualification`, `primary_teacher_address`, `primary_teacher_image`, `primary_teacher_cookie`, `primary_teacher_timestamp`) VALUES
 (1, 0, '3', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 5, '08074573234', 'M.sc', 'Ikeja', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
 (2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 6, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '', '2022-01-10 08:32:38'),
-(3, 1, '4', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 7, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', 'c5589a87c418a3b246bb188ace0875d1', '2022-01-23 09:51:47');
+(3, 1, '4', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 7, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', '', '2022-01-23 09:51:47');
 
 -- --------------------------------------------------------
 
@@ -282,7 +268,7 @@ CREATE TABLE `primary_test_assignment_submit` (
   `primary_test_upload_submit_name` varchar(30) NOT NULL,
   `primary_test_upload_classid` int(11) NOT NULL,
   `primary_test_upload_submit_file` varchar(255) NOT NULL,
-  `primary_test_submit_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_test_submit_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -305,7 +291,7 @@ CREATE TABLE `primary_test_assignment_upload` (
   `primary_test_upload_class_id` varchar(20) NOT NULL,
   `primary_test_upload_filename` varchar(255) NOT NULL,
   `primary_test_upload_testname` varchar(255) NOT NULL,
-  `primary_test_upload_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `primary_test_upload_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -330,7 +316,7 @@ CREATE TABLE `pri_total_number` (
   `pri_school_popu` int(11) NOT NULL,
   `pri_total_number_term` varchar(15) NOT NULL,
   `pri_total_number_year` varchar(15) NOT NULL,
-  `pri_total_number_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `pri_total_number_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -341,15 +327,15 @@ CREATE TABLE `pri_total_number` (
 
 CREATE TABLE `prospective_students` (
   `prospective_id` int(11) NOT NULL,
-  `email_active` int(1) NOT NULL DEFAULT 0,
+  `email_active` int(1) NOT NULL DEFAULT '0',
   `firstname` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(11) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email_hash` text NOT NULL,
-  `email_confirm` int(1) NOT NULL DEFAULT 0,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `email_confirm` int(1) NOT NULL DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -359,6 +345,75 @@ CREATE TABLE `prospective_students` (
 INSERT INTO `prospective_students` (`prospective_id`, `email_active`, `firstname`, `surname`, `email`, `phone`, `password`, `email_hash`, `email_confirm`, `timestamp`) VALUES
 (5, 0, 'Chadwick', 'Griffin', 'funigo@mailinator.com', '08074574512', '$2y$10$mwbCH2NlXrthJkFZBnsqdu1Kzw1/2AUMPSlj83EM5v30WR950xsw6', '1aa48fc4880bb0c9b8a3bf979d3b917e', 0, '2021-12-21 10:51:01'),
 (6, 0, 'Sybil', 'Key', 'wolodaboc@mailinator.com', '08074574512', '$2y$10$xz1Yfvoc8rfD5utqH7Cmge.nxRRtmkEkxzs1AJ7zM6Yr7oZ3jFjLW', 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 0, '2021-12-21 10:59:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_activities_confirm`
+--
+
+CREATE TABLE `secondary_activities_confirm` (
+  `secondary_activities_confirm_id` int(11) NOT NULL,
+  `primary_activities_confirmation` int(1) NOT NULL,
+  `primary_activities_students` int(11) NOT NULL,
+  `primary_activities_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_activities_payment`
+--
+
+CREATE TABLE `secondary_activities_payment` (
+  `secondary_activities_payment_id` int(11) NOT NULL,
+  `primary_activities_payment_name` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `primary_activities_payment_price` varchar(11) CHARACTER SET utf8mb4 NOT NULL,
+  `primary_activities_payment_deadline` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `primary_activities_payment_timestamp` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_class_subjects`
+--
+
+CREATE TABLE `secondary_class_subjects` (
+  `secondary_class_subjects_id` int(11) NOT NULL,
+  `secondary_class_id_class` int(11) NOT NULL,
+  `secondary_subject_id_subject` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_payment`
+--
+
+CREATE TABLE `secondary_payment` (
+  `secondary_payment_id` bigint(20) NOT NULL,
+  `secondary_payment_students_id` bigint(20) NOT NULL,
+  `secondary_payment_students_reference` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_payment_term` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_payment_session` varchar(10) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_payment_fees` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_payment_status` varchar(10) CHARACTER SET utf8mb4 NOT NULL DEFAULT '0',
+  `secondary_payment_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_result`
+--
+
+CREATE TABLE `secondary_result` (
+  `secondary_result_id` int(11) NOT NULL,
+  `secondary_result_class_id` int(11) NOT NULL,
+  `secondary_result_upload_filename` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_result_upload_name` varchar(30) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -386,22 +441,57 @@ INSERT INTO `secondary_school_classes` (`secondary_class_id`, `secondary_class`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `secondary_school_exam`
+--
+
+CREATE TABLE `secondary_school_exam` (
+  `secondary_school_exam_id` bigint(20) NOT NULL,
+  `secondary_school_exam_year` varchar(4) NOT NULL,
+  `secondary_school_session` varchar(11) NOT NULL,
+  `secondary_school_exam_class_id` int(11) NOT NULL,
+  `secondary_school_exam_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `secondary_school_students`
 --
 
 CREATE TABLE `secondary_school_students` (
   `secondary_id` int(11) NOT NULL,
-  `sec_active` varchar(6) NOT NULL,
+  `sec_active_email` int(1) NOT NULL DEFAULT '0',
+  `sec_active` varchar(6) NOT NULL DEFAULT '0',
+  `sec_paid` int(1) NOT NULL DEFAULT '0',
+  `sec_admit` int(1) NOT NULL DEFAULT '0',
   `sec_class_id` int(1) NOT NULL,
+  `sec_school_term` varchar(20) NOT NULL DEFAULT 'choose term',
+  `sec_year` varchar(15) NOT NULL,
   `sec_firstname` varchar(20) NOT NULL,
   `sec_surname` varchar(20) NOT NULL,
+  `sec_age` varchar(2) NOT NULL,
+  `sec_sex` varchar(6) NOT NULL,
   `sec_email` varchar(255) NOT NULL,
+  `sec_photo` varchar(255) NOT NULL DEFAULT 'default.jpg',
   `sec_phone` varchar(11) NOT NULL,
+  `sec_address` text NOT NULL,
   `sec_password` varchar(255) NOT NULL,
   `sec_email_hash` varchar(255) NOT NULL,
   `sec_cookie_session` varchar(255) NOT NULL,
-  `sec_timestamp` date NOT NULL DEFAULT current_timestamp()
+  `sec_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_subject`
+--
+
+CREATE TABLE `secondary_subject` (
+  `secondary_subjects_id` int(11) NOT NULL,
+  `secondary_subjects_name` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_subjects_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -411,13 +501,64 @@ CREATE TABLE `secondary_school_students` (
 
 CREATE TABLE `secondary_teachers` (
   `secondary_teacher_id` int(11) NOT NULL,
-  `secondary_teacher_class_id` int(11) NOT NULL,
+  `secondary_teacher_active` int(1) NOT NULL DEFAULT '1',
+  `secondary_teacher_class_id` int(15) NOT NULL,
   `secondary_teacher_firstname` varchar(30) NOT NULL,
   `secondary_teacher_surname` varchar(30) NOT NULL,
+  `secondary_teacher_email` varchar(255) NOT NULL,
+  `secondary_teacher_password` varchar(255) NOT NULL,
   `secondary_teacher_sex` varchar(6) NOT NULL,
+  `primary_teacher_age` int(2) NOT NULL,
+  `primary_teacher_phone` varchar(11) NOT NULL,
   `secondary_teacher_qualification` varchar(30) NOT NULL,
-  `secondary_teacher_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `secondary_teacher_address` varchar(255) NOT NULL,
+  `secondary_teacher_image` varchar(255) NOT NULL,
+  `secondary_teacher_cookie` varchar(255) NOT NULL,
+  `secondary_teacher_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_test_assignment_submit`
+--
+
+CREATE TABLE `secondary_test_assignment_submit` (
+  `secondary_test_submit_id` int(11) NOT NULL,
+  `secondary_test_upload_submit_name` varchar(30) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_test_upload_classid` int(11) NOT NULL,
+  `secondary_test_upload_submit_file` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_test_submit_timestamp` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondary_test_assignment_upload`
+--
+
+CREATE TABLE `secondary_test_assignment_upload` (
+  `secondary_test_upload_id` int(11) NOT NULL,
+  `secondary_test_upload_class_status` varchar(6) CHARACTER SET utf8mb4 NOT NULL DEFAULT 'Open',
+  `secondary_test_upload_class_id` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_test_upload_filename` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_test_upload_testname` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `secondary_test_upload_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sec_total_number`
+--
+
+CREATE TABLE `sec_total_number` (
+  `sec_total_number_id` int(11) NOT NULL,
+  `sec_school_popu` int(11) NOT NULL,
+  `sec_total_number_term` varchar(15) CHARACTER SET utf8mb4 NOT NULL,
+  `sec_total_number_year` varchar(15) CHARACTER SET utf8mb4 NOT NULL,
+  `sec_total_number_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -427,9 +568,9 @@ CREATE TABLE `secondary_teachers` (
 
 CREATE TABLE `session_start_end` (
   `session_start_end_id` int(11) NOT NULL,
-  `session_start` timestamp NOT NULL DEFAULT current_timestamp(),
-  `session_end` timestamp NOT NULL DEFAULT current_timestamp(),
-  `session_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `session_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `session_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `session_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -440,7 +581,7 @@ CREATE TABLE `session_start_end` (
 
 CREATE TABLE `super_admin` (
   `super_id` tinyint(1) NOT NULL,
-  `super_active` tinyint(1) NOT NULL DEFAULT 0,
+  `super_active` tinyint(1) NOT NULL DEFAULT '0',
   `super_firstname` varchar(20) NOT NULL,
   `super_lastname` varchar(20) NOT NULL,
   `super_email` varchar(225) NOT NULL,
@@ -459,7 +600,7 @@ CREATE TABLE `term_start_end` (
   `choose_term` varchar(20) NOT NULL,
   `term_start` varchar(255) NOT NULL,
   `term_end` varchar(255) NOT NULL,
-  `term_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `term_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `school_session` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -493,7 +634,7 @@ ALTER TABLE `primary_activities_confirm`
 -- Indexes for table `primary_activities_payment`
 --
 ALTER TABLE `primary_activities_payment`
-  ADD PRIMARY KEY (`primary_activities_payment`);
+  ADD PRIMARY KEY (`primary_activities_payment_id`) USING BTREE;
 
 --
 -- Indexes for table `primary_class_subjects`
@@ -568,10 +709,46 @@ ALTER TABLE `prospective_students`
   ADD PRIMARY KEY (`prospective_id`);
 
 --
+-- Indexes for table `secondary_activities_confirm`
+--
+ALTER TABLE `secondary_activities_confirm`
+  ADD PRIMARY KEY (`secondary_activities_confirm_id`);
+
+--
+-- Indexes for table `secondary_activities_payment`
+--
+ALTER TABLE `secondary_activities_payment`
+  ADD PRIMARY KEY (`secondary_activities_payment_id`);
+
+--
+-- Indexes for table `secondary_class_subjects`
+--
+ALTER TABLE `secondary_class_subjects`
+  ADD PRIMARY KEY (`secondary_class_subjects_id`);
+
+--
+-- Indexes for table `secondary_payment`
+--
+ALTER TABLE `secondary_payment`
+  ADD PRIMARY KEY (`secondary_payment_id`);
+
+--
+-- Indexes for table `secondary_result`
+--
+ALTER TABLE `secondary_result`
+  ADD PRIMARY KEY (`secondary_result_id`);
+
+--
 -- Indexes for table `secondary_school_classes`
 --
 ALTER TABLE `secondary_school_classes`
   ADD PRIMARY KEY (`secondary_class_id`);
+
+--
+-- Indexes for table `secondary_school_exam`
+--
+ALTER TABLE `secondary_school_exam`
+  ADD PRIMARY KEY (`secondary_school_exam_id`);
 
 --
 -- Indexes for table `secondary_school_students`
@@ -580,10 +757,34 @@ ALTER TABLE `secondary_school_students`
   ADD PRIMARY KEY (`secondary_id`);
 
 --
+-- Indexes for table `secondary_subject`
+--
+ALTER TABLE `secondary_subject`
+  ADD PRIMARY KEY (`secondary_subjects_id`);
+
+--
 -- Indexes for table `secondary_teachers`
 --
 ALTER TABLE `secondary_teachers`
   ADD PRIMARY KEY (`secondary_teacher_id`);
+
+--
+-- Indexes for table `secondary_test_assignment_submit`
+--
+ALTER TABLE `secondary_test_assignment_submit`
+  ADD PRIMARY KEY (`secondary_test_submit_id`);
+
+--
+-- Indexes for table `secondary_test_assignment_upload`
+--
+ALTER TABLE `secondary_test_assignment_upload`
+  ADD PRIMARY KEY (`secondary_test_upload_id`);
+
+--
+-- Indexes for table `sec_total_number`
+--
+ALTER TABLE `sec_total_number`
+  ADD PRIMARY KEY (`sec_total_number_id`);
 
 --
 -- Indexes for table `session_start_end`
@@ -608,12 +809,6 @@ ALTER TABLE `term_start_end`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `primary_activities_confirm`
 --
 ALTER TABLE `primary_activities_confirm`
@@ -623,13 +818,13 @@ ALTER TABLE `primary_activities_confirm`
 -- AUTO_INCREMENT for table `primary_activities_payment`
 --
 ALTER TABLE `primary_activities_payment`
-  MODIFY `primary_activities_payment` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `primary_activities_payment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `primary_class_subjects`
 --
 ALTER TABLE `primary_class_subjects`
-  MODIFY `primary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `primary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `primary_payment`
@@ -654,12 +849,6 @@ ALTER TABLE `primary_school_classes`
 --
 ALTER TABLE `primary_school_exam`
   MODIFY `primary_school_exam_id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `primary_school_students`
---
-ALTER TABLE `primary_school_students`
-  MODIFY `primary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `primary_subjects`
@@ -698,10 +887,46 @@ ALTER TABLE `prospective_students`
   MODIFY `prospective_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `secondary_activities_confirm`
+--
+ALTER TABLE `secondary_activities_confirm`
+  MODIFY `secondary_activities_confirm_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `secondary_activities_payment`
+--
+ALTER TABLE `secondary_activities_payment`
+  MODIFY `secondary_activities_payment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `secondary_class_subjects`
+--
+ALTER TABLE `secondary_class_subjects`
+  MODIFY `secondary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `secondary_payment`
+--
+ALTER TABLE `secondary_payment`
+  MODIFY `secondary_payment_id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `secondary_result`
+--
+ALTER TABLE `secondary_result`
+  MODIFY `secondary_result_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `secondary_school_classes`
 --
 ALTER TABLE `secondary_school_classes`
   MODIFY `secondary_class_id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `secondary_school_exam`
+--
+ALTER TABLE `secondary_school_exam`
+  MODIFY `secondary_school_exam_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `secondary_school_students`
@@ -710,10 +935,34 @@ ALTER TABLE `secondary_school_students`
   MODIFY `secondary_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `secondary_subject`
+--
+ALTER TABLE `secondary_subject`
+  MODIFY `secondary_subjects_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `secondary_teachers`
 --
 ALTER TABLE `secondary_teachers`
   MODIFY `secondary_teacher_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `secondary_test_assignment_submit`
+--
+ALTER TABLE `secondary_test_assignment_submit`
+  MODIFY `secondary_test_submit_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `secondary_test_assignment_upload`
+--
+ALTER TABLE `secondary_test_assignment_upload`
+  MODIFY `secondary_test_upload_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sec_total_number`
+--
+ALTER TABLE `sec_total_number`
+  MODIFY `sec_total_number_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `session_start_end`
