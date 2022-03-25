@@ -15,6 +15,24 @@ if($_SESSION['admin_type'] != HEADMASTER){      // if not headmaster
 }
 
 ?>
+<?php
+//Forceful password change and logout of the admin by the super admin. The super admin wonts logged out immediately if he changes password
+if($_SESSION['admin_type'] == HEADMASTER || $_SESSION['admin_type'] == ACCOUNTANT || $_SESSION['admin_type'] == ADMISSION){
+
+
+  $change_pass = mysqli_query($connect, "SELECT admin_password FROM admin WHERE admin_password != '".$_SESSION['admin_password']."' AND admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error); 
+
+if(mysqli_num_rows($change_pass) == 1){
+  mysqli_query($connect,"UPDATE admin SET admin_cookie_session = '' WHERE admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error);	
+  session_destroy();
+  setcookie("admin_remember_me", "", time() - 31104000);		
+
+header("Location:".GEN_WEBSITE."/admin");
+exit();
+
+}
+}
+?>
 
 
 <?php require_once ('../../incs-arahman/dashboard.php');?>
@@ -90,52 +108,69 @@ $_GET = array();
 
 
            
-           <?php
-include ('../../incs-arahman/paginate.php');
-$statement = "primary_teachers ORDER BY primary_teacher_id ASC";
-           
-$page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
-            $per_page = 15; 		// Set how many records do you want to display per page. Image alt tag to be put too
-            $startpoint = ($page * $per_page) - $per_page;
-            $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_email, primary_teacher_sex, primary_teacher_age, primary_teacher_qualification, primary_teacher_image FROM primary_teachers ORDER BY primary_teacher_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);
-            
-            if (mysqli_num_rows($results) != 0){
+          <?php
+            if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == HEADMASTER){
+  
+              if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['ban_teacher'])){
+                mysqli_query($connect, "UPDATE primary_teachers SET primary_teacher_active = '0', 	primary_teacher_cookie = '' WHERE primary_teacher_active = '1' AND primary_teacher_id = '".$_POST['ban_teacher']."'") or die(db_conn_error);
+
+              }elseif($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['unban_teacher'])){
+                mysqli_query($connect, "UPDATE primary_teachers SET primary_teacher_active = '1' WHERE  primary_teacher_active = '0' AND primary_teacher_id = '".$_POST['unban_teacher']."'") or die(db_conn_error);
+
+              }
+              $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active,  primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_sex, primary_teacher_qualification, primary_class_id, primary_class FROM primary_teachers, primary_school_classes WHERE primary_class_id = primary_teacher_class_id ORDER BY primary_teacher_id ASC LIMIT 3") or die(db_conn_error); 
+
+              include ('../../incs-arahman/paginate.php');
+              $statement = "primary_teachers ORDER BY primary_teacher_id ASC";
+                        
+              $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
+              if ($page <= 0) $page = 1;
+                $per_page = 15; 		// Set how many records do you want to display per page. Image alt tag to be put too
+                $startpoint = ($page * $per_page) - $per_page;
+                $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active, primary_teacher_firstname, primary_teacher_surname, primary_teacher_email, primary_teacher_sex, primary_teacher_age, primary_teacher_qualification, primary_teacher_image FROM primary_teachers ORDER BY primary_teacher_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);
+                
+              if (mysqli_num_rows($results) != 0){
                 while ($row = mysqli_fetch_array($results)) {
-                    echo '<tr>
+                  echo '
+                  <tr>
                     <td>
-                    <img src="'.GEN_WEBSITE.'/admin/teachers/'.$row['primary_teacher_image'].'" alt="'.$row['primary_teacher_firstname'].'"/>    
-                    <span class="ps-2">'.$row['primary_teacher_firstname']." ".$row['primary_teacher_surname'].'</span>
-                  </td>
+                      <img src="'.GEN_WEBSITE.'/admin/teachers/'.$row['primary_teacher_image'].'" alt="'.$row['primary_teacher_firstname'].'"/>    
+                      <span class="ps-2">'.$row['primary_teacher_firstname']." ".$row['primary_teacher_surname'].'</span>
+                    </td>
                     
                     <td>'.$row['primary_teacher_email'].'</td>
                     <td>'.$row['primary_teacher_sex'].'</td>
                     <td>'.$row['primary_teacher_age'].'</td>
                     <td>'.$row['primary_teacher_qualification'].'</td>
                     <td> 04 Dec 2019 </td>
+
                     <td>
-                    <form action="'.GEN_WEBSITE.'/admin/edit-teacher-data.php" method="POST">
-                   
-                    <button type="submit" class="btn btn-success me-2" name="edit_teacher_data">Edit</button>
-                    </form>
-                   </td>
-
-                   <td>
-                    <form action="" method="POST">
-                   
-                    <button type="submit" class="btn btn-danger me-2" name="ban_teacher">Ban</button>
-                    </form>
+                      <form action="'.GEN_WEBSITE.'/admin/edit-teacher-data.php" method="GET">
+                        <button type="submit" class="btn btn-success me-2" name="id" value="'.$row['primary_teacher_id'].'">Edit</button>
+                      </form>
                     </td>
-                   
 
-                </tr>';
-
-                  }
-            }else{
+                    <td>';
+                      if($row['primary_teacher_active'] == 1){
+                        echo '
+                        <form action="" method="POST">
+                          <button type="submit" class="btn btn-danger me-2" name="ban_teacher" value="'.$row['primary_teacher_id'].'">Ban</button>
+                        </form>';
+                      } elseif($row['primary_teacher_active'] == 0){
+                        echo '
+                        <form action="" method="POST">
+                          <button type="submit" class="btn btn-danger me-2" name="unban_teacher" value="'.$row['primary_teacher_id'].'">Unban</button>
+                        </form>';
+                      } 
+                      echo  '
+                    </td>
+                  </tr>';
+                }
+              } else{
                 echo '<h3 class="text-center">No result found</h3>';
-            } 
-
-           ?>
+              } 
+            }
+          ?>
             </tbody>
                       </table>
                       
