@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2022 at 09:08 AM
+-- Generation Time: Mar 24, 2022 at 03:28 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
-  `admin_active` int(1) NOT NULL DEFAULT 0,
+  `admin_active` int(1) NOT NULL DEFAULT 1,
   `type` varchar(10) NOT NULL DEFAULT 'admin' COMMENT 'Possible values are: admin, owner, accountant, principal, head teacher, admission, teacher',
   `admin_firstname` varchar(20) NOT NULL,
   `admin_lastname` varchar(20) NOT NULL,
-  `admin_email` varchar(255) NOT NULL,
+  `admin_email` varchar(30) NOT NULL,
   `admin_password` varchar(255) NOT NULL,
   `admin_cookie_session` varchar(255) NOT NULL,
   `admin_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
@@ -44,8 +44,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
-(1, 1, 'admission', 'Ahmed', 'Olusesi', 'ola.sesi@yahoo.com', 'password', '75a2a8c5267dc418d626e5a9f730fb64', '2022-01-03 09:49:31'),
-(2, 1, 'headmaster', 'rasheed', 'rasheed', 'rasheed@rasheed.com', 'password', '', '2022-01-08 14:00:53');
+(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', 'eb31e9e82e448cc2eba5db9ba9709b37', '2022-01-03 09:49:31'),
+(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '18d386759c1b337a42183c25bf3e538f', '2022-01-08 14:00:53');
 
 -- --------------------------------------------------------
 
@@ -267,7 +267,7 @@ CREATE TABLE `primary_teachers` (
 --
 
 INSERT INTO `primary_teachers` (`primary_teacher_id`, `primary_teacher_active`, `primary_teacher_class_id`, `primary_teacher_firstname`, `primary_teacher_surname`, `primary_teacher_email`, `primary_teacher_password`, `primary_teacher_sex`, `primary_teacher_age`, `primary_teacher_phone`, `primary_teacher_qualification`, `primary_teacher_address`, `primary_teacher_image`, `primary_teacher_cookie`, `primary_teacher_timestamp`) VALUES
-(1, 1, '3', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 5, '08074573234', 'M.sc', 'Ikeja', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
+(1, 0, '3', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 5, '08074573234', 'M.sc', 'Ikeja', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
 (2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 6, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '', '2022-01-10 08:32:38'),
 (3, 1, '4', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 7, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', 'c5589a87c418a3b246bb188ace0875d1', '2022-01-23 09:51:47');
 
@@ -314,7 +314,7 @@ CREATE TABLE `primary_test_assignment_upload` (
 
 INSERT INTO `primary_test_assignment_upload` (`primary_test_upload_id`, `primary_test_upload_class_status`, `primary_test_upload_class_id`, `primary_test_upload_filename`, `primary_test_upload_testname`, `primary_test_upload_timestamp`) VALUES
 (1, 'Open', '4', 'b01fb76031540ff97c259f3fbc0c4a4bf570d203.pdf', '453bf74dbd41', '2022-02-11 10:43:03'),
-(2, 'Open', '3', 'b01fb76031540ff97c259f3fbc0c4a4bf570d203.pdf', '07c3c38c34d4b4', '2022-02-11 10:43:12'),
+(2, 'Close', '3', 'b01fb76031540ff97c259f3fbc0c4a4bf570d203.pdf', '07c3c38c34d4b4', '2022-03-02 17:05:10'),
 (3, 'Close', '3', 'b01fb76031540ff97c259f3fbc0c4a4bf570d203.pdf', 'ffgdfgdfg.pdf', '2022-02-11 10:43:19'),
 (4, 'Close', '3', 'b01fb76031540ff97c259f3fbc0c4a4bf570d203.pdf', 'physics', '2022-02-11 10:43:27'),
 (5, 'Open', '3', 'b01fb76031540ff97c259f3fbc0c4a4bf570d203.pdf', 'maths', '2022-02-08 09:44:03');
@@ -468,7 +468,10 @@ CREATE TABLE `term_start_end` (
 --
 
 INSERT INTO `term_start_end` (`term_start_end_id`, `choose_term`, `term_start`, `term_end`, `term_timestamp`, `school_session`) VALUES
-(36, 'First term', '2022-02-12 14:00:49', '2022-02-12 14:01:31', '2022-02-12 14:00:49', '2001/2002');
+(36, 'First term', '2022-02-12 14:00:49', '2022-02-12 14:01:31', '2022-02-12 14:00:49', '2001/2002'),
+(37, 'Second term', '2022-03-22 15:50:36', '2022-03-22 15:51:33', '2022-03-22 15:50:36', '2001/2002'),
+(38, 'Third term', '2022-03-22 16:33:18', '2022-03-22 16:34:24', '2022-03-22 16:33:18', '2001/2002'),
+(39, 'Second term', '2022-03-24 11:56:29', '2022-03-24 11:58:22', '2022-03-24 11:56:29', '2001/2002');
 
 --
 -- Indexes for dumped tables
@@ -728,7 +731,7 @@ ALTER TABLE `super_admin`
 -- AUTO_INCREMENT for table `term_start_end`
 --
 ALTER TABLE `term_start_end`
-  MODIFY `term_start_end_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `term_start_end_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

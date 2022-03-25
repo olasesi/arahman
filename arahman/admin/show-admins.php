@@ -17,7 +17,7 @@ if($_SESSION['admin_type'] != OWNER){      // if not headmaster
 ?>
 
 <?php
- 
+ //This is for banning and unbanning 
  if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['ban_admin'])){
     mysqli_query($connect, "UPDATE admin SET admin_active = '0' WHERE admin_active  = '1' AND admin_id = '".$_POST['ban_admin']."'") or die(db_conn_error);
 

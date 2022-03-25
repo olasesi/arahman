@@ -4,7 +4,7 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include("../incs_shop/cookie_for_most.php");
 //include('../users/includes/menu.php');
 
-if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
+if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them. Alls is general to all admins
 	header("Location:".GEN_WEBSITE.'/admin');
 	exit();
 }
@@ -16,12 +16,20 @@ if($_SESSION['admin_type'] != OWNER){
 
 ?>
 <?php
-$ternary = (isset($_GET['password_change']))?$_GET['password_change']:'';
+if(isset($_GET['password_change'])){
+    $results = mysqli_query($connect,"SELECT admin_id, type FROM admin WHERE admin_id = '".mysqli_real_escape_string($connect, $_GET['password_change'])."'") or die(db_conn_error);
+if(mysqli_num_rows($results) == 0){
+    header("Location:".GEN_WEBSITE.'/admin/show-admins.php');
+	exit(); 
+}
 
-$results = mysqli_query($connect,"SELECT admin_id FROM admin WHERE admin_id = '".mysqli_real_escape_string($connect, $ternary)."'") or die(db_conn_error);
+}else{
+    header("Location:".GEN_WEBSITE.'/admin/show-admins.php');
+	exit(); 
+
+}
 
 ?>
-
 <?php
 if (!isset($errors)){$errors = array();}
 
@@ -30,22 +38,18 @@ if($_POST['password'] == $_POST['confirm_password']){
 	if(preg_match('/^.{6,255}$/i',$_POST['password'])){
     $password =  mysqli_real_escape_string($connect,$_POST['password']);
   }else{
-    $signup_errors['password'] = "Minimum of 6 characters";
+    $errors['password'] = "Minimum of 6 characters";
   }
 }else{
-	$signup_errors['password_match'] = "Password did not match";
+	$errors['password_match'] = "Password did not match";
 }
 
 
 	 
    
 if (empty($errors)){
-   
-   
-    mysqli_query($connect, "UPDATE admin SET admin_active = '0' WHERE admin_active  = '1' AND admin_id = '".$_POST['ban_admin']."'") or die(db_conn_error);
-
-	
-
+mysqli_query($connect, "UPDATE admin SET admin_password = '".$password."' WHERE admin_id = '".$_GET['password_change']."'") or die(mysqli_error());
+$done = 1;
 
 
 
@@ -83,14 +87,14 @@ if (empty($errors)){
             </div>
 
  <?php         
-    if(isset($done)){
+    if(isset($done) AND $done == 1){
            
         echo '<div class="row">
 
 <div class="col-12 grid-margin stretch-card">
    <div class="card">
      <div class="card-body">
-       <h4 class="card-title">Password has now been changed. The user can now login in again</h4>
+       <h4 class="card-title text-warning">Password has now been changed. The user can now login in again</h4>
      
 
           
@@ -114,13 +118,13 @@ if (empty($errors)){
                     <h4 class="card-title">Change admin password</h4>
                     <p class="card-description"></p>
                                         
-                    <form class="forms-sample" method="POST" action="<?php echo GEN_WEBSITE.'/admin/edit-admin-password.php?password_change='.$_GET['password_change']; ?>">
+                    <form class="forms-sample" method="POST" action="<?php //echo GEN_WEBSITE.'/admin/edit-admin-password.php?password_change='.$_GET['password_change']; ?>">
                       <div class="form-group">
-                        <label for="exampleInputName1">Change password</label>
+                        <label for="exampleInputName1">Change admin password</label>
                         <?php if (array_key_exists('password', $errors)) {
-				echo '<p class="text-danger">'.$signup_errors['password'].'</p>';}?>
-                 <?php if (array_key_exists('password_match', $errors)) {
-				echo '<p class="text-danger">'.$signup_errors['password_match'].'</p>';}?>
+				echo '<p class="text-danger">'.$errors['password'].'</p>';}?>
+                 <?php if (array_key_exists('password_match', $errors)){
+				echo '<p class="text-danger">'.$errors['password_match'].'</p>';}?>
                         <input type="password" class="form-control" id="exampleInputName1" placeholder="Password" value="" name="password">
                       </div>
                       
@@ -130,7 +134,7 @@ if (empty($errors)){
                         <input type="password" class="form-control" id="exampleInputName1" placeholder="Confirm password" value="" name="confirm_password">
                       
                     </div>
-                    <input type="hidden" value="<?php echo $_GET['password_change']; ?>" name="pass_change">
+                    <input type="hidden" value="<?php echo $_GET['password_change'];?>" name="pass_change">
 
 
                   <button type="submit" class="btn btn-primary me-2" name="submit">Submit</button>
