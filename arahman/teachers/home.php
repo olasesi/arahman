@@ -11,9 +11,8 @@ if(!isset($_SESSION['primary_teacher_id'])){   //Not a teacher? Please leave
 }
 ?>
 <?php
-	//BANNING AND UNBANNING
-	//if(){}
-	$query_banning = mysqli_query($connect, "SELECT primary_teacher_active FROM primary_teachers WHERE primary_teacher_active = '0' AND primary_teacher_id = '".$_SESSION['primary_teacher_id']."'") or die(db_conn_error); 
+
+$query_banning = mysqli_query($connect, "SELECT primary_teacher_active FROM primary_teachers WHERE primary_teacher_active = '0' AND primary_teacher_id = '".$_SESSION['primary_teacher_id']."'") or die(db_conn_error); 
 	
 if (mysqli_affected_rows($connect) == 1) {
 

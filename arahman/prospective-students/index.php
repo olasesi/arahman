@@ -175,7 +175,7 @@ if(empty($signup_errors)){
               <form id="contact" action="" method="POST">
                 <div class="row">
                   <div class="col-lg-12">
-                    <h2>Prospective students</h2>
+                    <h2>Prospective primary students</h2>
                   </div>
                   <div class="col-lg-4">
                   <?php if(array_key_exists('firstname', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['firstname'].'</small>';}?> 
