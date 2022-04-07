@@ -82,6 +82,23 @@
                             </a></div>';
                         }
                         ?>
+                        <?php
+                        if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){      // if not headmaster
+                          echo '<a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+                         
+                          <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+                            <a href="'.GEN_WEBSITE.'/admin/bill-setting.php" class="dropdown-item preview-item">
+                              <div class="preview-thumbnail">
+                                <div class="preview-icon bg-dark rounded-circle">
+                                  <i class="mdi mdi-settings text-primary"></i>
+                                </div>
+                              </div>
+                              <div class="preview-item-content">
+                                <p class="preview-subject ellipsis mb-1 text-small">School bill settings</p>
+                              </div>
+                            </a></div>';
+                        }
+                        ?>
               
 
 
@@ -231,6 +248,28 @@
  <div class="collapse" id="ui-teachers">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/show-admins.php">Show admins</a></li>
+                
+              </ul>
+            </div>
+          </li>
+           '; }       
+          
+?>
+<?php
+ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){
+       echo   '<li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-teachers" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+              <span class="menu-title">Recent Payment</span>
+              <i class="menu-arrow"></i>
+            </a>
+
+            <div class="collapse" id="ui-teachers">
+              <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/primary-school-payment.php">Primary School</a></li>
+              <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/secondary-school-payment.php">Secondary School</a></li>
                 
               </ul>
             </div>
