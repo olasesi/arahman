@@ -15,15 +15,81 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
 
 }
 
-
 ?>
+
+
+
+
 
 
 <?php 
+$errors = array();
 
-    mysqli_query($connect, "SELECT " )
+    if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['primary_submit'])) {
+   $values = array();
+   
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic1']))) {		//only 20 characters are allowed to be 
+            $values[] = $basic_one = mysqli_real_escape_string ($connect, trim($_POST['basic1']));
+        } else {
+            $errors['basic1'] = 'Please enter correct value';
+        } 
+
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic2']))) {		//only 20 characters are allowed to be 
+            $values[] = $basic_two = mysqli_real_escape_string ($connect, trim($_POST['basic2']));
+        } else {
+            $errors['basic2'] = 'Please enter correct value';
+        } 
+
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic3']))) {		//only 20 characters are allowed to be 
+            $values[] = $basic_three = mysqli_real_escape_string ($connect, trim($_POST['basic3']));
+        } else {
+            $errors['basic3'] = 'Please enter correct value';
+        } 
+
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic4']))) {		//only 20 characters are allowed to be 
+            $values[] = $basic_four = mysqli_real_escape_string ($connect, trim($_POST['basic4']));
+        } else {
+            $errors['basic4'] = 'Please enter correct value';
+        } 
+
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic5']))) {		//only 20 characters are allowed to be 
+            $values[] = $basic_five = mysqli_real_escape_string ($connect, trim($_POST['basic5']));
+        } else {
+            $errors['basic5'] = 'Please enter correct value';
+        } 
+
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic6']))) {		//only 20 characters are allowed to be 
+            $values[] =$basic_six = mysqli_real_escape_string ($connect, trim($_POST['basic6']));
+        } else {
+            $errors['basic6'] = 'Please enter correct value';
+        } 
+        
+
+
+        if(empty($errors)) {
+
+            $primary_classes = mysqli_query($connect, "SELECT * FROM primary_school_classes")  or die(db_conn_error);
+
+            while($primary_row = mysqli_fetch_array($primary_classes)){ 
+
+                for($i = 0; $i < count($values); $i++ ) {
+                    mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$values[$i]."' WHERE ") or die(db_conn_error);
+
+                }
+
+
+            }
+
+        }
+
+
+    }
+        
+
 
 ?>
+
+
 
 
 <?php require_once('../../incs-arahman/dashboard.php'); ?>
@@ -39,38 +105,37 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
                             <div class="card-body">
                                 <h4 class="card-title">Primary School</h4>
                                 <p class="card-description">Primary School Fees </p>
-                                <form class="forms-sample">
-                                <div class="form-group row">
-                                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputUsername2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputMobile" class="col-sm-3 col-form-label">Mobile</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputMobile" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Password</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputPassword2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Re Password</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputConfirmPassword2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                <form class="forms-sample" action="bill-setting.php" method="post">
+                                <?php 
+                                 
+                                $primary_classes = mysqli_query($connect, "SELECT * FROM primary_school_classes")  or die(db_conn_error);
+                            
+                            
+                                 while($primary_row = mysqli_fetch_array($primary_classes)){
+                                     echo '
+                                        <div class="form-group row">
+                                            <label for="Input'.$primary_row['primary_class'].'fee" class="col-sm-3 col-form-label">'.$primary_row['primary_class'].'</label>
+                                            <div class="col-sm-9">
+                                            
+                                            <input type="text" class="form-control" id="Input'.$primary_row['primary_class'].'fee" name="basic'.$primary_row['primary_class_id'].'" value="';
+                                            
+                                             if(isset($_POST['id'.$primary_row['primary_class']])){
+                                                 echo 'id'.$primary_row['primary_class_id'];
+                                             }else{
+                                                echo $primary_row['primary_class_fees'];
+                                            }
+                                            echo '">
+                                            </div>
+                                        </div>
+                                        ';
+
+
+                                }
+                                
+                                ?>
+
+                               
+                                <button type="submit" class="btn btn-primary me-2" name="primary_submit">Submit</button>
                                 </form>
                             </div>
                             </div>
@@ -81,37 +146,21 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
                                 <h4 class="card-title">Secondary School</h4>
                                 <p class="card-description"> Secondary School Fees</p>
                                 <form class="forms-sample">
-                                <div class="form-group row">
-                                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputUsername2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputMobile" class="col-sm-3 col-form-label">Mobile</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputMobile" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Password</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputPassword2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="exampleInputConfirmPassword2" class="col-sm-3 col-form-label">Re Password</label>
-                                    <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="exampleInputConfirmPassword2" placeholder="10,000">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                <?php 
+                                 $secondary_classes = mysqli_query($connect, "SELECT * FROM secondary_school_classes")  or die(db_conn_error);
+                                 while($secondary_row = mysqli_fetch_array($secondary_classes)) {
+                                     echo '
+                                        <div class="form-group row">
+                                            <label for="Input'.$secondary_row['secondary_class'].'fee" class="col-sm-3 col-form-label">'.$secondary_row['secondary_class'].'</label>
+                                            <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="Input'.$secondary_row['secondary_class'].'fee" name="'.$secondary_row['secondary_class'].'" value="'.number_format((int)$primary_row['primary_class_fees']).'">
+                                            </div>
+                                        </div>
+                                        ';
+                                }
+                                
+                                ?>
+                                <button type="submit" class="btn btn-primary me-2" name="secondary_submit">Submit</button>
                                 </form>
                             </div>
                             </div>

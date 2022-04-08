@@ -258,23 +258,31 @@
 <?php
  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){
        echo   '<li class="nav-item menu-items">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-teachers" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-laptop"></i>
-              </span>
-              <span class="menu-title">Recent Payment</span>
-              <i class="menu-arrow"></i>
-            </a>
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-teachers" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                  <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Recent Payment</span>
+                <i class="menu-arrow"></i>
+              </a>
 
-            <div class="collapse" id="ui-teachers">
-              <ul class="nav flex-column sub-menu">
-              <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/primary-school-payment.php">Primary School</a></li>
-              <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/secondary-school-payment.php">Secondary School</a></li>
-                
-              </ul>
-            </div>
-          </li>
-           '; }       
+              <div class="collapse" id="ui-teachers">
+                <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/primary-school-payment.php">Primary School</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/secondary-school-payment.php">Secondary School</a></li>
+                  
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item menu-items">
+              <a class="nav-link" href="'.GEN_WEBSITE.'/admin/modules.php">
+                <span class="menu-icon">
+                  <i class="mdi mdi-speedometer"></i>
+                </span>
+                <span class="menu-title">Modules</span>
+              </a>
+            </li>'; 
+          }       
           
 ?>
 
