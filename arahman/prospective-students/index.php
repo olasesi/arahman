@@ -64,13 +64,14 @@ if(isset($_POST['radio'])){
 if(empty($signup_errors)){
 
 
-        $query = mysqli_query($connect, "SELECT pri_email FROM primary_school_students WHERE pri_email='".$email."'") or die(db_conn_error);
+        $query = mysqli_query($connect, "SELECT pri_email FROM primary_school_students WHERE pri_email='".$email."'") or die(mysqli_error($connect));
+        
         if(mysqli_num_rows($query)== 0){
           $hash=md5(rand(0,1000));
           $encrypted = password_hash($password, PASSWORD_DEFAULT);
         
         $q = mysqli_query($connect,"INSERT INTO primary_school_students (pri_class_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, pri_password, pri_email_hash, pri_cookie_session) 
-          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(db_conn_error);
+          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(mysqli_error($connect));
 
                 if(mysqli_affected_rows($connect) == 1){
 

@@ -18,7 +18,7 @@ define( 'DB_PASSWORD', '' );
 define( 'DB_HOST', 'localhost' );
 
 
-define ('GEN_WEBSITE', 'http://localhost/arahman/arahman');	//
+define ('GEN_WEBSITE', 'http://localhost:88/arahman/arahman');	//
 date_default_timezone_set('UTC');
 session_start();
 
@@ -102,4 +102,3 @@ function genReference($qtd){
 
 
 /*Loading contents of the user folder*/
-

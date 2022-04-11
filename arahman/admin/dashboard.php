@@ -206,13 +206,13 @@ exit();
 
 
 
-                $results = mysqli_query($connect,"SELECT primary_id, pri_firstname, pri_surname, pri_email FROM primary_school_students WHERE pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 3") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                $results = mysqli_query($connect,"SELECT primary_id, pri_firstname, pri_surname, pri_email FROM primary_school_students WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 3") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
                 echo '<div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Recently paid students</h4>
+                      <h4 class="card-title mb-1">Registered students</h4>
                       <p class="text-muted mb-1"></p>
                     </div>';
 
