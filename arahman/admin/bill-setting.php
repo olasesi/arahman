@@ -26,40 +26,39 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
 $errors = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['primary_submit'])) {
-   $values = array();
-   
+  
         if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic1']))) {		//only 20 characters are allowed to be 
-            $values[] = $basic_one = mysqli_real_escape_string ($connect, trim($_POST['basic1']));
+            $basic_one = $basic_one = mysqli_real_escape_string ($connect, trim($_POST['basic1']));
         } else {
             $errors['basic1'] = 'Please enter correct value';
         } 
 
         if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic2']))) {		//only 20 characters are allowed to be 
-            $values[] = $basic_two = mysqli_real_escape_string ($connect, trim($_POST['basic2']));
+            $basic_two = $basic_two = mysqli_real_escape_string ($connect, trim($_POST['basic2']));
         } else {
             $errors['basic2'] = 'Please enter correct value';
         } 
 
         if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic3']))) {		//only 20 characters are allowed to be 
-            $values[] = $basic_three = mysqli_real_escape_string ($connect, trim($_POST['basic3']));
+            $basic_three = $basic_three = mysqli_real_escape_string ($connect, trim($_POST['basic3']));
         } else {
             $errors['basic3'] = 'Please enter correct value';
         } 
 
         if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic4']))) {		//only 20 characters are allowed to be 
-            $values[] = $basic_four = mysqli_real_escape_string ($connect, trim($_POST['basic4']));
+            $basic_four = $basic_four = mysqli_real_escape_string ($connect, trim($_POST['basic4']));
         } else {
             $errors['basic4'] = 'Please enter correct value';
         } 
 
         if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic5']))) {		//only 20 characters are allowed to be 
-            $values[] = $basic_five = mysqli_real_escape_string ($connect, trim($_POST['basic5']));
+            $basic_five = $basic_five = mysqli_real_escape_string ($connect, trim($_POST['basic5']));
         } else {
             $errors['basic5'] = 'Please enter correct value';
         } 
 
         if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['basic6']))) {		//only 20 characters are allowed to be 
-            $values[] =$basic_six = mysqli_real_escape_string ($connect, trim($_POST['basic6']));
+            $basic_six = $basic_six = mysqli_real_escape_string ($connect, trim($_POST['basic6']));
         } else {
             $errors['basic6'] = 'Please enter correct value';
         } 
@@ -68,17 +67,19 @@ $errors = array();
 
         if(empty($errors)) {
 
-            $primary_classes = mysqli_query($connect, "SELECT * FROM primary_school_classes")  or die(db_conn_error);
+            // $primary_classes = mysqli_query($connect, "SELECT * FROM primary_school_classes")  or die(db_conn_error);
 
-            while($primary_row = mysqli_fetch_array($primary_classes)){ 
+            
+                mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_one."' WHERE primary_class_id = '1' ") or die(db_conn_error);
+                mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_two."' WHERE primary_class_id = '2'") or die(db_conn_error);
+                mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_three."' WHERE primary_class_id = '3'") or die(db_conn_error);
+                mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_four."' WHERE primary_class_id = '4'") or die(db_conn_error);
+                mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_five."' WHERE primary_class_id = '5'") or die(db_conn_error);
+                mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_six."' WHERE primary_class_id = '6'") or die(db_conn_error);
 
-                for($i = 0; $i < count($values); $i++ ) {
-                    mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$values[$i]."' WHERE ") or die(db_conn_error);
+            
 
-                }
-
-
-            }
+            
 
         }
 
@@ -119,12 +120,25 @@ $errors = array();
                                             
                                             <input type="text" class="form-control" id="Input'.$primary_row['primary_class'].'fee" name="basic'.$primary_row['primary_class_id'].'" value="';
                                             
-                                             if(isset($_POST['id'.$primary_row['primary_class']])){
-                                                 echo 'id'.$primary_row['primary_class_id'];
-                                             }else{
+                                             if(isset($_POST['basic'.$primary_row['primary_class_id']])){
+                                                
+                                            
+                                            if (array_key_exists('basic'.$primary_row['primary_class_id'], $errors)) {
+                                               echo $_POST['basic'.$primary_row['primary_class_id']] ;}
+                                            else {
+                                                echo $primary_row['primary_class_fees'];
+                                            }}
+                                            else {
                                                 echo $primary_row['primary_class_fees'];
                                             }
-                                            echo '">
+                                            echo '">';
+                                            if (array_key_exists('basic'.$primary_row['primary_class_id'], $errors)) { 
+                                                echo '<p class="text-danger">'.$errors['basic'.$primary_row['primary_class_id']].'</p>';
+
+                                            }
+                                            
+
+                                            echo '
                                             </div>
                                         </div>
                                         ';
