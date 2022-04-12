@@ -180,7 +180,7 @@ include("../../incs-arahman/change-admin-pass.php");
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Registered students</h4>
+                      <h4 class="card-title mb-1">Registered students (Primary)</h4>
                       <p class="text-muted mb-1">Other details</p>
                       
                     </div>';
@@ -256,7 +256,7 @@ include("../../incs-arahman/change-admin-pass.php");
                 } 
 
                 if(mysqli_num_rows($results) >= 0){               
-                echo '<form action="" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
+                echo '<form action="show-registered.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
               }
             echo '  </div>
             </div>
@@ -550,7 +550,10 @@ echo '  </div>
 
 
             </div>
-            <div class="row">
+
+            <?php    
+              if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){
+           echo '<div class="row">
               <div class="col-sm-4 grid-margin">
                 <div class="card">
                   <div class="card-body">
@@ -608,7 +611,8 @@ echo '  </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div>';}
+            ?>
     
            
             <?php require_once ('../../incs-arahman/dashboard-footer.php'); ?>
