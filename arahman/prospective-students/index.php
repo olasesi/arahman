@@ -13,7 +13,6 @@ include('../../incs-arahman/menu.php');
 
 
 ?>
-
 <?php
 $signup_errors = array();
 if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD']== "POST" ){
@@ -36,7 +35,7 @@ if(filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
 	$signup_errors['email'] = "Enter a valid email address";
 }
 
-if(preg_match('/^(0)[0-9]{10}$/i',$_POST['phone'])){
+if(preg_match('/^[0-9]{9,11}$/i',$_POST['phone'])){
 	$phone =  mysqli_real_escape_string($connect,$_POST['phone']);
 }else{
 	$signup_errors['phone'] = "Enter a valid phone number";
@@ -56,21 +55,24 @@ if($_POST['password'] == $_POST['confirm_password']){
 
 if(isset($_POST['radio'])){
   $radio =  mysqli_real_escape_string($connect,$_POST['radio']);
+  }
   
-}
-
+  if(isset($_POST['school_type'])){
+    $pri_school_type =  mysqli_real_escape_string($connect,$_POST['school_type']);
+    }else{
+      $signup_errors['school_type'] = "Please select an option";    }
 
 
 if(empty($signup_errors)){
 
-
+if($pri_school_type == 'Primary school'){
         $query = mysqli_query($connect, "SELECT pri_email FROM primary_school_students WHERE pri_email='".$email."'") or die(db_conn_error);
         if(mysqli_num_rows($query)== 0){
           $hash=md5(rand(0,1000));
           $encrypted = password_hash($password, PASSWORD_DEFAULT);
         
-        $q = mysqli_query($connect,"INSERT INTO primary_school_students (pri_class_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, pri_password, pri_email_hash, pri_cookie_session) 
-          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(db_conn_error);
+        $q = mysqli_query($connect,"INSERT INTO primary_school_students (pri_class_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, pri_password, pri_email_hash, pri_cookie_session, pri_school_type) 
+          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(mysqli_error($connect));
 
                 if(mysqli_affected_rows($connect) == 1){
 
@@ -80,7 +82,7 @@ if(empty($signup_errors)){
             <div style="font-size:14px; margin-top:50px;">
             <center><h1 style="color:#f5f5f5; background-color:#161616; text-shadow:1px 1px 1px #a2a2a2; padding-top:10px; padding-bottom:10px; text-transform:uppercase;">Prospective Primary Student Registration</h1></center>
             <p>Thank you for registering to be a student on Arahman School. Please click this link to confirm your email.
-            <center><a href="https://arahmanschool.com/verify-email.php?surname='.$surname.'&&hash='.$hash.'">https://arahmanschool.com/verify-email.php?hash='.$hash.'</a></center>
+            <center><a href="'.GEN_WEBSITE.'/verify-email.php?&hash='.$hash.'">'.GEN_WEBSITE.'/verify-email.php?hash='.$hash.'</a></center>
             </p>
             
             
@@ -130,6 +132,109 @@ if(empty($signup_errors)){
 		exit();
 
 
+
+
+
+    
+
+
+
+
+
+
+  }else{
+    trigger_error('You could not be registered due to a system error. We apologize for any inconvenience.');
+
+  }
+
+
+  }else{
+
+
+
+    $signup_errors['email'] = 'This email has already been registered. Please try another.';
+   
+
+  }
+}elseif($pri_school_type == 'Secondary school'){
+
+
+  $query = mysqli_query($connect, "SELECT sec_email FROM secondary_school_students WHERE sec_email='".$email."'") or die(db_conn_error);
+        if(mysqli_num_rows($query)== 0){
+          $hash=md5(rand(0,1000));
+          $encrypted = password_hash($password, PASSWORD_DEFAULT);
+        
+        $q = mysqli_query($connect,"INSERT INTO secondary_school_students (sec_class_id, sec_year, sec_firstname, sec_surname, sec_age, sec_sex, sec_email, sec_photo, sec_phone, sec_address, sec_password, sec_email_hash, sec_cookie_session, sec_school_type) 
+          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '', '".$pri_school_type."')") or die(mysqli_error($connect));
+
+                if(mysqli_affected_rows($connect) == 1){
+
+
+          $body = '
+          <div style="max-width:1000px; margin-left:auto; margin-right:auto;">
+            <div style="font-size:14px; margin-top:50px;">
+            <center><h1 style="color:#f5f5f5; background-color:#161616; text-shadow:1px 1px 1px #a2a2a2; padding-top:10px; padding-bottom:10px; text-transform:uppercase;">Prospective Secondary Student Registration</h1></center>
+            <p>Thank you for registering to be a student on Arahman School. Please click this link to confirm your email.
+            <center><a href="'.GEN_WEBSITE.'/verify-email.php?&hash='.$hash.'">'.GEN_WEBSITE.'/verify-email-sec.php?hash='.$hash.'</a></center>
+            </p>
+            
+            
+            </div>
+          </div>
+
+          ';
+              
+              $headers = 'MIME-Version: 1.0' . "\r\n";
+              $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+              $headers .= 'From: noreply@myshoptwo.com' . "\r\n";
+              $headers .= 'Reply-To: noreply@myshoptwo.com' . "\r\n";
+              $headers .= 'Return-Path: noreply@myshoptwo.com' . "\r\n";
+              $headers .= 'BCC: noreply@myshoptwo.com' . "\r\n";
+              $headers .= 'X-Priority: 3' . "\r\n";
+              $headers .= 'X-Mailer: PHP/'. phpversion() . "\r\n";
+              
+              mail($email, 'Arahman School Registration', $body, $headers);	
+              
+              //edit 1
+              echo '<header id="home" class="home">
+                      <div class="overlay-fluid-block">
+                          <div class="container text-center">
+                              <div class="row">
+                                  <div class="home-wrapper">
+                                      <div class="text-center">
+                  
+              <div class="home-content">
+                <h3 class="text-success">Congratulations for the Successful Application</h3>
+                
+                </br>
+                A link has been sent to your email to continue the process. If you do not find the mail in your inbox, please check the spam mails.
+              
+              
+		
+		</div>
+                            
+							</div>
+                        </div>
+                    </div>
+                </div>			
+            </div>
+        </header>';
+	
+		
+    include ('../../incs-arahman/footer.php');
+		exit();
+
+
+
+
+
+    
+
+
+
+
+
+
   }else{
     trigger_error('You could not be registered due to a system error. We apologize for any inconvenience.');
 
@@ -145,6 +250,22 @@ if(empty($signup_errors)){
 
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
 
@@ -205,22 +326,25 @@ if(empty($signup_errors)){
                   <?php if(array_key_exists('password', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password'].'</small>';}?>  
                   <?php if(array_key_exists('password_match', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password_match'].'</small>';}?>
                   <fieldset>
-                    <input name="password" type="password" id="password" placeholder="Password" value="<?php if(isset($_POST['password'])){echo '';} ?>" >
+                    <input name="password" type="password" id="password" placeholder="Password" >
                   </fieldset>
 </div>
                   
                   <div class="col-lg-4">
                     <fieldset>
-                    <input name="confirm_password" type="password" id="confirm_password" placeholder="Confirm Password" value="<?php if(isset($_POST['confirm_password'])){echo '';} ?>">
+                    <input name="confirm_password" type="password" id="confirm_password" placeholder="Confirm Password" >
                   </fieldset>
 </div>
 
 
 
         <input class="form-check-input" type="hidden" name="radio" id="gridRadios1" value="0" >
-       
-  
+       <?php if(array_key_exists('school_type', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['school_type'].'</small>';}?> 
+        <label for="gridRadios2">Primary school</label>
+        <input class="form-check-input" type="radio" name="school_type" id="gridRadios2" value="Primary school" <?php if(isset($_POST['school_type']) && $_POST['school_type'] =='Primary school'){echo 'checked="checked"';} ?>>
 
+        <label for="gridRadios3">Secondary school</label>
+        <input class="form-check-input" type="radio" name="school_type" id="gridRadios3" value="Secondary school" <?php if(isset($_POST['school_type']) && $_POST['school_type'] == 'Secondary school'){echo 'checked="checked"';} ?>>
 
 
 

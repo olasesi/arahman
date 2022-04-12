@@ -11,41 +11,9 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 ?>
 <?php
 //Forceful logout of the admin by the super admin
-if($_SESSION['admin_type'] == HEADMASTER || $_SESSION['admin_type'] == ACCOUNTANT || $_SESSION['admin_type'] == ADMISSION ){
-$ban_query = mysqli_query($connect, "SELECT admin_active FROM admin WHERE admin_active = '0' AND admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error); 
-
-if(mysqli_num_rows($ban_query) == 1){
-  mysqli_query($connect,"UPDATE admin SET admin_cookie_session = '' WHERE admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error);	
-  session_destroy();
-  setcookie("admin_remember_me", "", time() - 31104000);		
-
-header("Location:".GEN_WEBSITE."/admin");
-exit();
-
-}
-}
-?>
-<?php
 //Forceful password change and logout of the admin by the super admin. The super admin wonts logged out immediately if he changes password
-if($_SESSION['admin_type'] == HEADMASTER || $_SESSION['admin_type'] == ACCOUNTANT || $_SESSION['admin_type'] == ADMISSION){
-
-
-  $change_pass = mysqli_query($connect, "SELECT admin_password FROM admin WHERE admin_password != '".$_SESSION['admin_password']."' AND admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error); 
-
-if(mysqli_num_rows($change_pass) == 1){
-  mysqli_query($connect,"UPDATE admin SET admin_cookie_session = '' WHERE admin_id = '".$_SESSION['admin_user_id']."'") or die(db_conn_error);	
-  session_destroy();
-  setcookie("admin_remember_me", "", time() - 31104000);		
-
-header("Location:".GEN_WEBSITE."/admin");
-exit();
-
-}
-}
+include("../../incs-arahman/change-admin-pass.php");
 ?>
-
-
-
 
 <?php require_once ('../../incs-arahman/dashboard.php');?>
 
@@ -206,75 +174,79 @@ exit();
 
 
 
-                $results = mysqli_query($connect,"SELECT primary_id, pri_firstname, pri_surname, pri_email FROM primary_school_students WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 3") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                $results = mysqli_query($connect,"SELECT pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
                 echo '<div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
                       <h4 class="card-title mb-1">Registered students</h4>
-                      <p class="text-muted mb-1"></p>
+                      <p class="text-muted mb-1">Other details</p>
+                      
                     </div>';
 
 
-                if (mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 3){
+                if (mysqli_num_rows($results) >= 1 && mysqli_num_rows($results) <= 5){
                    
-                  if(mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 3){
-                  while ($row = mysqli_fetch_array($results)){
-                 
-                
-                    echo '<div class="row">
-                      <div class="col-12">
-                        <div class="preview-list">
-                          <div class="preview-item border-bottom">
-                            <div class="preview-thumbnail">
-                              <div class="preview-icon bg-primary">
-                                <i class="mdi mdi-file-document"></i>
-                              </div>
-                            </div>
-                            <div class="preview-item-content d-sm-flex flex-grow">
-                              <div class="flex-grow">
-                                <h6 class="preview-subject">'.$row['pri_surname'].' '.$row['pri_firstname'].'</h6>
-                                <p class="text-muted mb-0">'.$row['pri_email'].'</p>
-                              </div>
-                              <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                <p class="text-muted"><a href="'.GEN_WEBSITE.'/admin/confirm-data.php?id='.$row['primary_id'].'">Confirm admission</a></p>
-                                <p class="text-muted mb-0"></p>
-                              </div>
-                            </div>
-                          </div>
-                         </div>
-                      </div>
-                    </div>';
-                
-                
-                
-                    
-                   
+                              
                   
-                }
-              }else{
-                 echo '<div class="row">
-                <div class="col-12">
-                  <div class="preview-list">
-                    <div class="preview-item border-bottom">
-                      <div class="preview-thumbnail">
-                       </div>
-                      <div class="preview-item-content d-sm-flex flex-grow">
-                        <div class="flex-grow">
-                          <h6 class="preview-subject"></h6>
-                          <p class="text-muted mb-0"></p>
-                        </div>
-                        <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                          <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/search-paid.php">See more...</a></p>
-                          <p class="text-muted mb-0"></p>
-                        </div>
-                      </div>
-                    </div>
-                   </div>
-                </div>
-              </div>';
-}
+                        if(mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 5){
+                              while ($row = mysqli_fetch_array($results)){
+                            
+                            
+                                echo '<div class="row">
+                                  <div class="col-12">
+                                    <div class="preview-list">
+                                      <div class="preview-item border-bottom">
+                                        <div class="preview-thumbnail">
+                                          <div class="preview-icon bg-primary">
+                                            <i class="mdi mdi-account-card-details"></i>
+                                          </div>
+                                        </div>
+                                        <div class="preview-item-content d-sm-flex flex-grow">
+                                          <div class="flex-grow">
+                                            <h6 class="preview-subject">'.$row['pri_surname'].' '.$row['pri_firstname'].'</h6>
+                                            <p class="text-muted mb-0">'.$row['pri_email'].'</p>
+                                          </div>
+                                          <div class="me-auto text-sm-right pt-2 pt-sm-0">
+                                            <p class="text-muted"></p>
+                                            
+                                            <p class="text-muted mb-0">'.$row['pri_phone'].'</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>';
+                            
+                            
+                            
+                                
+                              
+                              
+                            }
+                                              }elseif(mysqli_num_rows($results) > 5){
+                                        echo '<div class="row">
+                                        <div class="col-12">
+                                          <div class="preview-list">
+                                            <div class="preview-item border-bottom">
+                                              <div class="preview-thumbnail">
+                                              </div>
+                                              <div class="preview-item-content d-sm-flex flex-grow">
+                                                <div class="flex-grow">
+                                                  <h6 class="preview-subject"></h6>
+                                                  <p class="text-muted mb-0"></p>
+                                                </div>
+                                                <div class="me-auto text-sm-right pt-2 pt-sm-0">
+                                                  <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/search-paid.php">See more...</a></p>
+                                                  <p class="text-muted mb-0"></p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>';
+                                }
 
                
 
@@ -283,11 +255,13 @@ exit();
                   echo '<h3 class="text-center">No result found</h3>';
                 } 
 
-
-echo '  </div>
-</div>
-</div>
-';
+                if(mysqli_num_rows($results) >= 0){               
+                echo '<form action="" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
+              }
+            echo '  </div>
+            </div>
+            </div>
+            ';
 
  }
               

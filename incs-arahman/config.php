@@ -80,7 +80,9 @@ function genReference($qtd){
 
 
 
-
+//Cron jobs
+//CREATE EVENT foo ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 3 HOUR
+//DO DELETE FROM my_table WHERE id = 123
 
 
 
