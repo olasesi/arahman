@@ -251,7 +251,6 @@ if(empty($signup_errors)){
 
   }
 
-
 }
 
 
