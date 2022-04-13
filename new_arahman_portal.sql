@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 25, 2022 at 05:41 PM
+-- Generation Time: Apr 13, 2022 at 04:14 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -44,8 +44,61 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
-(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', '', '2022-01-03 09:49:31'),
-(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '19504c08f6b3d202f27b598733da5e41', '2022-01-08 14:00:53');
+(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', '8f4413850e49757e057420941a8e4e08', '2022-01-03 09:49:31'),
+(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '', '2022-01-08 14:00:53'),
+(3, 1, 'admission', 'seye', 'alade', 'admission', 'password', '', '2022-04-06 14:28:14'),
+(4, 1, 'accountant', 'teni', 'alade', 'accountant', 'password', '577746cc3db488483b8be3ecdee63346', '2022-04-06 14:28:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `modules`
+--
+
+CREATE TABLE `modules` (
+  `module_id` int(11) NOT NULL,
+  `module_type` varchar(50) NOT NULL,
+  `module_start_date` varchar(11) NOT NULL,
+  `module_end_date` varchar(11) NOT NULL,
+  `module_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`module_id`, `module_type`, `module_start_date`, `module_end_date`, `module_timestamp`) VALUES
+(1, 'Inter House Sport', '2022-05-12', '2022-05-24', '2022-04-08 16:36:44'),
+(2, 'Inter House Sport', '2022-05-12', '2022-05-24', '2022-04-08 16:36:44'),
+(3, 'Excursion', '2022-04-13', '2022-04-21', '2022-04-13 11:09:16'),
+(4, 'Excursion', '2022-04-13', '2022-04-21', '2022-04-13 11:10:07'),
+(5, 'Pratical', '2022-04-13', '2022-04-22', '2022-04-13 11:13:41'),
+(6, 'Excursion', '2022-04-13', '2022-04-27', '2022-04-13 11:18:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_price`
+--
+
+CREATE TABLE `module_price` (
+  `module_price_id` int(11) NOT NULL,
+  `module_class_id` int(11) NOT NULL,
+  `modules_id` int(11) NOT NULL,
+  `module_price` varchar(9) NOT NULL,
+  `module_price_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `module_price`
+--
+
+INSERT INTO `module_price` (`module_price_id`, `module_class_id`, `modules_id`, `module_price`, `module_price_timestamp`) VALUES
+(1, 1, 5, '5000', '2022-04-13 11:13:41'),
+(2, 2, 5, '5000', '2022-04-13 11:13:41'),
+(3, 4, 5, '5000', '2022-04-13 11:13:41'),
+(4, 4, 6, '8000', '2022-04-13 11:18:58'),
+(5, 5, 6, '8000', '2022-04-13 11:18:58');
 
 -- --------------------------------------------------------
 
@@ -86,6 +139,13 @@ CREATE TABLE `primary_class_subjects` (
   `primary_subject_id_subject` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `primary_class_subjects`
+--
+
+INSERT INTO `primary_class_subjects` (`primary_class_subjects_id`, `primary_class_id_class`, `primary_subject_id_subject`) VALUES
+(1, 3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -99,6 +159,8 @@ CREATE TABLE `primary_payment` (
   `primary_payment_term` varchar(20) NOT NULL,
   `primary_payment_session` varchar(10) NOT NULL,
   `primary_payment_fees` varchar(50) NOT NULL,
+  `primary_payment_paid_percent` varchar(9) NOT NULL,
+  `primary_payment_balance` varchar(9) NOT NULL,
   `primary_payment_status` varchar(10) NOT NULL DEFAULT '0',
   `primary_payment_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -131,20 +193,21 @@ INSERT INTO `primary_result` (`primary_result_id`, `primary_result_class_id`, `p
 
 CREATE TABLE `primary_school_classes` (
   `primary_class_id` int(1) NOT NULL,
-  `primary_class` varchar(20) NOT NULL
+  `primary_class` varchar(20) NOT NULL,
+  `primary_class_fees` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `primary_school_classes`
 --
 
-INSERT INTO `primary_school_classes` (`primary_class_id`, `primary_class`) VALUES
-(1, 'Basic one'),
-(2, 'Basic two'),
-(3, 'Basic three'),
-(4, 'Basic four'),
-(5, 'Basic five'),
-(6, 'Basic six');
+INSERT INTO `primary_school_classes` (`primary_class_id`, `primary_class`, `primary_class_fees`) VALUES
+(1, 'Basic one', '20000'),
+(2, 'Basic two', '30000'),
+(3, 'Basic three', '40000'),
+(4, 'Basic four', '50000'),
+(5, 'Basic five', '60000'),
+(6, 'Basic six', '70000');
 
 -- --------------------------------------------------------
 
@@ -194,7 +257,7 @@ CREATE TABLE `primary_school_students` (
 --
 
 INSERT INTO `primary_school_students` (`primary_id`, `pri_active_email`, `pri_active`, `pri_paid`, `pri_admit`, `pri_class_id`, `pri_school_term`, `pri_year`, `pri_firstname`, `pri_surname`, `pri_age`, `pri_sex`, `pri_email`, `pri_photo`, `pri_phone`, `pri_address`, `pri_password`, `pri_email_hash`, `pri_cookie_session`, `pri_timestamp`) VALUES
-(1, 1, '0', 0, 0, '3', 'choose term', '2022', 'ahmed', 'olusesi', '5', 'Male', 'ola.sesi@yahoo.com', 'ab029b597c08b5f0757b4443fea3e4837d276b9a.png', '08074574512', 'Ikeja', 'password', '', '', '0000-00-00 00:00:00'),
+(1, 1, '1', 0, 0, '3', 'choose term', '2022', 'ahmed', 'olusesi', '5', 'Male', 'ola.sesi@yahoo.com', 'ab029b597c08b5f0757b4443fea3e4837d276b9a.png', '08074574512', 'Ikeja', 'password', '', '', '0000-00-00 00:00:00'),
 (2, 1, '1', 1, 1, '4', 'choose term', '2022', 'Rasheed', 'Raseed', '4', 'Male', 'oosodof@yahoo.com', '4862698757bed4eada1e9a9ebe2bf84e256773db.JPG', '08074574512', 'Ogba', '', '', '', '2022-01-05 14:36:13'),
 (3, 1, '0', 1, 1, '3', 'choose term', '2022', 'duro', 'media', '4', 'Male', 'dfasfds@yahoo.com', '5e8688a0fcf6dd98a52b1acafd7856d8b5fa59f6.JPG', '08074574512', 'Oshodi', '', '', '', '2022-01-05 15:01:22'),
 (4, 1, '0', 1, 0, '6', 'choose term', '', 'minus', 'olusesi', '', '', 'Eligendi@enim.com', 'default.jpg', '08074574512', 'Aut ex consequatur ', '', '', '', '2022-01-06 14:47:31'),
@@ -220,9 +283,9 @@ CREATE TABLE `primary_subjects` (
 --
 
 INSERT INTO `primary_subjects` (`primary_subjects_id`, `primary_subjects_name`, `primary_subjects_timestamp`) VALUES
-(2, 'English', '2022-03-25 09:39:30'),
 (3, 'Mathematics', '2022-03-25 09:39:35'),
-(4, 'French', '2022-03-25 09:39:40');
+(4, 'French', '2022-03-25 09:39:40'),
+(6, 'yoruba', '2022-04-06 12:13:20');
 
 -- --------------------------------------------------------
 
@@ -253,8 +316,8 @@ CREATE TABLE `primary_teachers` (
 --
 
 INSERT INTO `primary_teachers` (`primary_teacher_id`, `primary_teacher_active`, `primary_teacher_class_id`, `primary_teacher_firstname`, `primary_teacher_surname`, `primary_teacher_email`, `primary_teacher_password`, `primary_teacher_sex`, `primary_teacher_age`, `primary_teacher_phone`, `primary_teacher_qualification`, `primary_teacher_address`, `primary_teacher_image`, `primary_teacher_cookie`, `primary_teacher_timestamp`) VALUES
-(1, 0, '3', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 5, '08074573234', 'M.sc', 'Ikeja', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
-(2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 6, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '', '2022-01-10 08:32:38'),
+(1, 1, 'Basic one', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 6, '08074573234', 'M.sc', 'ikotun', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
+(2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 6, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '8c2a6d61c6649dc05a4749af6c21067c', '2022-01-10 08:32:38'),
 (3, 1, '4', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 7, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', '', '2022-01-23 09:51:47');
 
 -- --------------------------------------------------------
@@ -423,20 +486,21 @@ CREATE TABLE `secondary_result` (
 
 CREATE TABLE `secondary_school_classes` (
   `secondary_class_id` int(1) NOT NULL,
-  `secondary_class` varchar(10) NOT NULL
+  `secondary_class` varchar(10) NOT NULL,
+  `secondary_class_fees` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `secondary_school_classes`
 --
 
-INSERT INTO `secondary_school_classes` (`secondary_class_id`, `secondary_class`) VALUES
-(1, 'JSS One'),
-(2, 'JSS Two'),
-(3, 'JSS Three'),
-(4, 'SS 1'),
-(5, 'SS 2'),
-(6, 'SS 3');
+INSERT INTO `secondary_school_classes` (`secondary_class_id`, `secondary_class`, `secondary_class_fees`) VALUES
+(1, 'JSS 1', '40000'),
+(2, 'JSS 2', '40000'),
+(3, 'JSS 3', '45000'),
+(4, 'SSS 1', '47000'),
+(5, 'SSS 2', '47000'),
+(6, 'SSS 3', '75000');
 
 -- --------------------------------------------------------
 
@@ -625,6 +689,18 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`admin_id`);
 
 --
+-- Indexes for table `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`module_id`);
+
+--
+-- Indexes for table `module_price`
+--
+ALTER TABLE `module_price`
+  ADD PRIMARY KEY (`module_price_id`);
+
+--
 -- Indexes for table `primary_activities_confirm`
 --
 ALTER TABLE `primary_activities_confirm`
@@ -809,6 +885,24 @@ ALTER TABLE `term_start_end`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `module_price`
+--
+ALTER TABLE `module_price`
+  MODIFY `module_price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `primary_activities_confirm`
 --
 ALTER TABLE `primary_activities_confirm`
@@ -824,7 +918,7 @@ ALTER TABLE `primary_activities_payment`
 -- AUTO_INCREMENT for table `primary_class_subjects`
 --
 ALTER TABLE `primary_class_subjects`
-  MODIFY `primary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `primary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `primary_payment`
@@ -854,7 +948,7 @@ ALTER TABLE `primary_school_exam`
 -- AUTO_INCREMENT for table `primary_subjects`
 --
 ALTER TABLE `primary_subjects`
-  MODIFY `primary_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `primary_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `primary_teachers`
