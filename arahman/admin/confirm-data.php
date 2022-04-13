@@ -284,7 +284,7 @@ exit();
              <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Upload student's details</h4>
+                    <h4 class="card-title">Upload <?php echo $pri_firstname.' '.$pri_surname.' '; ?>details</h4>
                     <p class="card-description"></p>
                     
                      <form class="forms-sample" method="POST" action="" enctype="multipart/form-data">
