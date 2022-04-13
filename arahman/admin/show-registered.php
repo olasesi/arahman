@@ -15,8 +15,11 @@ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] != ADMISSION){
 }
 ?>
 
-<?php require_once ('../../incs-arahman/dashboard.php');?>
 
+<?php require_once ('../../incs-arahman/dashboard.php');?>
+<?php
+include_once ('../../incs-arahman/deny-student.php');
+?>
 
         
         
@@ -66,39 +69,14 @@ echo ' <div class="row ">
 
 $_GET = array();	
 }
-
-
 ?>
            
+<?php
+include_once ('../../incs-arahman/reject-student-status.php');
+?>
 
 
-
-
-            <div class="row ">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Recently registered (Primary)</h4>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                          <th> S/N </th>
-                            <th> Firstname </th>
-                            <th> Surname </th>
-                            <th> Email address </th>
-                            <th> Phone number </th>
-                            <th> Admission status </th>
-                            <th>Date paid </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-
-
-
-           
-           <?php
+<?php
 include ('../../incs-arahman/paginate.php');
 
 
@@ -106,42 +84,25 @@ $statement = "primary_school_students WHERE pri_paid = '0' AND pri_admit = '0' A
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
-            $per_page = 15; 								// Set how many records do you want to display per page.
+          								// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
             mysqli_query($connect,"SET @a:=0");
             $results = mysqli_query($connect,"SELECT @a:=@a+1 serial_number, primary_id, pri_paid, pri_firstname, pri_surname, pri_email, pri_phone, pri_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
             
-            if (mysqli_num_rows($results) != 0){
-                while ($row = mysqli_fetch_array($results)) {
-                    echo '<tr>
-                    <td> '.$row['serial_number'].' </td>
-                    <td>'.$row['pri_firstname'].'</td>
-                    <td>'.$row['pri_surname'].' </td>
-                    <td>'.$row['pri_email'].'</td>
-                    <td>'.$row['pri_phone'].'</td>
-                    <td>Not admitted</td>
-                    <td> '.$row['pri_timestamp'].' </td>
-                    <td>
-                    <form action="'.GEN_WEBSITE.'/admin/confirm-data.php?id='.$row['primary_id'].'" method="POST">
-                   
-                    <button type="submit" class="btn btn-success me-2" name="paid_students">Confirm admission</button>
-                    </form>
-                    </td>
+?>
 
-                </tr>';
 
-                  }
-            }else{
-                echo '<h3 class="text-center">No result found</h3>';
-            } 
+            <div class="row ">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                 
 
-           ?>
-            </tbody>
-                      </table>
-                      
-                    </div>
-                    
-                  </div>
+<?php
+include_once ('../../incs-arahman/recently-registered.php');
+?>
+
+
+                
                   <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/show-registered.php?");?> </nav>
                 </div>
               </div>

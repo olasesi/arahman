@@ -56,7 +56,8 @@ define("BASIC_SIX_FEES", 600000);
 
 
 
-
+/*Result per page*/
+$per_page = 15;
 
 
 
