@@ -23,12 +23,12 @@ if(isset($_GET['hash']) && !empty($_GET['hash'])){
 //$surname = mysqli_real_escape_string($connect, $_GET['surname']);	
 $hash = mysqli_real_escape_string($connect, $_GET['hash']);
 
-$search = mysqli_query($connect, "SELECT pri_surname, pri_email, pri_active_email FROM primary_school_students WHERE pri_surname='".$surname."' AND pri_email_hash = '".$hash."' AND pri_active_email = '0'") or die(db_conn_error);
+$search = mysqli_query($connect, "SELECT sec_email, sec_active_email FROM secondary_school_students WHERE sec_email_hash = '".$hash."' AND sec_active_email = '0'") or die(db_conn_error);
 $match = mysqli_num_rows($search);
 
 	if($match > 0){
 
-	mysqli_query($connect, "UPDATE primary_school_students SET pri_active_email = '1' WHERE pri_surname='".$surname."' AND pri_email_hash='".$hash."' AND pri_active_email='0'") or die(db_conn_error);	
+	mysqli_query($connect, "UPDATE secondary_school_students SET sec_active_email = '1' WHERE sec_surname='".$surname."' AND sec_email_hash='".$hash."' AND sec_active_email='0'") or die(db_conn_error);	
 	
 	echo '<br><br><br>';
 	echo '<div class="">Thank you for registering. An email has been sent to your inbox. Please click the link to confirm your account.

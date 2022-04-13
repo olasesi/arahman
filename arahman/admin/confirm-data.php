@@ -27,7 +27,7 @@ if(!isset($_GET['id'])){
 
 
 <?php
-$query = mysqli_query($connect, "SELECT primary_id, pri_firstname, pri_surname, pri_age, pri_sex, pri_photo, pri_phone, pri_address FROM primary_school_students WHERE primary_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1'") or die(db_conn_error);
+$query = mysqli_query($connect, "SELECT primary_id, pri_firstname, pri_surname, pri_age, pri_sex, pri_photo, pri_phone, pri_address FROM primary_school_students WHERE primary_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1'") or die(db_conn_error);
 
 if (!isset($errors)){$errors = array();}
 
@@ -140,14 +140,14 @@ while($loop_term_session=mysqli_fetch_array($query_term_session)){
 
 
 
-mysqli_query($connect, "UPDATE primary_school_students SET pri_active='1', pri_admit = '1', pri_school_term = '".$current_term."' , pri_year = '".$current_session_term."', pri_firstname = '".$firstname."', pri_surname = '".$surname."', pri_age = '".$age."', pri_sex = '".$gender."', pri_class_id = '".$pri_class."', pri_photo = '".$new_name."', pri_address= '".$address."' WHERE primary_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_admit = '0' AND pri_active_email = '1' AND pri_paid = '1'") or die(db_conn_error);
+mysqli_query($connect, "UPDATE primary_school_students SET pri_active='1', pri_admit = '1', pri_school_term = '".$current_term."' , pri_year = '".$current_session_term."', pri_firstname = '".$firstname."', pri_surname = '".$surname."', pri_age = '".$age."', pri_sex = '".$gender."', pri_class_id = '".$pri_class."', pri_photo = '".$new_name."', pri_address= '".$address."' WHERE primary_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_admit = '0' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
 			if (mysqli_affected_rows($connect) == 1) {
 			
             $_POST = array();		
 			$_FILES = array();
 				
 			unset($_FILES['img'], $_SESSION['images']);
-            header('Location:'.GEN_WEBSITE.'/admin/search-paid.php?confirm='.$firstname);
+            header('Location:'.GEN_WEBSITE.'/admin/show-registered.php?confirm='.$firstname);
             exit();
            
             
@@ -284,7 +284,7 @@ exit();
              <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Upload student's details</h4>
+                    <h4 class="card-title">Upload <?php echo $pri_firstname.' '.$pri_surname.' '; ?>details</h4>
                     <p class="card-description"></p>
                     
                      <form class="forms-sample" method="POST" action="" enctype="multipart/form-data">

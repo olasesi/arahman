@@ -419,6 +419,18 @@
             </ul>';
           }
           ?>
+           <?php
+ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ADMISSION){
+       echo   '<ul class="navbar-nav w-100">
+              <li class="nav-item w-100">
+                <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="search-registered.php">
+                  <input type="text" class="form-control" placeholder="Registered students" name="search-registered" value="';if(isset($_GET['search-registered'])){echo $_GET['search-registered'];}echo '">
+                  <button type="submit" class="btn btn-success me-2" name="button-search-registered">Search</button>
+                </form>
+              </li>
+            </ul>';
+          }
+          ?>
           <!-- <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
                
