@@ -56,7 +56,8 @@ define("BASIC_SIX_FEES", 600000);
 
 
 
-
+/*Result per page*/
+$per_page = 15;
 
 
 
@@ -80,7 +81,9 @@ function genReference($qtd){
 
 
 
-
+//Cron jobs
+//CREATE EVENT foo ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 3 HOUR
+//DO DELETE FROM my_table WHERE id = 123
 
 
 
