@@ -22,64 +22,49 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
 
 
 
-<?php 
+<?php //INSERT SECONDARY SCHOOL FEES TO DATABASE
 $errors = array();
 
     if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['module_submit'])) {
-   
-        if (isset($_POST['type'])) {		//only 20 characters are allowed to be 
-            $type = mysqli_real_escape_string ($connect, $_POST['type']);
-            
+  
+        if (isset($_POST['type'])) {		 
+            $type = $_POST['type'];
         } 
-
-        if (isset($_POST['class'])){	
-         
-            $class = $_POST['class'];
+        if (isset($_POST['class'])) {		 
+            $classes = $_POST['class'];
            
-        } else {
-            $errors['class'] = 'Please choose class';
         } 
-
-        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['price']))) {		//only 20 characters are allowed to be 
-            $price = mysqli_real_escape_string ($connect, trim($_POST['price']));
-            
+        if (preg_match ('/^[0-9]{3,6}$/i', trim($_POST['price']))) {		 
+             $price = mysqli_real_escape_string ($connect, trim($_POST['price']));
         } else {
             $errors['price'] = 'Please enter correct value';
         } 
-
-        if (isset($_POST['start-date'])) {		//only 20 characters are allowed to be 
-            $start_date = mysqli_real_escape_string ($connect, $_POST['start-date']);
+        if (isset($_POST['startdate'])) {		 
+            $startdate = $_POST['startdate'];
             
-        } else {
-            $errors['start-date'] = 'Please enter correct value';
+        } else if(empty($_POST['startdate'])) {
+            $errors['startdate'] = 'Please enter correct value';
         } 
-
-        if (isset($_POST['end-date'])) {		//only 20 characters are allowed to be 
-            $end_date = mysqli_real_escape_string ($connect, $_POST['end-date']);
-           
-        } else {
-            $errors['end-date'] = 'Please enter correct value';
+        if (isset($_POST['enddate'])) {		 
+            $enddate = $_POST['enddate'];
+        } else if(empty($_POST['enddate'])) {
+            $errors['enddate'] = 'Please enter correct value';
+            
         } 
-
-      
-        
 
 
         if(empty($errors)) {
 
-           
-foreach ($_POST['class'] as $each_class){
-//echo '<pre>';
-//var_dump($each_class);
-//echo '</pre>';
-    $q = mysqli_query($connect,"INSERT INTO modules (module_class_id, module_type, module_price, module_start_date, module_end_date) 
-   VALUES ('".$each_class."','".$type."','".$price."', '".$start_date."', '".$end_date."')") or die(mysqli_error($connect));
+            mysqli_query($connect, "INSERT INTO modules (module_type, module_start_date, module_end_date) 
+            VALUES ('". $type."', '". $startdate."','".$enddate."')") or die(db_conn_error);
+            $last_insert_id = mysqli_insert_id($connect);
 
+            foreach($classes as $class) {
 
+            mysqli_query($connect, "INSERT INTO module_price (modules_id,module_price, module_class_id) 
+            VALUES ('".$last_insert_id."','".$price."','".$class."')") or die(mysqli_error($connect));
+            }
 
-
-
-}
 
 
 
@@ -162,7 +147,6 @@ foreach ($_POST['class'] as $each_class){
                                                 <label class="col-form-label">Class</label>
                                                 <div class="col-sm-12">
                                                     <select class="form-control js-example-basic-multiple" multiple="multiple" style="width:100%" name="class[]">
-
                                                         <option value="1">Class 1</option>
                                                         <option value="2">Class 2</option>
                                                         <option value="3">Class 3</option>
@@ -177,6 +161,12 @@ foreach ($_POST['class'] as $each_class){
                                                 <label class="col-form-label">Price</label>
                                                 <div class="col-sm-12">
                                                 <input type="text" class="form-control" name="price"/>
+                                                <?php 
+                                                     if (array_key_exists('price', $errors)) { 
+                                                        echo '<p class="text-danger">'.$errors['price'].'</p>';
+                                                         
+                                                    }
+                                                ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +176,20 @@ foreach ($_POST['class'] as $each_class){
                                             <div class="form-group row">
                                                 <label class="col-form-label">Start</label>
                                                 <div class="col-sm-12">
-                                                <input type="date" class="form-control" name="start-date"/>
+                                                <input type="date" class="form-control" name="startdate" value="
+                                                    <?php
+                                                     if(!isset($_POST['startdate'])) {
+                                                        echo date('Y-m-d');
+                                                    } else {
+                                                        echo $_POST['startdate'];
+                                                    }  ?>
+                                                "/>
+                                                <?php 
+                                                     if (array_key_exists('startdate', $errors)) { 
+                                                        echo '<p class="text-danger">'.$errors['startdate'].'</p>';
+                                                         
+                                                    }
+                                                ?>
                                                 </div>
                                             </div>
                                             </div>
@@ -194,7 +197,21 @@ foreach ($_POST['class'] as $each_class){
                                             <div class="form-group row">
                                                 <label class="col-form-label">End</label>
                                                 <div class="col-sm-12">
-                                                <input type="date" class="form-control" name="end-date"/>
+                                                <input type="date" class="form-control" name="enddate"  value="
+                                                    <?php
+                                                    //  if(!isset($_POST['enddate'])) {
+                                                    //     echo date('Y-m-d');
+                                                    // } else {
+                                                    //     echo $_POST['enddate'];
+                                                    // }  
+                                                    ?>
+                                                "/>
+                                                <?php 
+                                                     if (array_key_exists('enddate', $errors)) { 
+                                                        echo '<p class="text-danger">'.$errors['enddate'].'</p>';
+                                                         
+                                                    }
+                                                ?>
                                                 </div>
                                             </div>
                                             </div>
