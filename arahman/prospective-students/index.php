@@ -250,34 +250,13 @@ if($pri_school_type == 'Primary school'){
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
-
-
-
-
-
-
-
+}
 }
 
-}
+
 ?>
 
 
@@ -368,4 +347,3 @@ if($pri_school_type == 'Primary school'){
 
 
    <?php include ('../../incs-arahman/footer.php'); ?>
-    
