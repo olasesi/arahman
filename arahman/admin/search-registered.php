@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 	exit();
 }
 
-if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] != ADMISSION){
+if($_SESSION['admin_type'] != ADMISSION){
 	header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }

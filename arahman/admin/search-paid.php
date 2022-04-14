@@ -5,19 +5,19 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
-	header("Location:/".GEN_WEBSITE.'/admin');
+	header("Location:".GEN_WEBSITE.'/admin');
 	exit();
 }
 
-if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] != ACCOUNTANT){
-	header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
+if($_SESSION['admin_type'] != ACCOUNTANT){
+	header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 ?>
 
 <?php
 if(!isset($_GET['search-paid'])){
-    header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
+    header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 
