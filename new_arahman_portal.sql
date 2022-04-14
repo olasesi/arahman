@@ -682,6 +682,24 @@ INSERT INTO `term_start_end` (`term_start_end_id`, `choose_term`, `term_start`, 
 -- Indexes for dumped tables
 --
 
+CREATE TABLE `module_list` (
+  `module_list_id` int(11) NOT NULL,
+  `module_list_name` varchar(255) NOT NULL,
+  `module_list_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `module_list`
+--
+
+INSERT INTO `module_list` (`module_list_id`, `module_list_name`, `module_list_timestamp`) VALUES
+(16, 'matteres', '2022-04-14 10:03:08'),
+(17, 'cloth', '2022-04-14 10:03:10');
+
+--
+-- Indexes for dumped tables
+--
+
 --
 -- Indexes for table `admin`
 --
@@ -1075,6 +1093,24 @@ ALTER TABLE `super_admin`
 --
 ALTER TABLE `term_start_end`
   MODIFY `term_start_end_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+COMMIT;
+
+
+--
+-- Indexes for table `module_list`
+--
+ALTER TABLE `module_list`
+  ADD PRIMARY KEY (`module_list_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `module_list`
+--
+ALTER TABLE `module_list`
+  MODIFY `module_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
