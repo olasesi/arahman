@@ -62,7 +62,7 @@ $errors = array();
             foreach($classes as $class) {
 
             mysqli_query($connect, "INSERT INTO module_price (modules_id,module_price, module_class_id) 
-            VALUES ('".$last_insert_id."','".$price."','".$class."')") or die(mysqli_error($connect));
+            VALUES ('".$last_insert_id."','".$price."','".$class."')") or die(db_conn_error);
             }
 
 
@@ -122,9 +122,15 @@ $errors = array();
                                             <label class="col-form-label">Type</label>
                                             <div class="col-sm-12">
                                             <select class="form-control" name="type">
-                                                <option>Excursion</option>
-                                                <option>Inter House Sport</option>
-                                                <option>Pratical</option>
+                                            <?php 
+                                             $fetch_module = mysqli_query($connect, "SELECT * FROM module_list") or die(db_conn_error);
+
+                                             while($row = mysqli_fetch_array( $fetch_module)) {
+
+                                                echo '<option>'.$row['module_list_name'].'</option>';
+                                             }
+
+                                            ?>
                                             </select>
                                             </div>
                                         </div>
