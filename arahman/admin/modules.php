@@ -129,9 +129,15 @@ $errors = array();
                                             <label class="col-form-label">Type</label>
                                             <div class="col-sm-12">
                                             <select class="form-control" name="type">
-                                                <option>Excursion</option>
-                                                <option>Inter House Sport</option>
-                                                <option>Pratical</option>
+                                            <?php 
+                                             $fetch_module = mysqli_query($connect, "SELECT * FROM module_list") or die(db_conn_error);
+
+                                             while($row = mysqli_fetch_array( $fetch_module)) {
+
+                                                echo '<option>'.$row['module_list_name'].'</option>';
+                                             }
+
+                                            ?>
                                             </select>
                                             </div>
                                         </div>
