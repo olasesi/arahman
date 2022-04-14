@@ -15,7 +15,13 @@ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] != ACCOUNTANT){
 }
 ?>
 
+<?php
+if(!isset($_GET['search-paid'])){
+    header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
+	exit();
+}
 
+?>
 <?php require_once ('../../incs-arahman/dashboard.php');?>
 
 
@@ -79,7 +85,7 @@ $_GET = array();
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Recently paid</h4>
+                    <h4 class="card-title">Search paid</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -101,11 +107,11 @@ $_GET = array();
            
            <?php
 include ('../../incs-arahman/paginate.php');
-$statement = "primary_school_students WHERE pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC";
+$statement = "primary_school_students WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id ASC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
-            $per_page = 15; 								// Set how many records do you want to display per page.
+          								// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
             $results = mysqli_query($connect,"SELECT primary_id, pri_paid, pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students WHERE pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);
             if (mysqli_num_rows($results) != 0){

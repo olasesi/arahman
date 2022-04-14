@@ -55,14 +55,21 @@ $errors = array();
 
         if(empty($errors)) {
 
-            mysqli_query($connect, "INSERT INTO modules (module_type, module_start_date, module_end_date) 
-            VALUES ('". $type."', '". $startdate."','".$enddate."')") or die(db_conn_error);
+            $taking_session = mysqli_query ($connect,"SELECT module_session, module_term FROM term_start_end ORDER BY term_start_end_id DESC  LIMIT 1") or die(db_conn_error);
+            while($rows = mysqli_fetch_array($taking_session)){
+                $the_session=$rows['module_session'];
+                $the_term=$rows['module_term'];
+            }
+  
+
+            mysqli_query($connect, "INSERT INTO modules (module_type, module_session, module_term, module_start_date, module_end_date) 
+            VALUES ('". $type."',  '".$the_session."',  '".$the_term."','". $startdate."','".$enddate."')") or die(db_conn_error);
             $last_insert_id = mysqli_insert_id($connect);
 
             foreach($classes as $class) {
 
-            mysqli_query($connect, "INSERT INTO module_price (modules_id,module_price, module_class_id) 
-            VALUES ('".$last_insert_id."','".$price."','".$class."')") or die(mysqli_error($connect));
+            mysqli_query($connect, "INSERT INTO module_price (modules_id, module_session, module_term, module_price, module_class_id) 
+            VALUES ('".$last_insert_id."', '".$the_session."', '".$the_term."','".$price."','".$class."')") or die(mysqli_error($connect));
             }
 
 
