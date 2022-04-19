@@ -421,7 +421,7 @@
        echo   '<ul class="navbar-nav w-100">
               <li class="nav-item w-100">
                 <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="search-paid.php">
-                  <input type="text" class="form-control" placeholder="Paid student" name="search-paid.php" value="';
+                  <input type="text" class="form-control" placeholder="Paid student" name="search-paid" value="';
                   if(isset($_GET['search-paid'])){echo $_GET['search-paid'];}
                   echo '">
                   <button type="submit" class="btn btn-success me-2" name="button-paid_students">Search</button>
