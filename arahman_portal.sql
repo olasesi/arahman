@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2022 at 02:52 PM
+-- Generation Time: Apr 20, 2022 at 12:54 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -44,10 +44,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
-(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', '8f4413850e49757e057420941a8e4e08', '2022-01-03 09:49:31'),
+(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', '', '2022-01-03 09:49:31'),
 (2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '', '2022-01-08 14:00:53'),
 (3, 1, 'admission', 'seye', 'alade', 'admission', 'password', '', '2022-04-06 14:28:14'),
-(4, 1, 'accountant', 'teni', 'alade', 'accountant', 'password', '577746cc3db488483b8be3ecdee63346', '2022-04-06 14:28:14');
+(4, 1, 'accountant', 'teni', 'alade', 'accountant', 'password', '9b7624cfed96db9fd8c414eb5b27d7ba', '2022-04-06 14:28:14');
 
 -- --------------------------------------------------------
 
@@ -89,6 +89,14 @@ CREATE TABLE `module_join_students` (
   `module_type_id` int(11) NOT NULL,
   `module_join_students_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `module_join_students`
+--
+
+INSERT INTO `module_join_students` (`module_join_students_id`, `module_students`, `module_type_id`, `module_join_students_timestamp`) VALUES
+(1, 2, 2, '2022-04-19 20:50:47'),
+(2, 2, 3, '2022-04-19 20:50:47');
 
 -- --------------------------------------------------------
 
@@ -193,12 +201,18 @@ CREATE TABLE `primary_payment` (
   `primary_payment_students_reference` varchar(20) NOT NULL,
   `primary_payment_term` varchar(20) NOT NULL,
   `primary_payment_session` varchar(10) NOT NULL,
-  `primary_payment_fees` varchar(50) NOT NULL,
-  `primary_payment_paid_percent` varchar(9) NOT NULL,
-  `primary_payment_balance` varchar(9) NOT NULL,
-  `primary_payment_status` varchar(10) NOT NULL DEFAULT '0',
+  `primary_payment_fees` varchar(10) NOT NULL,
+  `primary_payment_paid_percent` varchar(3) NOT NULL,
+  `primary_payment_completion_status` int(1) NOT NULL DEFAULT 0,
   `primary_payment_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `primary_payment`
+--
+
+INSERT INTO `primary_payment` (`primary_payment_id`, `primary_payment_students_id`, `primary_payment_students_reference`, `primary_payment_term`, `primary_payment_session`, `primary_payment_fees`, `primary_payment_paid_percent`, `primary_payment_completion_status`, `primary_payment_timestamp`) VALUES
+(1, 2, '4er5t6ywer', '', '2001/2002', '40000', '70', 0, '2022-04-19 22:37:12');
 
 -- --------------------------------------------------------
 
@@ -352,7 +366,7 @@ CREATE TABLE `primary_teachers` (
 
 INSERT INTO `primary_teachers` (`primary_teacher_id`, `primary_teacher_active`, `primary_teacher_class_id`, `primary_teacher_firstname`, `primary_teacher_surname`, `primary_teacher_email`, `primary_teacher_password`, `primary_teacher_sex`, `primary_teacher_age`, `primary_teacher_phone`, `primary_teacher_qualification`, `primary_teacher_address`, `primary_teacher_image`, `primary_teacher_cookie`, `primary_teacher_timestamp`) VALUES
 (1, 1, 'Basic one', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 6, '08074573234', 'M.sc', 'ikotun', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
-(2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 6, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '8c2a6d61c6649dc05a4749af6c21067c', '2022-01-10 08:32:38'),
+(2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 6, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '', '2022-01-10 08:32:38'),
 (3, 1, '4', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 7, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', '', '2022-01-23 09:51:47');
 
 -- --------------------------------------------------------
@@ -718,6 +732,12 @@ INSERT INTO `term_start_end` (`term_start_end_id`, `choose_term`, `term_start`, 
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
 -- Indexes for table `modules`
 --
 ALTER TABLE `modules`
@@ -730,8 +750,56 @@ ALTER TABLE `module_join_students`
   ADD PRIMARY KEY (`module_join_students_id`);
 
 --
+-- Indexes for table `module_list`
+--
+ALTER TABLE `module_list`
+  ADD PRIMARY KEY (`module_list_id`);
+
+--
+-- Indexes for table `module_price`
+--
+ALTER TABLE `module_price`
+  ADD PRIMARY KEY (`module_price_id`);
+
+--
+-- Indexes for table `primary_payment`
+--
+ALTER TABLE `primary_payment`
+  ADD PRIMARY KEY (`primary_payment_id`);
+
+--
+-- Indexes for table `primary_school_students`
+--
+ALTER TABLE `primary_school_students`
+  ADD PRIMARY KEY (`primary_id`);
+
+--
+-- Indexes for table `primary_subjects`
+--
+ALTER TABLE `primary_subjects`
+  ADD PRIMARY KEY (`primary_subjects_id`);
+
+--
+-- Indexes for table `primary_teachers`
+--
+ALTER TABLE `primary_teachers`
+  ADD PRIMARY KEY (`primary_teacher_id`);
+
+--
+-- Indexes for table `term_start_end`
+--
+ALTER TABLE `term_start_end`
+  ADD PRIMARY KEY (`term_start_end_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `modules`
@@ -743,7 +811,25 @@ ALTER TABLE `modules`
 -- AUTO_INCREMENT for table `module_join_students`
 --
 ALTER TABLE `module_join_students`
-  MODIFY `module_join_students_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `module_join_students_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `module_list`
+--
+ALTER TABLE `module_list`
+  MODIFY `module_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `module_price`
+--
+ALTER TABLE `module_price`
+  MODIFY `module_price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `primary_school_students`
+--
+ALTER TABLE `primary_school_students`
+  MODIFY `primary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

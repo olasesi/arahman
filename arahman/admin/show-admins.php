@@ -35,7 +35,7 @@ if($_SESSION['admin_type'] != OWNER){      // if not headmaster
   <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-12 grid-margin stretch-card">
                 <div class="card corona-gradient-card">
                   <div class="card-body py-0 px-0 px-sm-3">
@@ -56,7 +56,7 @@ if($_SESSION['admin_type'] != OWNER){      // if not headmaster
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <?php
 if(isset($_GET['info-edited'])){

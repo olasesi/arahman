@@ -34,7 +34,7 @@ if(!isset($_GET['search-paid'])){
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-12 grid-margin stretch-card">
                 <div class="card corona-gradient-card">
                   <div class="card-body py-0 px-0 px-sm-3">
@@ -55,7 +55,7 @@ if(!isset($_GET['search-paid'])){
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 
@@ -90,12 +90,12 @@ $_GET = array();
                       <table class="table">
                         <thead>
                           <tr>
-                          <th> S/N </th>
+                          
                             <th> Firstname </th>
                             <th> Surname </th>
-                            <th> Email address </th>
-                            <th> Phone number </th>
-                            <th> Payment status </th>
+                            <th> Fee completion status</th>
+                         
+                           
                             <th>Date paid </th>
                         </tr>
                         </thead>
@@ -107,31 +107,39 @@ $_GET = array();
            
            <?php
 include ('../../incs-arahman/paginate.php');
-$statement = "primary_school_students WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id ASC";
+$statement = "primary_school_students, primary_payment WHERE primary_payment_students_id = primary_id AND pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id ASC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
           								// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
-            $results = mysqli_query($connect,"SELECT primary_id, pri_paid, pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students WHERE pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);
+            $results = mysqli_query($connect,"SELECT primary_payment_paid_percent, primary_payment_timestamp,  primary_id, pri_paid, pri_firstname, primary_payment_completion_status, pri_surname, pri_email, pri_phone FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
             if (mysqli_num_rows($results) != 0){
                 while ($row = mysqli_fetch_array($results)) {
-                    echo '<tr>
-                    <td> 1 </td>
+                    
+                  $num_of_joins = mysqli_query($connect,"SELECT * FROM modules LEFT JOIN module_join_students ON module_id = module_type_id WHERE module_students = '".$row['primary_id']."'") or die(mysqli_error($connect));
+                  echo '<tr>
+                   
                     <td>'.$row['pri_firstname'].'</td>
                     <td>'.$row['pri_surname'].' </td>
-                    <td>'.$row['pri_email'].'</td>
-                    <td>'.$row['pri_phone'].'</td>
-                    <td>Paid</td>
-                    <td> 04 Dec 2019 </td>
-                    <td>
-                    <form action="'.GEN_WEBSITE.'/admin/confirm-data.php?id='.$row['primary_id'].'" method="POST">
-                   
-                    <button type="submit" class="btn btn-success me-2" name="paid_students">Confirm admission</button>
-                    </form>
-                    </td>
+                    <td>'.$row['primary_payment_paid_percent'].'% </td>
+                    <td>'.date('M j Y g:i A', strtotime($row['primary_payment_timestamp'] )).'</td>';
 
-                </tr>';
+                    while ($row_answer = mysqli_fetch_array($num_of_joins)) {
+                     
+                      echo '<td><button type="button" class="btn btn-danger me-2" name="paid_students">'.$row_answer['module_type'].'</td>';
+                     
+                    }
+
+
+
+echo                '</tr>';
+
+              
+
+
+
+
 
                   }
             }else{
