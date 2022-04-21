@@ -31,7 +31,7 @@ if(isset($_POST['submit'])) {
     
     if (empty($errors)) {
       
-        mysqli_query($connect, "INSERT INTO module_list (module_list_name) VALUES ('".$module."')") or die(db_conn_error);
+        mysqli_query($connect, "INSERT INTO module_list (module_list_name) VALUES ('".$module."')") or die(mysqli_error($connect));
     }
      
 
@@ -97,61 +97,65 @@ if(isset($_GET['delete'])) {
                             <div class="card">
                                 <div class="card-body">
                                     
-                                    <form class="forms-sample" action="" method="post">
-                                    <div class="form-group">
-                                        <label for="module">
-                                            
+                                    
                                     <?php 
-                                    
-                                    if(isset($_GET['edit'])) {
-                                        echo 'Edit Module';
-                                    } else {
-                                        echo 'Add New Module';
+                                           if(!isset($_GET['edit'])) {
+                                                
+                                               
+                                               echo '
 
-                                    }
-                                    ?>
-                                           
-                                    </label>
-                                    <input type="text" class="form-control" id="module" name="<?php 
-                                    if(isset($_GET['edit'])) {
-                                        echo 'editmodule';
-                                    } else {
-                                        echo 'module';
+                                               <form class="forms-sample" action="" method="post">
+                                               <div class="form-group">
+                                                   <label for="module">Add New Module</label>
+                                                    <input type="text" class="form-control" id="module" name="module" value="'; 
+                                                    if(isset($_POST['module'])) {
+                                                        echo $_POST['module'];
+                                                       
+                                                   }
+                                               echo '" >
+                                               </div>
+                                               
+                                               <button type="submit" class="btn btn-primary me-2" name="submit">Submit</button>
+                                               
+                                               </form>';
 
-                                    }
-                                    ?>" value="<?php 
-                                    if(isset($_GET['edit'])) {
-                                        $the_module_id = $_GET['edit'];
-                                        $fetch_module = mysqli_query($connect, "SELECT * FROM module_list WHERE module_list_id = $the_module_id") or die(db_conn_error);
-                                
-                                        while($row = mysqli_fetch_array($fetch_module)) {
-                                            echo $row['module_list_name'];
+                                             
+                                             } else {
+                                                 $the_module_id = $_GET['edit']; 
+
+                                                echo '
+
+                                                <div class="row pb-4">
+                                                    <a class="nav-link btn btn-success create-new-button col-md-5" id="createbuttonDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="'.GEN_WEBSITE.'/admin/new-module.php">+ Create New Module</a>
+                                                </div>
+                                                
+                                                <form class="forms-sample" action="" method="post">
+                                                <div class="form-group">
+                                                    <label for="module">Edit Module</label>
+                                                    <input type="text" class="form-control" id="module" name="editmodule" value="';
+                                                    $fetch_module = mysqli_query($connect, "SELECT * FROM module_list WHERE module_list_id = $the_module_id") or die(db_conn_error);
                                             
-                                        }
-                                    } 
-                                    ?>" >
-                                    </div>
-                                    
-                                    <button type="submit" class="btn btn-primary me-2" name="<?php 
-                                        if(isset($_GET['edit'])) {
-                                            echo 'update';
-                                        } else {
-                                            echo 'submit';
+                                                    while($row = mysqli_fetch_array($fetch_module)) {
+                                                        echo $row['module_list_name'];
+                                                        
+                                                    }
+                                                
+                                                echo '">
+                                                </div>
+                                                
+                                                <button type="submit" class="btn btn-primary me-2" name="update">Update</button>
+                                                
+                                                </form>';
 
-                                        }
-                                        ?>">
-                                        <?php 
-                            
-                                        if(isset($_GET['edit'])) {
-                                            echo 'Update';
-                                        } else {
-                                            echo 'Submit';
-
-                                        }
+                                            }
+                                            
+                                        
+                                        
+                                       
+                                        
+                                        
                                         ?>
-                                    </button>
-                                    
-                                    </form>
+
 
 
                                 </div>

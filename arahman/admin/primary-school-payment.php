@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 	exit();
 }
 
-if($_SESSION['admin_type'] != ACCOUNTANT){
+if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
 	header('Location:/'.GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 
@@ -114,7 +114,7 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th> Pupils Name </th>
+                                        <th> Name </th>
                                         <th> Refrence No </th>
                                         <th> Amount </th>
                                         <th> Class </th>
