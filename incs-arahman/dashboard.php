@@ -62,6 +62,16 @@
                 <div class="profile-name">
                   <h5 class="mb-0 font-weight-normal"><?= $_SESSION['admin_firstname'].' '.$_SESSION['admin_surname'] ?></h5>
                   <span><?= $_SESSION['admin_type']  ?></span>
+                <?php  $taking_session = mysqli_query ($connect,"SELECT school_session, choose_term FROM term_start_end ORDER BY term_start_end_id DESC  LIMIT 1") or die(mysqli_error($connect));
+            while($rows = mysqli_fetch_array($taking_session)){
+              
+              echo '<br><br>';
+              echo '<div class="badge badge-outline-warning">'.$the_term=$rows['choose_term'].'</div>'; 
+              echo '<br><br>';
+              echo '<div class="badge badge-outline-success">'.$rows['school_session'].'</div>';
+               
+            }
+  ?>
                 </div>
               </div>
               <div>
@@ -303,11 +313,34 @@
               <div class="collapse" id="modules">
                 <ul class="nav flex-column sub-menu">
                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/new-module.php">Add New Module</a></li>
-                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/modules.php">Create Module</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/modules.php">Module Setup</a></li>
+               
+
+               
+                </ul>
+              </div>
+            </li> 
+            
+            
+            <li class="nav-item menu-items">
+              <a class="nav-link" data-bs-toggle="collapse" href="#recent-payments_common" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                  <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Common Entrance</span>
+                <i class="menu-arrow"></i>
+              </a>
+
+              <div class="collapse" id="recent-payments_common">
+                <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/">Common entrance fee</a></li>
+               
                   
                 </ul>
               </div>
-            </li> '; 
+            </li>
+            
+            '; 
           }       
           
 ?>
@@ -423,29 +456,36 @@
             <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-            <ul class="navbar-nav w-100">
-              <li class="nav-item w-100">
-                <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                  <input type="text" class="form-control" placeholder="Search students">
-                </form>
-              </li>
-            </ul> -->
+           
             <?php
  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){
        echo   '<ul class="navbar-nav w-100">
               <li class="nav-item w-100">
                 <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="search-paid.php">
-                  <input type="text" class="form-control" placeholder="Paid student" name="search-paid" value="';
+                  <input type="text" class="form-control" placeholder="Paid student (primary)" name="search-paid" value="';
                   if(isset($_GET['search-paid'])){echo $_GET['search-paid'];}
                   echo '">
-                  <button type="submit" class="btn btn-success me-2" name="button-paid_students">Search</button>
-                </form>
+                  
+                  <button type="submit" class="btn btn-success me-2" name="button-paid_students">Search</button>  
+                   </form>
               </li>
             </ul>';
+
+echo
+'<ul class="navbar-nav w-100">
+<li class="nav-item w-100">
+  <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search method="GET" action="search-paid-sec.php"">
+    <input type="text" class="form-control" placeholder="Paid students (secondary)" name="search-paid-sec" value="';
+    if(isset($_GET['search-paid-sec'])){echo $_GET['search-paid-sec'];}
+    echo '">
+    
+    <button type="submit" class="btn btn-danger me-2" name="button-paid_students">Search</button>  
+    </form>
+</li>
+</ul>';
+
           }
+          
           ?>
            <?php
  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ADMISSION){

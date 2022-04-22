@@ -51,7 +51,7 @@ include("../../incs-arahman/change-admin-pass.php");
             </div> -->
 
             <?php
-            $query = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_admit = '1' AND pri_active_email = '1'") or die(db_conn_error);  ?>
+            $query = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_admit = '1' AND pri_active_email = '1' AND pri_paid = '1'") or die(db_conn_error);  ?>
             
             <div class="row">
               <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
@@ -272,7 +272,7 @@ include("../../incs-arahman/change-admin-pass.php");
 
 
 
-                $results = mysqli_query($connect,"SELECT primary_id, pri_firstname, pri_surname, pri_email FROM primary_school_students WHERE pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 3") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                $results = mysqli_query($connect,"SELECT primary_id, pri_firstname, pri_surname, pri_email FROM primary_school_students WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 3") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
                 echo '<div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
