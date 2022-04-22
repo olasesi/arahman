@@ -22,6 +22,10 @@ define ('GEN_WEBSITE', 'http://localhost/arahman/arahman');	//
 date_default_timezone_set('UTC');
 session_start();
 
+/*Local time (Nigeria)*/
+define( 'OFFSET_TIME', '+1 hour' );
+
+
 
 /*PRIMARY SCHOOL ADMIN ROLES*/
 define("OWNER","owner");
@@ -57,7 +61,7 @@ define("BASIC_SIX_FEES", 600000);
 
 
 /*Result per page*/
-$per_page = 15;
+$per_page = 1;
 
 
 

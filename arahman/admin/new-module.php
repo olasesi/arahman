@@ -19,67 +19,43 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
 
 
 <?php 
-
-if(isset($_POST['submit'])) {
+ $errors_new_module = array();
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
     $errors = array();
 
-    if (preg_match ('/^[a-zA-Z]{3,50}$/i', trim($_POST['module']))) {	
+    if (preg_match ('/^[a-zA-Z 0-9]{3,50}$/i', trim($_POST['module']))) {	
 		$module = mysqli_real_escape_string ($connect, trim($_POST['module']));
+       
 	} else {
-		$errors['module'] = 'Please enter correct value';
+		$errors_new_module['module'] = 'Please enter valid name';
 	} 
     
-    if (empty($errors)) {
-      
-        mysqli_query($connect, "INSERT INTO module_list (module_list_name) VALUES ('".$module."')") or die(db_conn_error);
-    }
-     
-
- }
-
-
-?>
-<?php 
-
-if(isset($_GET['edit'])) {
-    $the_module_id = $_GET['edit']; 
-
-    if(isset($_POST['update'])) {
-        $errors = array();
-    
-        if (preg_match ('/^[a-zA-Z]{3,50}$/i', trim($_POST['editmodule']))) {	
-            $editmodule = mysqli_real_escape_string ($connect, trim($_POST['editmodule']));
-        } else {
-            $errors['editmodule'] = 'Please enter correct value';
-        } 
-        
-        if (empty($errors)) {
-        
-            mysqli_query($connect, "UPDATE module_list SET  module_list_name = '".$editmodule."'  WHERE module_list_id = $the_module_id") or die(db_conn_error);
-        }
-        
-    
+    if (empty($errors_new_module)) {
+       
+        mysqli_query($connect, "INSERT INTO modules (module_type) VALUES ('".$module."')") or die(db_conn_error);
+        header('Location:'.GEN_WEBSITE.'/admin/new-module.php?confirm-new-module=1');
     }
 }
 
-    
-
 
 ?>
-
 
 <?php 
 
 if(isset($_GET['delete'])) {
-    $the_module_id = $_GET['delete'];
-    $delete_query = mysqli_query($connect, "DELETE FROM module_list WHERE module_list_id = '$the_module_id'");
-    header("Location: new-module.php");
+    $the_module_id = mysqli_real_escape_string ($connect, trim($_GET['delete']));
+    $delete_query = mysqli_query($connect, "DELETE FROM modules WHERE module_id = '$the_module_id'");
+    $delete_query_price = mysqli_query($connect, "DELETE FROM module_price WHERE modules_id = '$the_module_id'");
+    $delete_query_join = mysqli_query($connect, "DELETE FROM module_join_students WHERE module_type_id = '$the_module_id'");
+   
+    header('Location:'.GEN_WEBSITE.'/admin/new-module.php?confirm-delete-module=1');
 
 }
 
 ?>
 
 
+          
 
 
 
@@ -87,11 +63,65 @@ if(isset($_GET['delete'])) {
 
 <?php require_once('../../incs-arahman/dashboard.php'); ?>
 
+
+
             <div class="main-panel">
                 <div class="content-wrapper">
+
+                <?php         
+    if(isset($_GET['confirm-new-module']) && $_GET['confirm-new-module'] == 1){
+           
+        echo '<div class="row">
+
+<div class="col-12 grid-margin stretch-card">
+   <div class="card">
+     <div class="card-body">
+       <h4 class="card-title">New module has been added</h4>
+     
+
+          
+              
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>';
+}
+          
+            ?>
+
+<?php         
+    if(isset($_GET['confirm-delete-module']) && $_GET['confirm-delete-module'] == 1){
+           
+        echo '<div class="row">
+
+<div class="col-12 grid-margin stretch-card">
+   <div class="card">
+     <div class="card-body">
+       <h4 class="card-title">Module has been deleted</h4>
+     
+
+          
+              
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>';
+}
+          
+            ?>
+
+
+
                     <div class="page-header">
                         <h3 class="page-title">Add Module</h3>
                     </div>
+                    
+                    
+                    
                     <div class="row">
                         <div class="col-md-6 grid-margin stretch-card">
                             <div class="card">
@@ -101,88 +131,61 @@ if(isset($_GET['delete'])) {
                                     <div class="form-group">
                                         <label for="module">
                                             
-                                    <?php 
-                                    
-                                    if(isset($_GET['edit'])) {
-                                        echo 'Edit Module';
-                                    } else {
-                                        echo 'Add New Module';
-
-                                    }
-                                    ?>
+                                  Add New Module (Primary)
                                            
                                     </label>
-                                    <input type="text" class="form-control" id="module" name="<?php 
-                                    if(isset($_GET['edit'])) {
-                                        echo 'editmodule';
-                                    } else {
-                                        echo 'module';
+                                    <input type="text" class="form-control" id="module" name="module" value="<?php 
+                                   
+                                    if(isset($_POST['module'])){echo $_POST['module'];}
 
-                                    }
-                                    ?>" value="<?php 
-                                    if(isset($_GET['edit'])) {
-                                        $the_module_id = $_GET['edit'];
-                                        $fetch_module = mysqli_query($connect, "SELECT * FROM module_list WHERE module_list_id = $the_module_id") or die(db_conn_error);
-                                
-                                        while($row = mysqli_fetch_array($fetch_module)) {
-                                            echo $row['module_list_name'];
-                                            
-                                        }
-                                    } 
+
                                     ?>" >
                                     </div>
                                     
-                                    <button type="submit" class="btn btn-primary me-2" name="<?php 
-                                        if(isset($_GET['edit'])) {
-                                            echo 'update';
-                                        } else {
-                                            echo 'submit';
+                                    <?php if (array_key_exists('module', $errors_new_module)) {
+				echo '<p class="text-danger">'.$errors_new_module['module'].'</p>';}?>
+                                   
 
-                                        }
-                                        ?>">
-                                        <?php 
-                            
-                                        if(isset($_GET['edit'])) {
-                                            echo 'Update';
-                                        } else {
-                                            echo 'Submit';
 
-                                        }
-                                        ?>
+                                    <button type="submit" class="btn btn-primary me-2" name="submit">
+
+                                       Submit
                                     </button>
                                     
                                     </form>
+                                     
 
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 grid-margin stretch-card">
-                            <div class="card">
+                                   
                                 <div class="card-body">
                                     <div class="table-responsive">
 
                                     <?php 
-       $fetch_module = mysqli_query($connect, "SELECT * FROM module_list") or die(db_conn_error);
+       $fetch_module = mysqli_query($connect, "SELECT * FROM modules ORDER BY module_id DESC") or die(db_conn_error);
 
                                     ?>
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Module Name</th>
+                                                    <th>Module Name Primary</th>
                                                     <th></th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php 
-                                                while($row = mysqli_fetch_array( $fetch_module)) {
-
+                                                while($row = mysqli_fetch_array($fetch_module)) {
+                                                    $fetch_know_status = mysqli_query($connect, "SELECT module_start_date, 	module_end_date, module_session FROM modules WHERE module_id = '".$row['module_id']."' AND module_start_date = '' AND module_end_date = '' AND module_session = ''") or die(db_conn_error);
+                                                   
                                                     echo'
                                                     <tr>
-                                                        <td>'.$row['module_list_name'].'</td>
-                                                        <td><a href="new-module.php?edit='.$row['module_list_id'].'">Edit</a></td></td>
-                                                        <td><a href="new-module.php?delete='.$row['module_list_id'].'">Delete</a></td></td>
+                                                        <td>'.$row['module_type'].'</td>
+                                                       
+                                                        <td><a href="new-module.php?delete='.$row['module_id'].'">Delete</a></td></td>
+                                                        <td>';
+                                                        if(mysqli_num_rows($fetch_know_status) == 1){
+                                                        echo '<i>not set up</i>';
+                                                        }
+                                                    echo    '</td>
                                                     </tr>';
                                                 }
 
@@ -191,19 +194,21 @@ if(isset($_GET['delete'])) {
                                         </table>
                                     </div>
                                 </div>
+                            
                             </div>
                         </div>
-                        <div class="col-md-6 grid-margin stretch-card">
-                            
-                                  
-                               
+                             
+                            </div>
                         </div>
-                    </div>
                     
                     
 
 
 
+
+
+
+                  
                 
 
 
@@ -214,15 +219,15 @@ if(isset($_GET['delete'])) {
 
 
 <script>
-                     window.addEventListener("load", function() {
+ /*                    window.addEventListener("load", function() {
     var f = document.getElementById('Foo');
     setInterval(function() {
         f.style.display = (f.style.display == 'none' ? '' : 'none');
     }, 1000);
 
-}, false);
+}, false);*/
 </script>   
-<script>
+<script>/*
 $(document).ready(function() {
 $('#class-selection').on('select', function() {
 var category_id = this.value;
@@ -238,7 +243,7 @@ $("#class-selection").html(result);
 }
 });
 });
-});
+});*/
 </script>              
 
 

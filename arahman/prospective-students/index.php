@@ -65,14 +65,27 @@ if(isset($_POST['radio'])){
 
 if(empty($signup_errors)){
 
+  $taking_session = mysqli_query ($connect,"SELECT school_session, choose_term FROM term_start_end ORDER BY term_start_end_id DESC  LIMIT 1") or die(mysqli_error($connect));
+  while($rows = mysqli_fetch_array($taking_session)){
+    
+   
+    $the_term=$rows['choose_term']; 
+   
+  $the_session = $rows['school_session'];
+     
+  }
+
+
 if($pri_school_type == 'Primary school'){
         $query = mysqli_query($connect, "SELECT pri_email FROM primary_school_students WHERE pri_email='".$email."'") or die(db_conn_error);
         if(mysqli_num_rows($query)== 0){
           $hash=md5(rand(0,1000));
           $encrypted = password_hash($password, PASSWORD_DEFAULT);
-        
-        $q = mysqli_query($connect,"INSERT INTO primary_school_students (pri_class_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, pri_password, pri_email_hash, pri_cookie_session, pri_school_type) 
-          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(mysqli_error($connect));
+        //$radio does not do anything really. I thought that I would use it but now its too late to remove it. The radio button is hidden
+
+
+        $q = mysqli_query($connect,"INSERT INTO primary_school_students (pri_class_id, pri_school_term,  pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, pri_password, pri_email_hash, pri_cookie_session) 
+          VALUES ('".$radio."', '".$the_term."', '".$the_session."','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(mysqli_error($connect));
 
                 if(mysqli_affected_rows($connect) == 1){
 
@@ -164,8 +177,8 @@ if($pri_school_type == 'Primary school'){
           $hash=md5(rand(0,1000));
           $encrypted = password_hash($password, PASSWORD_DEFAULT);
         
-        $q = mysqli_query($connect,"INSERT INTO secondary_school_students (sec_class_id, sec_year, sec_firstname, sec_surname, sec_age, sec_sex, sec_email, sec_photo, sec_phone, sec_address, sec_password, sec_email_hash, sec_cookie_session, sec_school_type) 
-          VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '', '".$pri_school_type."')") or die(mysqli_error($connect));
+        $q = mysqli_query($connect,"INSERT INTO secondary_school_students (sec_class_id, sec_school_term, sec_year, sec_firstname, sec_surname, sec_age, sec_sex, sec_email, sec_photo, sec_phone, sec_address, sec_password, sec_email_hash, sec_cookie_session) 
+          VALUES ('".$radio."', '".$the_term."', '".$the_session."','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(mysqli_error($connect));
 
                 if(mysqli_affected_rows($connect) == 1){
 

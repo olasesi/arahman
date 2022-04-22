@@ -85,7 +85,7 @@ $_GET = array();
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Search paid (Primary)</h4>
+                    <h4 class="card-title">Search paid (Secondary)</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -109,7 +109,7 @@ $_GET = array();
            
                                         <?php
                               include ('../../incs-arahman/paginate.php');
-                              $statement = "primary_school_students INNER JOIN primary_payment ON primary_payment_students_id = primary_id  WHERE (pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1') AND (pri_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%') ORDER BY primary_id ASC";
+                              $statement = "secondary_school_students INNER JOIN primary_payment ON primary_payment_students_id = primary_id  WHERE (pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1') AND (pri_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%') ORDER BY primary_id ASC";
                                         
                               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
                                           if ($page <= 0) $page = 1;
@@ -157,7 +157,7 @@ $_GET = array();
                     </div>
                     
                   </div>
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/search-paid.php?search-paid=".mysqli_real_escape_string($connect, $_GET['search-paid'])."&button-paid_students=&");?> </nav>
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/search-paid.php?sec-search-paid=".mysqli_real_escape_string($connect, $_GET['search-paid'])."&button-paid_students=&");?> </nav>
                 </div>
               </div>
             </div>

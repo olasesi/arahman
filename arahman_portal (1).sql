@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2022 at 12:54 AM
+-- Generation Time: Apr 22, 2022 at 06:42 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -47,7 +47,7 @@ INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `adm
 (1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', 'password', '', '2022-01-03 09:49:31'),
 (2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', 'password', '', '2022-01-08 14:00:53'),
 (3, 1, 'admission', 'seye', 'alade', 'admission', 'password', '', '2022-04-06 14:28:14'),
-(4, 1, 'accountant', 'teni', 'alade', 'accountant', 'password', '9b7624cfed96db9fd8c414eb5b27d7ba', '2022-04-06 14:28:14');
+(4, 1, 'accountant', 'teni', 'alade', 'accountant', 'password', '8928a531ed03d3ef7e4d82949070fb23', '2022-04-06 14:28:14');
 
 -- --------------------------------------------------------
 
@@ -70,12 +70,8 @@ CREATE TABLE `modules` (
 --
 
 INSERT INTO `modules` (`module_id`, `module_type`, `module_start_date`, `module_end_date`, `module_session`, `module_term`, `module_timestamp`) VALUES
-(1, 'Inter House Sport', '2022-05-12', '2022-05-24', '', '', '2022-04-08 15:36:44'),
-(2, 'Inter House Sport', '2022-05-12', '2022-05-24', '', '', '2022-04-08 15:36:44'),
-(3, 'Excursion', '2022-04-13', '2022-04-21', '', '', '2022-04-13 10:09:16'),
-(4, 'Excursion', '2022-04-13', '2022-04-21', '', '', '2022-04-13 10:10:07'),
-(5, 'Pratical', '2022-04-13', '2022-04-22', '', '', '2022-04-13 10:13:41'),
-(6, 'Excursion', '2022-04-13', '2022-04-27', '', '', '2022-04-13 10:18:58');
+(30, 'swimming lesson', '2022-04-23', '2022-04-27', '2001/2002', 'Second term', '2022-04-21 13:01:39'),
+(32, 'Field trip', '2022-04-23', '2022-04-24', '2001/2002', 'Second term', '2022-04-22 00:46:34');
 
 -- --------------------------------------------------------
 
@@ -95,8 +91,8 @@ CREATE TABLE `module_join_students` (
 --
 
 INSERT INTO `module_join_students` (`module_join_students_id`, `module_students`, `module_type_id`, `module_join_students_timestamp`) VALUES
-(1, 2, 2, '2022-04-19 20:50:47'),
-(2, 2, 3, '2022-04-19 20:50:47');
+(1, 2, 30, '2022-04-19 20:50:47'),
+(3, 2, 32, '2022-04-19 20:50:47');
 
 -- --------------------------------------------------------
 
@@ -137,11 +133,10 @@ CREATE TABLE `module_price` (
 --
 
 INSERT INTO `module_price` (`module_price_id`, `module_class_id`, `modules_id`, `module_price`, `module_price_timestamp`) VALUES
-(1, 1, 5, '5000', '2022-04-13 11:13:41'),
-(2, 2, 5, '5000', '2022-04-13 11:13:41'),
-(3, 4, 5, '5000', '2022-04-13 11:13:41'),
-(4, 4, 6, '8000', '2022-04-13 11:18:58'),
-(5, 5, 6, '8000', '2022-04-13 11:18:58');
+(24, 4, 30, '6000', '2022-04-21 13:07:46'),
+(25, 5, 30, '5000', '2022-04-22 01:08:21'),
+(26, 4, 32, '1000', '2022-04-22 01:15:21'),
+(27, 5, 32, '1000', '2022-04-22 01:15:21');
 
 -- --------------------------------------------------------
 
@@ -212,7 +207,8 @@ CREATE TABLE `primary_payment` (
 --
 
 INSERT INTO `primary_payment` (`primary_payment_id`, `primary_payment_students_id`, `primary_payment_students_reference`, `primary_payment_term`, `primary_payment_session`, `primary_payment_fees`, `primary_payment_paid_percent`, `primary_payment_completion_status`, `primary_payment_timestamp`) VALUES
-(1, 2, '4er5t6ywer', '', '2001/2002', '40000', '70', 0, '2022-04-19 22:37:12');
+(1, 2, '4er5t6ywer', 'Third term', '2001/2002', '40000', '70', 0, '2022-04-22 11:58:40'),
+(2, 3, 'sew345rfg5', 'Third term', '2001/2002', '40000', '50', 0, '2022-04-22 11:58:45');
 
 -- --------------------------------------------------------
 
@@ -308,7 +304,7 @@ CREATE TABLE `primary_school_students` (
 INSERT INTO `primary_school_students` (`primary_id`, `pri_active_email`, `pri_active`, `pri_paid`, `pri_admit`, `pri_class_id`, `pri_school_term`, `pri_year`, `pri_firstname`, `pri_surname`, `pri_age`, `pri_sex`, `pri_email`, `pri_photo`, `pri_phone`, `pri_address`, `pri_password`, `pri_email_hash`, `pri_cookie_session`, `pri_timestamp`) VALUES
 (1, 1, '1', 0, 0, '3', 'choose term', '2022', 'ahmed', 'olusesi', '5', 'Male', 'ola.sesi@yahoo.com', 'ab029b597c08b5f0757b4443fea3e4837d276b9a.png', '08074574512', 'Ikeja', 'password', '', '', '0000-00-00 00:00:00'),
 (2, 1, '1', 1, 1, '4', 'choose term', '2022', 'Rasheed', 'Raseed', '4', 'Male', 'oosodof@yahoo.com', '4862698757bed4eada1e9a9ebe2bf84e256773db.JPG', '08074574512', 'Ogba', '', '', '', '2022-01-05 14:36:13'),
-(3, 1, '0', 1, 1, '3', 'choose term', '2022', 'duro', 'media', '4', 'Male', 'dfasfds@yahoo.com', '5e8688a0fcf6dd98a52b1acafd7856d8b5fa59f6.JPG', '08074574512', 'Oshodi', '', '', '', '2022-01-05 15:01:22'),
+(3, 1, '1', 1, 1, '3', 'choose term', '2022', 'duro', 'media', '4', 'Male', 'dfasfds@yahoo.com', '5e8688a0fcf6dd98a52b1acafd7856d8b5fa59f6.JPG', '08074574512', 'Oshodi', '', '', '', '2022-01-05 15:01:22'),
 (4, 1, '0', 1, 0, '6', 'choose term', '', 'minus', 'olusesi', '', '', 'Eligendi@enim.com', 'default.jpg', '08074574512', 'Aut ex consequatur ', '', '', '', '2022-01-06 14:47:31'),
 (5, 1, '0', 1, 0, '4', 'choose term', '', 'Consequatur', 'Delectus', '', '', 'Corporis@aut.com', 'default.jpg', '08073454632', 'Corrupti dolore seq', '', '', '', '2022-01-06 14:47:31'),
 (6, 1, '1', 1, 1, '6', 'choose term', '2022', 'rasheed', 'rasheed', '', '', 'rasheed@test.com', '', '08074574512', 'Ikeja', 'password', '36660e59856b4de58a219bcf4e27eba3', '', '2022-01-14 09:48:57'),
@@ -594,6 +590,14 @@ CREATE TABLE `secondary_school_students` (
   `sec_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `secondary_school_students`
+--
+
+INSERT INTO `secondary_school_students` (`secondary_id`, `sec_active_email`, `sec_active`, `sec_paid`, `sec_admit`, `sec_class_id`, `sec_school_term`, `sec_year`, `sec_firstname`, `sec_surname`, `sec_age`, `sec_sex`, `sec_email`, `sec_photo`, `sec_phone`, `sec_address`, `sec_password`, `sec_email_hash`, `sec_cookie_session`, `sec_timestamp`) VALUES
+(0, 0, '0', 0, 0, 0, 'Second term', '2001/2002', 'aaliyah', 'olusesi', '', '', 'aaliyaholusesi@gmail.com', '', '08074574512', '', '$2y$10$ECHenBkEy/S0v.laQCnsq.XdDxG9MyiEMGtCMkLLZPqqgwpJjYXU2', '41f1f19176d383480afa65d325c06ed0', '', '2022-04-22 15:44:48'),
+(1, 1, '1', 1, 1, 3, 'choose term', '2020/2021', 'ahmed', 'olusesi', '', 'Male', 'olusesia@gmail.com', 'default.jpg', '08074574512', '', '', '', '', '2022-04-22 14:19:24');
+
 -- --------------------------------------------------------
 
 --
@@ -672,19 +676,6 @@ CREATE TABLE `sec_total_number` (
   `sec_total_number_year` varchar(15) CHARACTER SET utf8mb4 NOT NULL,
   `sec_total_number_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `session_start_end`
---
-
-CREATE TABLE `session_start_end` (
-  `session_start_end_id` int(11) NOT NULL,
-  `session_start` timestamp NOT NULL DEFAULT current_timestamp(),
-  `session_end` timestamp NOT NULL DEFAULT current_timestamp(),
-  `session_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -768,6 +759,12 @@ ALTER TABLE `primary_payment`
   ADD PRIMARY KEY (`primary_payment_id`);
 
 --
+-- Indexes for table `primary_school_classes`
+--
+ALTER TABLE `primary_school_classes`
+  ADD PRIMARY KEY (`primary_class_id`);
+
+--
 -- Indexes for table `primary_school_students`
 --
 ALTER TABLE `primary_school_students`
@@ -784,6 +781,18 @@ ALTER TABLE `primary_subjects`
 --
 ALTER TABLE `primary_teachers`
   ADD PRIMARY KEY (`primary_teacher_id`);
+
+--
+-- Indexes for table `secondary_payment`
+--
+ALTER TABLE `secondary_payment`
+  ADD PRIMARY KEY (`secondary_payment_id`);
+
+--
+-- Indexes for table `secondary_school_students`
+--
+ALTER TABLE `secondary_school_students`
+  ADD PRIMARY KEY (`secondary_id`);
 
 --
 -- Indexes for table `term_start_end`
@@ -805,13 +814,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `module_join_students`
 --
 ALTER TABLE `module_join_students`
-  MODIFY `module_join_students_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `module_join_students_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `module_list`
@@ -823,7 +832,7 @@ ALTER TABLE `module_list`
 -- AUTO_INCREMENT for table `module_price`
 --
 ALTER TABLE `module_price`
-  MODIFY `module_price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `module_price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `primary_school_students`
