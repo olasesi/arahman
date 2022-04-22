@@ -30,10 +30,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 		$errors_new_module['module'] = 'Please enter valid name';
 	} 
     
+
     if (empty($errors_new_module)) {
        
         mysqli_query($connect, "INSERT INTO modules (module_type) VALUES ('".$module."')") or die(db_conn_error);
         header('Location:'.GEN_WEBSITE.'/admin/new-module.php?confirm-new-module=1');
+
     }
 }
 
@@ -127,6 +129,7 @@ if(isset($_GET['delete'])) {
                             <div class="card">
                                 <div class="card-body">
                                     
+
                                     <form class="forms-sample" action="" method="post">
                                     <div class="form-group">
                                         <label for="module">
@@ -154,6 +157,7 @@ if(isset($_GET['delete'])) {
                                     
                                     </form>
                                      
+
 
                                    
                                 <div class="card-body">
