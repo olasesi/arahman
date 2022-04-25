@@ -42,10 +42,19 @@ $now = new DateTime();
 
 
 
-/*Classroom name*/
+/*Primary Classroom name*/
 $class_range = array('Basic one'=>'1', 'Basic two'=>'2', 'Basic three'=>'3', 'Basic four'=>'4', 'Basic five'=>'5', 'Basic six'=>'6');   
-$age_range = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20); 
 
+/*secondary Classroom name*/
+$sec_class_range = array('JSS 1'=>'1', 'JSS 2'=>'2', 'JSS 3'=>'3', 'SSS 1'=>'4', 'SSS 2'=>'5', 'SSS 3'=>'6');   
+
+
+
+/*Age range*/
+
+for($i=18;$i<70;$i++){
+    $age_range[] = $i;
+}
 
 /*Primary class school fees in kobo*/
 define("BASIC_ONE_FEES", 100000);

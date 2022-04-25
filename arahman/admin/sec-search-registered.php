@@ -15,7 +15,7 @@ if($_SESSION['admin_type'] != ADMISSION){
 }
 ?>
 <?php
-if(!isset($_GET['search-registered'])){
+if(!isset($_GET['search-registered-sec'])){
     header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
@@ -44,7 +44,7 @@ echo ' <div class="row ">
 <div class="col-12 grid-margin">
   <div class="card">
     <div class="card-body">
-<label class="badge badge-info">You have confirmed '.$_GET['confirm'].' admission. Student should proceed to make payment</label>
+<label class="badge badge-info">You have confirmed '.$_GET['confirm'].' admission. Student should proceed to school fees payment</label>
 </div>
 </div>
 </div>
@@ -61,14 +61,14 @@ include_once ('../../incs-arahman/reject-student-status.php');
 include ('../../incs-arahman/paginate.php');
 
 
-$statement = "primary_school_students WHERE (pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1') AND (pri_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-registered'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-registered'])."%') ORDER BY primary_id DESC";
+$statement = "secondary_school_students LEFT JOIN secondary_common_e ON secondary_common_e_students_id = secondary_id WHERE (sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1') AND (sec_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-registered-sec'])."%' OR sec_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-registered-sec'])."%') ORDER BY secondary_id DESC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
             							// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
           
-            $results = mysqli_query($connect,"SELECT primary_id, pri_paid, pri_firstname, pri_surname, pri_email, pri_phone, pri_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
+            $results = mysqli_query($connect,"SELECT secondary_id, sec_paid, sec_firstname, sec_surname, sec_email, sec_phone,secondary_common_e_exam, sec_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
             
 ?>
 
@@ -79,11 +79,11 @@ $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
               <div class="col-12 grid-margin">
                 <div class="card">
                 <?php
-include_once ('../../incs-arahman/recently-registered.php');
+include_once ('../../incs-arahman/sec-recently-registered.php');
 ?>
 
 
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/search-registered.php?");?> </nav>
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/sec-search-registered.php?search-registered-sec=".mysqli_real_escape_string($connect, $_GET['search-registered-sec'])."&button-search-registered-sec=".mysqli_real_escape_string($connect, $_GET['button-search-registered-sec'])."&");?> </nav>
                 </div>
               </div>
             </div>

@@ -26,8 +26,35 @@ if($_SESSION['admin_type'] != OWNER){
               if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['end_term'])){
                 
                 $q_end_term = mysqli_query($connect,"UPDATE term_start_end SET term_end = '".$now->format('Y-m-d H:i:s')."' WHERE term_start_end_id = '".$_POST['hidden_start_end']."' LIMIT 1") or die(db_conn_error);
+                
+     /*           if(mysqli_affected_rows($connect, $q_end_term) === 1){
+           //Primary school and should a students be logged out?      
+          mysqli_query($connect,"UPDATE primary_school_students SET pri_paid = '0', pri_admit = '0'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
+
+          mysqli_query($connect, "DELETE FROM primary_payment WHERE primary_payment_paid_percent ='100'") or die(db_conn_error);
+          //Debtors details still available in the history
+
+          mysqli_query($connect, "DELETE FROM module_join_students") or die(db_conn_error);
+      
+          mysqli_query($connect, "DELETE FROM module_price") or die(db_conn_error);
+
+          mysqli_query($connect, "DELETE FROM modules") or die(db_conn_error);
+
+
+
+                }*/
+                
+                
+                
+                
+                
                 header('Location:'.GEN_WEBSITE.'/admin/term-session.php?endstart_another=1');
                 exit();
+              
+              
+              
+              
+              
               }
           
            
@@ -37,7 +64,7 @@ if($_SESSION['admin_type'] != OWNER){
                 if (preg_match ('/^(\d{4}\/\d{4})$/', $_POST['pri_session'])) {	
                   $pri_session = mysqli_real_escape_string ($connect, $_POST['pri_session']);
                 } else {
-                  $errors['pri_session'] = 'Please enter the primary school session e.g 2001/2002';
+                  $errors['pri_session'] = 'Please enter the school session e.g 2001/2002';
                 } 
                 
                 if ($_POST['choose_term'] == "Choose term") {
@@ -47,6 +74,17 @@ if($_SESSION['admin_type'] != OWNER){
                 }
 
                  if(empty($errors)){
+
+                   $no_copy = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end") or die(db_conn_error);
+if(mysqli_num_rows($no_copy) > 0){
+  $no_many_copy = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end WHERE choose_term = '".$chooseterm."' AND school_session = '".$pri_session."'") or die(db_conn_error);
+if(mysqli_num_rows($no_many_copy) > 0){
+
+  header('Location:'.GEN_WEBSITE.'/admin/term-session.php?period_used_before=1');
+  exit();
+}
+  
+}
 
 
                   $query_term_start = mysqli_query($connect, "SELECT term_start, term_end FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
@@ -61,10 +99,17 @@ if($_SESSION['admin_type'] != OWNER){
 
 }
 
-if(!empty($ask_term_starts) AND empty($ask_term_end)){
-  header('Location:'.GEN_WEBSITE.'/admin/term-session.php?must_end_before=1');
-  exit();
-}
+                  if(!empty($ask_term_starts) AND empty($ask_term_end)){
+                    header('Location:'.GEN_WEBSITE.'/admin/term-session.php?must_end_before=1');
+                    exit();
+                  }
+
+
+
+
+                  // $no_copy = mysqli_query($connect, "SELECT term_start, term_end, choose_term, school_session FROM term_start_end") or die(db_conn_error);
+
+
 }                    
   
 
@@ -114,7 +159,7 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
                           <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body">
-                            <h4 class="card-title text-warning text-center">A new primary school term has started. Please do not forget to end a term before beginning a new one</h4>
+                            <h4 class="card-title text-warning text-center">A new school term has started. Please do not forget to end a term before beginning a new one</h4>
                           
                       
                                 
@@ -137,7 +182,7 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
                           <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body">
-                            <h4 class="card-title text-warning text-center">You have now ended a primary school term</h4>
+                            <h4 class="card-title text-warning text-center">You have now ended a school term</h4>
                           
                       
                                 
@@ -175,6 +220,33 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
                       }
                      
                           ?>
+
+<?php         
+                          if(isset($_GET['period_used_before']) AND $_GET['period_used_before'] = 1){
+                                
+                              echo '<div class="row">
+                      
+                          <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                          <div class="card-body">
+                            <h4 class="card-title text-warning text-center">This term and session has been used before</h4>
+                          
+                      
+                                
+                                    
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                      
+                                  </div>';
+                      }
+                     
+                          ?>
+
+
+
+
                     <div class="row">
                       
                       <div class="col-12 grid-margin stretch-card">
@@ -198,10 +270,10 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
 
                   <div class="row">
       
-                  <div class="col-md-6 grid-margin stretch-card">
+                  <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                         <div class="card-body">
-                          <h4 class="card-title">Primary School</h4>
+                          <h4 class="card-title">School term and session</h4>
                           <p class="card-title">To begin a term, type the session to begin with and select the term. And to end the term, only click the end term button </p>
 
            
@@ -217,7 +289,7 @@ if(!empty($ask_term_starts) AND empty($ask_term_end)){
                           
                           
                           <div class="form-group">
-                            <label>Select Primary school term</label>
+                            <label>Select school term</label>
                             <select class="js-example-basic-single" style="width:100%" name="choose_term">
             
                             
@@ -291,7 +363,7 @@ echo '<hr>
 
 
 
-              <div class="col-md-6 grid-margin stretch-card">
+              <!-- <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Secondary School</h4>
@@ -309,7 +381,7 @@ echo '<hr>
                     <button type="submit" class="btn btn-danger me-2">Submit</button>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
 

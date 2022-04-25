@@ -9,14 +9,14 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 	exit();
 }
 
-if($_SESSION['admin_type'] != ACCOUNTANT){
+if(($_SESSION['admin_type'] != ACCOUNTANT) && ($_SESSION['admin_type'] != OWNER)){
 	header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 ?>
 
 <?php
-if(!isset($_GET['search-paid'])){
+if(!isset($_GET['search-paid-sec'])){
     header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
@@ -109,30 +109,30 @@ $_GET = array();
            
                                         <?php
                               include ('../../incs-arahman/paginate.php');
-                              $statement = "secondary_school_students INNER JOIN primary_payment ON primary_payment_students_id = primary_id  WHERE (pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1') AND (pri_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%') ORDER BY primary_id ASC";
+                              $statement = "secondary_school_students INNER JOIN secondary_payment ON secondary_payment_students_id = secondary_id  WHERE (sec_paid = '1' AND sec_admit = '1' AND sec_active_email = '1') AND (sec_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid-sec'])."%' OR sec_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid-sec'])."%') ORDER BY secondary_id ASC";
                                         
                               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
                                           if ($page <= 0) $page = 1;
                                                         // Set how many records do you want to display per page.
                                           $startpoint = ($page * $per_page) - $per_page;
-                                          $results = mysqli_query($connect,"SELECT primary_payment_fees, primary_payment_session, primary_payment_term,  primary_payment_paid_percent, primary_payment_timestamp,  primary_id, pri_paid, pri_firstname, primary_payment_completion_status, pri_surname, pri_email, pri_phone FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
+                                          $results = mysqli_query($connect,"SELECT secondary_payment_fees, secondary_payment_session, secondary_payment_term,  secondary_payment_paid_percent, secondary_payment_timestamp,  secondary_id, sec_paid, sec_firstname, secondary_payment_completion_status, sec_surname, sec_email, sec_phone FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
                                           if (mysqli_num_rows($results) != 0){
                                               while ($row = mysqli_fetch_array($results)) {
                                                   
-                                                $num_of_joins = mysqli_query($connect,"SELECT * FROM modules LEFT JOIN module_join_students ON module_id = module_type_id WHERE module_students = '".$row['primary_id']."'") or die(mysqli_error($connect));
+                                                $num_of_joins = mysqli_query($connect,"SELECT * FROM secondary_modules LEFT JOIN secondary_module_join_students ON secondary_module_id = secondary_module_type_id WHERE secondary_module_students = '".$row['secondary_id']."'") or die(mysqli_error($connect));
                                                 echo '<tr>
                                                 
-                                                  <td>'.$row['pri_firstname'].'</td>
-                                                  <td>'.$row['pri_surname'].' </td>
-                                                  <td>&#8358;'.number_format($row['primary_payment_fees']).' </td>
-                                                  <td><div class="badge badge-outline-success">'.$row['primary_payment_paid_percent'].'% </div></td>
-                                                  <td>'.$row['primary_payment_term'].' </td>
-                                                  <td>'.$row['primary_payment_session'].' </td>
-                                                  <td>'.date('M j Y g:i A', strtotime($row['primary_payment_timestamp']. OFFSET_TIME  )).'</td>';
+                                                  <td>'.$row['sec_firstname'].'</td>
+                                                  <td>'.$row['sec_surname'].' </td>
+                                                  <td>&#8358;'.number_format($row['secondary_payment_fees']).' </td>
+                                                  <td><div class="badge badge-outline-success">'.$row['secondary_payment_paid_percent'].'% </div></td>
+                                                  <td>'.$row['secondary_payment_term'].' </td>
+                                                  <td>'.$row['secondary_payment_session'].' </td>
+                                                  <td>'.date('M j Y g:i A', strtotime($row['secondary_payment_timestamp']. OFFSET_TIME  )).'</td>';
                               echo '<td>';
                                                   while ($row_answer = mysqli_fetch_array($num_of_joins)) {
                                                   
-                                                    echo '<div class="badge badge-outline-success">'.$row_answer['module_type'].'</div>';
+                                                    echo '<div class="badge badge-outline-success">'.$row_answer['secondary_module_type'].'</div>';
                                                   
                                                   }
 
@@ -157,7 +157,7 @@ $_GET = array();
                     </div>
                     
                   </div>
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/search-paid.php?sec-search-paid=".mysqli_real_escape_string($connect, $_GET['search-paid'])."&button-paid_students=&");?> </nav>
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/sec-search-paid.php?search-paid-sec=".mysqli_real_escape_string($connect, $_GET['search-paid-sec'])."&button-paid_students-sec=&");?> </nav>
                 </div>
               </div>
             </div>
