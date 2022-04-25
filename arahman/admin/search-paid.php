@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 	exit();
 }
 
-if($_SESSION['admin_type'] != ACCOUNTANT){
+if(($_SESSION['admin_type'] != ACCOUNTANT) && ($_SESSION['admin_type'] != OWNER)){
 	header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
@@ -126,9 +126,9 @@ $_GET = array();
                                                   <td>'.$row['pri_surname'].' </td>
                                                   <td>&#8358;'.number_format($row['primary_payment_fees']).' </td>
                                                   <td><div class="badge badge-outline-success">'.$row['primary_payment_paid_percent'].'% </div></td>
-                                                  <td>'.$row['primary_payment_term'].' </td>
-                                                  <td>'.$row['primary_payment_session'].' </td>
-                                                  <td>'.date('M j Y g:i A', strtotime($row['primary_payment_timestamp']. OFFSET_TIME  )).'</td>';
+                                                  <td>'.$row['primary_payment_term'].'</td>
+                                                  <td>'.$row['primary_payment_session'].'</td>
+                                                  <td>'.date('M j Y g:i A', strtotime($row['primary_payment_timestamp']. OFFSET_TIME)).'</td>';
                               echo '<td>';
                                                   while ($row_answer = mysqli_fetch_array($num_of_joins)) {
                                                   

@@ -277,7 +277,7 @@ exit();
 
                         <select class="form-control" id="exampleSelectage" name="age">
                          <?php        
-                        $age_range = array(1, 2, 3, 4, 5, 6, 7, 8);    
+                      
                         echo "<option>Enter age</option>";
                         foreach($age_range as $as_age){	
                             if(!isset ($_POST['age'])){

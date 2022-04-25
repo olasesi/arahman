@@ -27,7 +27,7 @@ if(!isset($_GET['id'])){
 
 
 <?php
-$query = mysqli_query($connect, "SELECT primary_id, pri_firstname, pri_surname, pri_age, pri_sex, pri_photo, pri_phone, pri_address FROM primary_school_students WHERE primary_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1'") or die(db_conn_error);
+$query = mysqli_query($connect, "SELECT secondary_id, sec_firstname, sec_surname, sec_age, sec_sex, sec_photo, sec_phone, sec_address FROM secondary_school_students WHERE secondary_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1'") or die(db_conn_error);
 
 if (!isset($errors)){$errors = array();}
 
@@ -140,7 +140,7 @@ while($loop_term_session=mysqli_fetch_array($query_term_session)){
 
 
 
-mysqli_query($connect, "UPDATE primary_school_students SET pri_active='1', pri_admit = '1', pri_school_term = '".$current_term."' , pri_year = '".$current_session_term."', pri_firstname = '".$firstname."', pri_surname = '".$surname."', pri_age = '".$age."', pri_sex = '".$gender."', pri_class_id = '".$pri_class."', pri_photo = '".$new_name."', pri_address= '".$address."' WHERE primary_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_admit = '0' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
+mysqli_query($connect, "UPDATE secondary_school_students SET sec_active='1', sec_admit = '1', sec_school_term = '".$current_term."' , sec_year = '".$current_session_term."', sec_firstname = '".$firstname."', sec_surname = '".$surname."', sec_age = '".$age."', sec_sex = '".$gender."', sec_class_id = '".$sec_class."', sec_photo = '".$new_name."', sec_address= '".$address."' WHERE secondary_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND sec_admit = '0' AND sec_active_email = '1' AND sec_paid = '0'") or die(db_conn_error);
 			if (mysqli_affected_rows($connect) == 1) {
 			
             $_POST = array();		
@@ -171,9 +171,9 @@ while ($row = mysqli_fetch_array($query)) {
 	
     
     //$pri_name = $row['primary_id'];
-	$pri_firstname = $row['pri_firstname'];
-	$pri_surname = $row['pri_surname'];
-	$pri_phone = $row['pri_phone'];
+	$pri_firstname = $row['sec_firstname'];
+	$pri_surname = $row['sec_surname'];
+	$pri_phone = $row['sec_phone'];
 
 	
 	}
@@ -363,11 +363,11 @@ exit();
                         echo "<option>Choose school class</option>";
                                         
                         if(isset ($_POST['pri_class'])){
-                        foreach ($class_range as $pri_pri_class=>$class_id){
+                        foreach ($sec_class_range as $pri_pri_class=>$class_id){
                         $sel_pri_class = ($pri_pri_class==$_POST['pri_class'])?"Selected='selected'":"";
                         echo '<option '.$sel_pri_class. 'value="'.$class_id.'">'.$pri_pri_class.'</option>';}
                         }else{
-                        foreach ($class_range as $pri_pri_class=>$class_id){
+                        foreach ($sec_class_range as $pri_pri_class=>$class_id){
                         echo '<option value="'.$class_id.'">'.$pri_pri_class.'</option>';
                         }
                         }

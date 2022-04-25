@@ -35,7 +35,7 @@ if(preg_match('/^.{6,100}$/i',$_POST['password'])){
 
 
 if(empty($signup_errors)){
-  $query = mysqli_query($connect, "SELECT * FROM admin WHERE admin_email='".$email."' AND admin_password='".$password."' AND admin_active='1'") or die(db_conn_error);
+  $query = mysqli_query($connect, "SELECT * FROM admin WHERE admin_email='".$email."' AND admin_password='".md5($password)."' AND admin_active='1'") or die(db_conn_error);
   if(mysqli_num_rows($query)== 1){
     $row = mysqli_fetch_array ($query, MYSQLI_NUM);
 

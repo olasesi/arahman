@@ -48,7 +48,7 @@ if($_POST['password'] == $_POST['confirm_password']){
 	 
    
 if (empty($errors)){
-mysqli_query($connect, "UPDATE admin SET admin_password = '".$password."' WHERE admin_id = '".$_GET['password_change']."'") or die(mysqli_error());
+mysqli_query($connect, "UPDATE admin SET admin_password = '".md5($password)."' WHERE admin_id = '".mysqli_real_escape_string($connect, $_GET['password_change'])."'") or die(mysqli_error());
 $done = 1;
 
 

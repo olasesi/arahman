@@ -381,71 +381,36 @@
 
 
           
-          
-          <!-- <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/forms/basic_elements.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
-              </span>
-              <span class="menu-title">Form Elements</span>
-            </a>
-          </li> -->
-          
-          
-          
-<!-- 
-              <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/tables/basic-table.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-table-large"></i>
-              </span>
-              <span class="menu-title">Subjects</span>
-            </a>
-          </li>
+<?php
+  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == PRINCIPAL){
+        echo   '<li class="nav-item menu-items">
+             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicsubjects" aria-expanded="false" aria-controls="ui-basic">
+               <span class="menu-icon">
+                 <i class="mdi mdi-laptop"></i>
+               </span>
+               <span class="menu-title">Sec. Subjects</span>
+               <i class="menu-arrow"></i>
+             </a>
+
+
+             <div class="collapse" id="ui-basicsubjects">
+               <ul class="nav flex-column sub-menu">
+                
+              
          
-         
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/charts/chartjs.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-chart-bar"></i>
-              </span>
-              <span class="menu-title">Charts</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="pages/icons/mdi.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-contacts"></i>
-              </span>
-              <span class="menu-title">Icons</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li> -->
+              
+                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/add-subjects.php">Add new subjects</a>
+                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/link-subject-class.php">Give classes<br> to subjects</a></li>
+                 </li>
+               </ul>
+             </div>
+           </li>   
+              
+   ';
+  }       
+          
+?>
+
         </ul>
       </nav>
       <!-- partial -->
@@ -458,7 +423,7 @@
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
            
             <?php
- if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){
+ if((isset($_SESSION['admin_active'])) AND ($_SESSION['admin_type'] == ACCOUNTANT OR $_SESSION['admin_type'] == OWNER)){
        echo   '<ul class="navbar-nav w-100">
               <li class="nav-item w-100">
                 <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="search-paid.php">
@@ -474,12 +439,12 @@
 echo
 '<ul class="navbar-nav w-100">
 <li class="nav-item w-100">
-  <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search method="GET" action="search-paid-sec.php"">
+  <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search method="GET" action="sec-search-paid.php"">
     <input type="text" class="form-control" placeholder="Paid students (secondary)" name="search-paid-sec" value="';
     if(isset($_GET['search-paid-sec'])){echo $_GET['search-paid-sec'];}
     echo '">
     
-    <button type="submit" class="btn btn-danger me-2" name="button-paid_students">Search</button>  
+    <button type="submit" class="btn btn-danger me-2" name="button-paid_students-sec">Search</button>  
     </form>
 </li>
 </ul>';
@@ -492,12 +457,24 @@ echo
        echo   '<ul class="navbar-nav w-100">
               <li class="nav-item w-100">
                 <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="search-registered.php">
-                  <input type="text" class="form-control" placeholder="Registered students" name="search-registered" value="';if(isset($_GET['search-registered'])){echo $_GET['search-registered'];}
+                  <input type="text" class="form-control" placeholder="Registered students (Primary)" name="search-registered" value="';if(isset($_GET['search-registered'])){echo $_GET['search-registered'];}
                   echo'">
                   <button type="submit" class="btn btn-success me-2" name="button-search-registered">Search</button>
                 </form>
               </li>
             </ul>';
+
+            echo   '<ul class="navbar-nav w-100">
+            <li class="nav-item w-100">
+              <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search" method="GET" action="sec-search-registered.php">
+                <input type="text" class="form-control" placeholder="Registered students (Secondary)" name="search-registered-sec" value="';if(isset($_GET['search-registered-sec'])){echo $_GET['search-registered-sec'];}
+                echo'">
+                <button type="submit" class="btn btn-danger me-2" name="button-search-registered-sec">Search</button>
+              </form>
+            </li>
+          </ul>';
+
+
           }
           ?>
           <!-- <ul class="navbar-nav navbar-nav-right">

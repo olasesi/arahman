@@ -83,7 +83,7 @@ $_GET = array();
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Primary school admins</h4>
+                    <h4 class="card-title">School admins</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -93,7 +93,7 @@ $_GET = array();
                             <th> Post number </th>
                             <th> Username </th>
                             <th> Status </th>
-                            <th>Date started</th>
+                            <th>Date added</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -108,7 +108,7 @@ $statement = "admin ORDER BY admin_id ASC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
-            $per_page = 12; 		// Set how many records do you want to display per page. Image alt tag to be put too
+          		// Set how many records do you want to display per page. Image alt tag to be put too
             $startpoint = ($page * $per_page) - $per_page;
             $results = mysqli_query($connect,"SELECT admin_id, admin_active, type, admin_firstname, admin_firstname, admin_lastname, admin_email, admin_timestamp FROM admin ORDER BY admin_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);
             
@@ -124,7 +124,7 @@ $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
                     <td>'.$row['admin_firstname'].' '.$row['admin_lastname'].'</td>
                     <td>'.$row['admin_email'].'</td>
                     <td>'.$active.'</td>
-                    <td>'.$row['admin_timestamp'].'</td>
+                    <td>'.date('M j Y g:i A', strtotime($row['admin_timestamp'])).'</td>
                    
                     <td>
                     <form action="'.GEN_WEBSITE.'/admin/edit-admin-password.php" method="GET">

@@ -1,5 +1,5 @@
 <div class="card-body">
- <h4 class="card-title">Recently registered (Primary)</h4>
+ <h4 class="card-title">Recently registered (Secondary)</h4>
  <div class="table-responsive">
    <table class="table">
      <thead>
@@ -9,6 +9,7 @@
          <th> Surname </th>
          <th> Email address </th>
          <th> Phone number </th>
+         <th> Entrance Exam(Absent/Present) </th>
         <th>Date paid </th>
      </tr>
      </thead>
@@ -21,14 +22,16 @@ if (mysqli_num_rows($results) != 0){
 while ($row = mysqli_fetch_array($results)) {
  echo '<tr>
  
- <td>'.$row['pri_firstname'].'</td>
- <td>'.$row['pri_surname'].' </td>
- <td>'.$row['pri_email'].'</td>
- <td>'.$row['pri_phone'].'</td>
- 
- <td> '.date('M j Y g:i A', strtotime($row['pri_timestamp'])).' </td>
+ <td>'.$row['sec_firstname'].'</td>
+ <td>'.$row['sec_surname'].' </td>
+ <td>'.$row['sec_email'].'</td>
+ <td>'.$row['sec_phone'].'</td>';
+echo ($row['secondary_common_e_exam'] == NULL)?'<td><button type="button" class="btn btn-danger me-2 disabled">Exam in View/Was Absent</button></td>':'<td><button type="button"  class="btn btn-success me-2 disabled">Exam in View/Was Present</button></td>';
+
+
+ echo '<td> '.date('M j Y g:i A', strtotime($row['sec_timestamp'])).' </td>
  <td>
- <form action="'.GEN_WEBSITE.'/admin/confirm-data.php?id='.$row['primary_id'].'" method="POST">
+ <form action="'.GEN_WEBSITE.'/admin/sec-confirm-data.php?id='.$row['secondary_id'].'" method="POST">
 
  <button type="submit" class="btn btn-success me-2" name="paid_students">View</button>
  </form>
@@ -44,7 +47,7 @@ while ($row = mysqli_fetch_array($results)) {
  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
    <h6 class="dropdown-header">Admmission action</h6>
    
-   <button type="submit" class="btn btn-danger me-2" value="'.$row['primary_id'].'" name="reject_students">Reject Admission</button>
+   <button type="submit" class="btn btn-danger me-2" value="'.$row['secondary_id'].'" name="reject_students">Reject Admission</button>
   
    
  </div>
@@ -60,6 +63,8 @@ echo '<h3 class="text-center">No result found</h3>';
 } 
 
 ?>
+
+
 </tbody>
    </table>
    
