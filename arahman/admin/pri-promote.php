@@ -14,19 +14,20 @@ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] != ADMISSION){
 	exit();
 }
 ?>
-
+<?php
+$query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_term FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
+  while($term_rows = mysqli_fetch_array($query_term_start)){
+    $start_var = $term_rows['term_start'];
+    $end_var = $term_rows['term_end'];
+    $choose_term_var = $term_rows['choose_term'];
+  }
+  if(!empty($start_var) && !empty($end_var) && $choose_term_var == 'Third term'){  
+   
+  }  
+ ?> 
 
 <?php require_once ('../../incs-arahman/dashboard.php');?>
-<?php
-include_once ('../../incs-arahman/deny-student.php');
-?>
-
-        
-        
-        
-        
-        
-        
+   
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">

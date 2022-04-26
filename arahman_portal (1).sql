@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 03:47 PM
+-- Generation Time: Apr 26, 2022 at 02:04 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -44,9 +44,9 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
-(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-01-03 09:49:31'),
+(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', '5f4dcc3b5aa765d61d8327deb882cf99', '5c782c31a5e8115bb81afcfd4c6244a3', '2022-01-03 09:49:31'),
 (2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-01-08 14:00:53'),
-(3, 1, 'admission', 'seye', 'alade', 'admission', '5f4dcc3b5aa765d61d8327deb882cf99', '060686b23028e718f85a5fbd81f12245', '2022-04-06 14:28:14'),
+(3, 1, 'admission', 'seye', 'alade', 'admission', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-04-06 14:28:14'),
 (4, 1, 'accountant', 'teni', 'alade', 'accountant', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-04-06 14:28:14'),
 (5, 1, 'principal', 'anita', 'anita', 'principal', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-04-06 14:28:14');
 
@@ -232,11 +232,11 @@ CREATE TABLE `primary_school_exam` (
 CREATE TABLE `primary_school_students` (
   `primary_id` int(11) NOT NULL,
   `pri_active_email` int(1) NOT NULL DEFAULT 0,
-  `pri_active` varchar(1) NOT NULL DEFAULT '0',
+  `pri_active` varchar(1) NOT NULL DEFAULT '1',
   `pri_paid` int(1) NOT NULL DEFAULT 0,
   `pri_admit` int(1) NOT NULL DEFAULT 0,
   `pri_class_id` varchar(20) NOT NULL,
-  `pri_school_term` varchar(20) NOT NULL DEFAULT 'choose term',
+  `pri_school_term` varchar(20) NOT NULL DEFAULT 'First term',
   `pri_year` varchar(15) NOT NULL,
   `pri_firstname` varchar(20) NOT NULL,
   `pri_surname` varchar(20) NOT NULL,
@@ -264,7 +264,10 @@ INSERT INTO `primary_school_students` (`primary_id`, `pri_active_email`, `pri_ac
 (5, 1, '0', 1, 0, '4', 'choose term', '', 'Consequatur', 'Delectus', '', '', 'Corporis@aut.com', 'default.jpg', '08073454632', 'Corrupti dolore seq', '', '', '', '2022-01-06 14:47:31'),
 (6, 1, '1', 1, 1, '6', 'choose term', '2022', 'rasheed', 'rasheed', '', '', 'rasheed@test.com', '', '08074574512', 'Ikeja', 'password', '36660e59856b4de58a219bcf4e27eba3', '', '2022-01-14 09:48:57'),
 (7, 1, '1', 1, 1, '3', 'choose term', '2022', 'duro', 'duro', '3', 'Female', 'web@duromedia.com.ng', 'b3285c6aeaec1faa574de62167fdef54e268b060.JPG', '08074574512', 'Ikka', '$2y$10$ozqIlrHj3uTkKwud0nwe6u5ioKpkJ.XEvVKsM.NS1.sBAm6Y2EipW', 'd96409bf894217686ba124d7356686c9', '', '2022-02-10 09:33:26'),
-(8, 1, '0', 0, 0, '3', 'choose term', '2022', 'Anita', 'Olusesi', '12', 'Female', 'olusesianita@gmail.com', 'cb157db8d214863ab316c844ceffebaa9439878c.JPG', '08074574512', 'ikeja', '$2y$10$mlgOyxryVZ2Oq2LwHz1Y3On6maurSApYe3V7raaKhbhN4PDSG2uvW', 'a8ecbabae151abacba7dbde04f761c37', '', '2022-02-13 23:47:44');
+(8, 1, '0', 0, 0, '3', 'choose term', '2022', 'Anita', 'Olusesi', '12', 'Female', 'olusesianita@gmail.com', 'cb157db8d214863ab316c844ceffebaa9439878c.JPG', '08074574512', 'ikeja', '$2y$10$mlgOyxryVZ2Oq2LwHz1Y3On6maurSApYe3V7raaKhbhN4PDSG2uvW', 'a8ecbabae151abacba7dbde04f761c37', '', '2022-02-13 23:47:44'),
+(9, 0, '0', 0, 0, '0', 'Third term', '2000/2001', 'Elijah', 'Maynard', '', '', 'lizyqiq@mailinator.com', '', '08074574512', '', '$2y$10$37jrRWBQI7Wpd3woM7bxeuEda9jS757fsZaImjlFZ1f9ZcAK1O7de', '4e732ced3463d06de0ca9a15b6153677', '', '2022-04-26 08:08:31'),
+(10, 0, '1', 0, 0, '0', 'Third term', '2000/2001', 'Bernard', 'Avila', '', '', 'qeziwafaq@mailinator.com', '', '08074574512', '', '$2y$10$9rWMD9ZoPX5SwJGvQxB3M.tCuZ5U74J.PREImTjRcoT2nezC4VrPG', '3e89ebdb49f712c7d90d1b39e348bbbf', '', '2022-04-26 09:08:32'),
+(11, 1, '1', 0, 0, '0', '', '', 'Seth', 'Workman', '', '', 'legavunoz@mailinator.com', '', '08074574512', '', '$2y$10$ZY.NhAdpE7wl7foolq9dEukzH3E0FFyfxCeDYNnk/b5ANYifE7Ira', '99bcfcd754a98ce89cb86f73acc04645', '', '2022-04-26 09:29:57');
 
 -- --------------------------------------------------------
 
@@ -503,6 +506,30 @@ INSERT INTO `secondary_module_join_students` (`secondary_module_join_students_id
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `secondary_module_price`
+--
+
+CREATE TABLE `secondary_module_price` (
+  `secondary_module_price_id` int(11) NOT NULL,
+  `secondary_module_class_id` int(11) NOT NULL,
+  `secondary_modules_id` int(11) NOT NULL,
+  `secondary_module_price` varchar(9) NOT NULL,
+  `secondary_module_price_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `secondary_module_price`
+--
+
+INSERT INTO `secondary_module_price` (`secondary_module_price_id`, `secondary_module_class_id`, `secondary_modules_id`, `secondary_module_price`, `secondary_module_price_timestamp`) VALUES
+(24, 4, 30, '6000', '2022-04-21 13:07:46'),
+(25, 5, 30, '5000', '2022-04-22 01:08:21'),
+(26, 4, 32, '1000', '2022-04-22 01:15:21'),
+(27, 5, 32, '1000', '2022-04-22 01:15:21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `secondary_payment`
 --
 
@@ -586,11 +613,11 @@ CREATE TABLE `secondary_school_exam` (
 CREATE TABLE `secondary_school_students` (
   `secondary_id` int(11) NOT NULL,
   `sec_active_email` int(1) NOT NULL DEFAULT 0,
-  `sec_active` varchar(6) NOT NULL DEFAULT '0',
+  `sec_active` int(1) NOT NULL DEFAULT 1,
   `sec_paid` int(1) NOT NULL DEFAULT 0,
   `sec_admit` int(1) NOT NULL DEFAULT 0,
   `sec_class_id` int(1) NOT NULL,
-  `sec_school_term` varchar(20) NOT NULL DEFAULT 'choose term',
+  `sec_school_term` varchar(20) NOT NULL DEFAULT 'First term',
   `sec_year` varchar(15) NOT NULL,
   `sec_firstname` varchar(20) NOT NULL,
   `sec_surname` varchar(20) NOT NULL,
@@ -611,9 +638,11 @@ CREATE TABLE `secondary_school_students` (
 --
 
 INSERT INTO `secondary_school_students` (`secondary_id`, `sec_active_email`, `sec_active`, `sec_paid`, `sec_admit`, `sec_class_id`, `sec_school_term`, `sec_year`, `sec_firstname`, `sec_surname`, `sec_age`, `sec_sex`, `sec_email`, `sec_photo`, `sec_phone`, `sec_address`, `sec_password`, `sec_email_hash`, `sec_cookie_session`, `sec_timestamp`) VALUES
-(1, 1, '0', 0, 0, 1, 'Second term', '2001/2002', 'aaliyah', 'olusesi', '', '', 'aaliyaholusesi@gmail.com', '', '08074574512', '', '$2y$10$ECHenBkEy/S0v.laQCnsq.XdDxG9MyiEMGtCMkLLZPqqgwpJjYXU2', '41f1f19176d383480afa65d325c06ed0', '', '2022-04-22 15:44:48'),
-(2, 1, '0', 0, 0, 3, 'Second term', '2001/2002', 'ahmed', 'olusesi', '', 'Male', 'olusesia@gmail.com', 'default.jpg', '08074574512', '', '', '', '', '2022-04-22 14:19:24'),
-(3, 1, '0', 0, 0, 0, 'Third term', '2022/2023', 'anita', 'olusesi', '23', 'Male', 'olusesia@gmail.com', 'ae84f7205042cfa66705bd5ab3e17ec5879bdcfd.jpg', '08074574512', 'Ikeja', '', '', '', '2022-04-22 14:19:24');
+(1, 1, 0, 0, 0, 1, 'Second term', '2001/2002', 'aaliyah', 'olusesi', '', '', 'aaliyaholusesi@gmail.com', '', '08074574512', '', '$2y$10$ECHenBkEy/S0v.laQCnsq.XdDxG9MyiEMGtCMkLLZPqqgwpJjYXU2', '41f1f19176d383480afa65d325c06ed0', '', '2022-04-22 15:44:48'),
+(2, 1, 0, 0, 0, 3, 'Second term', '2001/2002', 'ahmed', 'olusesi', '', 'Male', 'olusesia@gmail.com', 'default.jpg', '08074574512', '', '', '', '', '2022-04-22 14:19:24'),
+(3, 1, 0, 0, 0, 0, 'Third term', '2022/2023', 'anita', 'olusesi', '23', 'Male', 'olusesia@gmail.com', 'ae84f7205042cfa66705bd5ab3e17ec5879bdcfd.jpg', '08074574512', 'Ikeja', '', '', '', '2022-04-22 14:19:24'),
+(4, 0, 0, 0, 0, 0, 'Third term', '2000/2001', 'Michael', 'Mccoy', '', '', 'cuqiz@mailinator.com', '', '08074574512', '', '$2y$10$yDvicX5rdd.cIe2qCFmQqeAWy5Hrz/T9JxxJYjMwQu97VQeEp3zIi', 'd1f255a373a3cef72e03aa9d980c7eca', '', '2022-04-26 08:09:52'),
+(5, 1, 1, 0, 0, 0, '', '', 'Darrel', 'Hanson', '', '', 'goxy@mailinator.com', '', '08074574512', '', '$2y$10$Um6uq5Z9wmRN3eAAam1no.fbY9U/mVe6neWplHt9qbK9SUUflcWOS', 'cbb6a3b884f4f88b3a8e3d44c636cbd8', '', '2022-04-26 09:31:00');
 
 -- --------------------------------------------------------
 
@@ -735,7 +764,8 @@ INSERT INTO `term_start_end` (`term_start_end_id`, `choose_term`, `term_start`, 
 (38, 'Third term', '2022-03-22 16:33:18', '2022-03-22 16:34:24', '2022-03-22 16:33:18', '2001/2002'),
 (39, 'Second term', '2022-03-24 11:56:29', '2022-03-24 11:58:22', '2022-03-24 11:56:29', '2001/2002'),
 (44, 'Third term', '2022-04-24 06:58:35', '2022-04-24 08:10:29', '2022-04-24 06:58:35', '2022/2023'),
-(45, 'First term', '2022-04-25 13:00:37', '', '2022-04-25 13:00:37', '2000/2001');
+(45, 'Third term', '2022-04-25 13:00:37', '2022-04-25 15:04:05', '2022-04-25 13:00:37', '2000/2001'),
+(46, 'First term', '2022-04-26 10:18:45', '', '2022-04-26 10:18:45', '2022/2023');
 
 --
 -- Indexes for dumped tables
@@ -820,6 +850,12 @@ ALTER TABLE `secondary_module_join_students`
   ADD PRIMARY KEY (`secondary_module_join_students_id`);
 
 --
+-- Indexes for table `secondary_module_price`
+--
+ALTER TABLE `secondary_module_price`
+  ADD PRIMARY KEY (`secondary_module_price_id`);
+
+--
 -- Indexes for table `secondary_payment`
 --
 ALTER TABLE `secondary_payment`
@@ -881,7 +917,7 @@ ALTER TABLE `primary_class_subjects`
 -- AUTO_INCREMENT for table `primary_school_students`
 --
 ALTER TABLE `primary_school_students`
-  MODIFY `primary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `primary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `secondary_common_e`
@@ -902,10 +938,16 @@ ALTER TABLE `secondary_module_join_students`
   MODIFY `secondary_module_join_students_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `secondary_module_price`
+--
+ALTER TABLE `secondary_module_price`
+  MODIFY `secondary_module_price_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
 -- AUTO_INCREMENT for table `term_start_end`
 --
 ALTER TABLE `term_start_end`
-  MODIFY `term_start_end_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `term_start_end_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

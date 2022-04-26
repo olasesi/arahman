@@ -348,6 +348,47 @@
 
 
 
+<?php
+ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ADMISSION){
+  $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_term FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
+  while($term_rows = mysqli_fetch_array($query_term_start)){
+    $start_var = $term_rows['term_start'];
+    $end_var = $term_rows['term_end'];
+    $choose_term_var = $term_rows['choose_term'];
+
+  }
+  if(!empty($start_var) && !empty($end_var) && $choose_term_var == 'Third term'){    
+  
+  echo   '<li class="nav-item menu-items">
+              <a class="nav-link" data-bs-toggle="collapse" href="#recent-payments" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                  <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Promote students</span>
+                <i class="menu-arrow"></i>
+              </a>
+
+              <div class="collapse" id="recent-payments">
+                <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/pri-promote.php">Primary Promotion</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/sec-promote.php">Secondary Promotion</a></li>
+                  
+                </ul>
+              </div>
+            </li>
+           
+            
+           
+            
+            '; 
+          }       
+        }
+?>
+
+
+
+
+
 
 <?php
  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == HEADMASTER){
