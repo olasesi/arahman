@@ -4,9 +4,9 @@ require_once ('../incs-arahman/gen_serv_con.php');
 $page_title = 'Email Verification';
 
 
-// if(isset($_SESSION['user_id'])){
-// header("Location:".GEN_WEBSITE);
-// exit();}
+ if(isset($_SESSION['user_id'])){
+header("Location:".GEN_WEBSITE);
+exit();}
 
 
 include ('../incs-arahman/header.php');
@@ -23,16 +23,16 @@ if(isset($_GET['hash']) && !empty($_GET['hash'])){
 //$surname = mysqli_real_escape_string($connect, $_GET['surname']);	
 $hash = mysqli_real_escape_string($connect, $_GET['hash']);
 
-$search = mysqli_query($connect, "SELECT pri_surname, pri_email, pri_active_email FROM primary_school_students WHERE pri_surname='".$surname."' AND pri_email_hash = '".$hash."' AND pri_active_email = '0'") or die(db_conn_error);
+$search = mysqli_query($connect, "SELECT pri_active_email FROM primary_school_students WHERE pri_email_hash = '".$hash."' AND pri_active_email = '0'") or die(db_conn_error);
 $match = mysqli_num_rows($search);
 
 	if($match > 0){
 
-	mysqli_query($connect, "UPDATE primary_school_students SET pri_active_email = '1' WHERE pri_surname='".$surname."' AND pri_email_hash='".$hash."' AND pri_active_email='0'") or die(db_conn_error);	
+	mysqli_query($connect, "UPDATE primary_school_students SET pri_active_email = '1' WHERE pri_email_hash='".$hash."' AND pri_active_email='0'") or die(db_conn_error);	
 	
 	echo '<br><br><br>';
-	echo '<div class="">Thank you for registering. An email has been sent to your inbox. Please click the link to confirm your account.
-    <center><a href="'.GEN_WEBSITE.'/verify-email.php?hash='.$_GET['hash'].'">Confirm email</a></center> 
+	echo '<div class="">Thank you for confirming your email.
+    <center>Please visit the school to know the next thing to do. Please do not forget your register details.</center> 
     </div>';
 	echo '<br><br><br>';
 	

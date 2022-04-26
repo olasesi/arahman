@@ -3,6 +3,14 @@ require_once ('../../incs-arahman/config.php');
 require_once ('../../incs-arahman/gen_serv_con.php');
 //include("../incs_shop/cookie_for_most.php");
 //include('../users/includes/menu.php');
+$testtime = mysqli_query($connect, "SELECT CURRENT_TIMESTAMP() AS real_time");
+while($row = mysqli_fetch_array($testtime)){
+echo $row['real_time'];
+//mysqli_query($connect, "DELETE FROM primary_school_students WHERE pri_active_email ='0' AND ") or die(db_conn_error);
+}
+// $no_many_copy = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end WHERE choose_term = '".$chooseterm."' AND school_session = '".$pri_session."'") or die(db_conn_error);
+// 
+      
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
 	header("Location:".GEN_WEBSITE.'/admin');
