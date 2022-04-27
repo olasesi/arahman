@@ -17,8 +17,44 @@ if($_SESSION['admin_type'] != OWNER){
 
 
 ?>
+<?php
+//payment portal
+if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['control_portal'])){
+  if($_POST['radio_portal'] == 'open'){
+    mysqli_query($connect,"UPDATE admin_owner SET admin_pay_reg_toggle = 'open'") or die(db_conn_error); 	
+    header('Location:'.GEN_WEBSITE.'/admin/term-session.php?action_open=1');
+    exit();
 
+  }elseif($_POST['radio_portal'] == 'close'){
+    mysqli_query($connect,"UPDATE admin_owner SET admin_pay_reg_toggle = 'close'") or die(db_conn_error); 	
+    header('Location:'.GEN_WEBSITE.'/admin/term-session.php?action_open=1');
+    exit();
+  }
+}
 
+$toggle_position = mysqli_query($connect,"SELECT admin_pay_reg_toggle FROM admin_owner") or die(db_conn_error);
+while($rows_position = mysqli_fetch_array($toggle_position)){
+ $var_rows_position = $rows_position['admin_pay_reg_toggle'];
+}
+?>
+
+<?php
+//registration portal
+if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['control_portal_session'])){
+  if($_POST['radio_portal_session'] == 'open'){
+    mysqli_query($connect,"UPDATE admin_owner SET admin_pay_reg_toggle = 'open'") or die(db_conn_error); 	
+
+  }elseif($_POST['radio_portal_session'] == 'close'){
+    mysqli_query($connect,"UPDATE admin_owner SET admin_pay_reg_toggle = 'close'") or die(db_conn_error); 	
+
+  }
+}
+
+$toggle_position = mysqli_query($connect,"SELECT admin_pay_reg_toggle FROM admin_owner") or die(db_conn_error);
+while($rows_position = mysqli_fetch_array($toggle_position)){
+ $var_rows_position = $rows_position['admin_pay_reg_toggle'];
+}
+?>
 
                   
                     <?php
@@ -27,7 +63,7 @@ if($_SESSION['admin_type'] != OWNER){
                 
                 $q_end_term = mysqli_query($connect,"UPDATE term_start_end SET term_end = '".$now->format('Y-m-d H:i:s')."' WHERE term_start_end_id = '".$_POST['hidden_start_end']."' LIMIT 1") or die(db_conn_error);
                 
-              if(mysqli_affected_rows($connect, $q_end_term) === 1){
+     /*         if(mysqli_affected_rows($connect, $q_end_term) === 1){
            //Primary school and should a students be logged out?      
           mysqli_query($connect,"UPDATE primary_school_students SET pri_paid = '0', pri_admit = '0' WHERE pri_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
 
@@ -54,7 +90,7 @@ if($_SESSION['admin_type'] != OWNER){
            mysqli_query($connect, "DELETE FROM secondary_payment WHERE secondary_payment_paid_percent ='100'") or die(db_conn_error);
            //Debtors details still available in the history
 
-                }
+                }*/
                 
                 
                 
@@ -162,6 +198,29 @@ if(mysqli_num_rows($no_many_copy) > 0){
               <div class="main-panel">
                 <div class="content-wrapper">
                       
+
+                <?php         
+                          if(isset($_GET['action_open']) AND $_GET['action_open'] = 1){
+                                
+                              echo '<div class="row">
+                      
+                          <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                          <div class="card-body">
+                            <h4 class="card-title text-warning text-center">Action was successful</h4>
+                          
+                      
+                                
+                                    
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                      
+                                  </div>';
+                      }
+                        
+                          ?>
 
                           <?php         
                           if(isset($_GET['confirm_file']) AND $_GET['confirm_file'] = 1){
@@ -356,83 +415,104 @@ echo '<hr>
 
 
 
-              <!-- <form action="" method="POST">
-                <div class="form-group">
-                <label>Select </label>
-                
-              </div>
-
-              <button type="submit" class="btn btn-success me-2" name="end_term">End term</button>
-              
-  
-                
-                  </form> -->
+                  <div class="row">
+      
+    
 
 
-
-
-
-
-
-
-              <!-- <div class="col-md-6 grid-margin stretch-card">
+   
+          
+    <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Secondary School</h4>
-                    <h4 class="card-title">Begin or End</h4>
-                    <div class="form-group">
-                      <label>Select </label>
-                      <select class="js-example-basic-single" style="width:100%">
-                      <option value="">Choose term</option>
-                      <option value="AL">First term</option>
-                        <option value="WY">Second term</option>
-                        <option value="AM">Third term</option>
-                      
-                      </select>
+                    <h4 class="card-title">Payment portal</h4>
+                    <p class="card-description">Payment portal</p>
+                    <form action="" method="POST">
+                      <div class="row">
+                        
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="radio_portal" id="optionsRadios1" <?php if(isset($_POST['radio_portal']) AND $_POST['radio_portal'] == 'close'){ echo 'checked';}elseif($var_rows_position == 'close'){ echo 'checked';} ?> value="close"> Close </label>
+                            </div>
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="radio_portal" id="optionsRadios2" <?php if(isset($_POST['radio_portal']) AND $_POST['radio_portal'] == 'open'){ echo 'checked';}elseif($var_rows_position == 'open'){ echo 'checked';} ?> value="open"> Open </label>
+                            </div>
+                           
+   
+                          </div>
+
+ <button type="submit" class="btn btn-success btn-fw" name="control_portal">Submit</button>
+                     
                     </div>
-                    <button type="submit" class="btn btn-danger me-2">Submit</button>
+                      </div>
+                    </form>
                   </div>
+                 
                 </div>
-              </div> -->
+              </div>
+              
+            
 
-
-
-
-
-
-
-
-
-
+             
+              
 
 
             </div>
 
 
-                     
+
+            <div class="row">
+      
+    
 
 
+   
+          
+      <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Registration portal</h4>
+                      <p class="card-description">Registration portal for new session</p>
+                      <form action="" method="POST">
+                        <div class="row">
+                          
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="radio_portal_session" id="optionsRadios1" <?php if(isset($_POST['radio_portal_session']) AND $_POST['radio_portal_session'] == 'close'){ echo 'checked';}elseif($var_rows_position_session == 'close'){ echo 'checked';} ?> value="close"> Close </label>
+                              </div>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="radio_portal_session" id="optionsRadios2" <?php if(isset($_POST['radio_portal_session']) AND $_POST['radio_portal_session'] == 'open'){ echo 'checked';}elseif($var_rows_position_session == 'open'){ echo 'checked';} ?> value="open"> Open </label>
+                              </div>
+                             
+     
+                            </div>
+  
+   <button type="submit" class="btn btn-success btn-fw" name="control_portal_session">Submit</button>
+                       
+                      </div>
+                        </div>
+                      </form>
+                    </div>
+                   
+                  </div>
+                </div>
+                
+              
+  
+               
+                
+  
+  
+              </div>
 
 
-
-
-
-
-
-
-
-
-
-<script>
-                    /* window.addEventListener("load", function() {
-    var f = document.getElementById('Foo');
-    setInterval(function() {
-        f.style.display = (f.style.display == 'none' ? '' : 'none');
-    }, 1000);
-
-}, false); */
-</script>                 
-
+              
 
 
             <?php require_once ('../../incs-arahman/dashboard-footer.php'); ?>
