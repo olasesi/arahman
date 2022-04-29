@@ -19,7 +19,7 @@ if($_SESSION['pri_admit'] == 0){
 
 <?php
 	
-/*	$query_banning = mysqli_query($connect, "SELECT pri_active FROM primary_school_students WHERE pri_active = '0' AND primary_id = '".$_SESSION['primary_id']."'") or die(db_conn_error); 
+	$query_banning = mysqli_query($connect, "SELECT pri_active FROM primary_school_students WHERE pri_active = '0' AND primary_id = '".$_SESSION['primary_id']."'") or die(db_conn_error); 
 	
 if (mysqli_affected_rows($connect) == 1) {
 
@@ -29,7 +29,7 @@ setcookie("students_remember_me", "", time() - 31104000);
 	
 header('Location:'.GEN_WEBSITE.'/students');
 exit();
-}*/
+}
 
 ?>
 

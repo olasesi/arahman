@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>ARRAHMAN SCHOOL</title>
     <!-- base:css -->
     <link rel="stylesheet" href="../vendors/typicons/typicons.css">
     <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css">

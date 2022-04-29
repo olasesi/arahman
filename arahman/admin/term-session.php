@@ -42,17 +42,17 @@ while($rows_position = mysqli_fetch_array($toggle_position)){
 //registration portal
 if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['control_portal_session'])){
   if($_POST['radio_portal_session'] == 'open'){
-    mysqli_query($connect,"UPDATE admin_owner SET admin_pay_reg_toggle = 'open'") or die(db_conn_error); 	
+    mysqli_query($connect,"UPDATE admin_registration SET admin_reg_status = 'open'") or die(db_conn_error); 	
 
   }elseif($_POST['radio_portal_session'] == 'close'){
-    mysqli_query($connect,"UPDATE admin_owner SET admin_pay_reg_toggle = 'close'") or die(db_conn_error); 	
+    mysqli_query($connect,"UPDATE admin_registration SET admin_reg_status = 'close'") or die(db_conn_error); 	
 
   }
 }
 
-$toggle_position = mysqli_query($connect,"SELECT admin_pay_reg_toggle FROM admin_owner") or die(db_conn_error);
-while($rows_position = mysqli_fetch_array($toggle_position)){
- $var_rows_position = $rows_position['admin_pay_reg_toggle'];
+$toggle_position_session = mysqli_query($connect,"SELECT admin_reg_status FROM admin_registration") or die(db_conn_error);
+while($rows_position = mysqli_fetch_array($toggle_position_session)){
+ $var_rows_position_session = $rows_position['admin_reg_status'];
 }
 ?>
 
@@ -64,7 +64,7 @@ while($rows_position = mysqli_fetch_array($toggle_position)){
                 $q_end_term = mysqli_query($connect,"UPDATE term_start_end SET term_end = '".$now->format('Y-m-d H:i:s')."' WHERE term_start_end_id = '".$_POST['hidden_start_end']."' LIMIT 1") or die(db_conn_error);
                 
      /*         if(mysqli_affected_rows($connect, $q_end_term) === 1){
-           //Primary school and should a students be logged out?      
+           //Primary school logged out I think      
           mysqli_query($connect,"UPDATE primary_school_students SET pri_paid = '0', pri_admit = '0' WHERE pri_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
 
           mysqli_query($connect, "DELETE FROM module_join_students") or die(db_conn_error);
@@ -73,12 +73,18 @@ while($rows_position = mysqli_fetch_array($toggle_position)){
 
           mysqli_query($connect, "DELETE FROM modules") or die(db_conn_error);
 
-          mysqli_query($connect, "DELETE FROM primary_payment WHERE primary_payment_paid_percent ='100'") or die(db_conn_error);
+         
+          
+
+
+   
+
+
           //Debtors details still available in the history
 
 
 
-           //Secondary school and should a students be logged out?      
+           //Secondary school be logged out I think      
            mysqli_query($connect,"UPDATE secondary_school_students SET sec_paid = '0', sec_admit = '0' WHERE sec_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
 
            mysqli_query($connect, "DELETE FROM secondary_module_join_students") or die(db_conn_error);
@@ -90,6 +96,8 @@ while($rows_position = mysqli_fetch_array($toggle_position)){
            mysqli_query($connect, "DELETE FROM secondary_payment WHERE secondary_payment_paid_percent ='100'") or die(db_conn_error);
            //Debtors details still available in the history
 
+         
+   
                 }*/
                 
                 
@@ -483,7 +491,8 @@ echo '<hr>
                             <div class="form-group">
                               <div class="form-check">
                                 <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="radio_portal_session" id="optionsRadios1" <?php if(isset($_POST['radio_portal_session']) AND $_POST['radio_portal_session'] == 'close'){ echo 'checked';}elseif($var_rows_position_session == 'close'){ echo 'checked';} ?> value="close"> Close </label>
+                                  <input type="radio" class="form-check-input" name="radio_portal_session" id="optionsRadios1"
+                                   <?php if(isset($_POST['radio_portal_session']) AND $_POST['radio_portal_session'] == 'close'){ echo 'checked';}elseif($var_rows_position_session == 'close'){ echo 'checked';} ?> value="close"> Close </label>
                               </div>
                               <div class="form-check">
                                 <label class="form-check-label">

@@ -31,9 +31,8 @@ define( 'OFFSET_TIME', '+1 hour' );
 define("OWNER","owner");
 define("ADMIN","admin");
 define("ADMISSION","admission");
-define('HEADMASTER', 'headmaster');
 define('ACCOUNTANT', 'accountant');
-
+define('HEADMASTER', 'headmaster');
 
 /*SECONDARY SCHOOL ADMIN ROLES*/
 define('PRINCIPAL', 'principal');
@@ -66,7 +65,7 @@ define("BASIC_SIX_FEES", 600000);
 
 
 /*API keys*/
-
+define('API', 'Bearer sk_test_4cab8d4d937b1ab5f847c78c0014a2f6a6e3405c');
 
 
 /*Result per page*/

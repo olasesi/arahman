@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admin Dashboard</title>
+    <title>ARRAHMAN SCHOOL</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -48,8 +48,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><img src="assets/images/logo.svg" alt="logo" /></a>
-          <a class="sidebar-brand brand-logo-mini" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="sidebar-brand brand-logo" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><h3 class="mb-0">ARRAHMAN SCHOOL</h3><!--<img src="assets/images/logo.svg" alt="logo" />--></a>
+          <a class="sidebar-brand brand-logo-mini" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><!--<img src="assets/images/logo-mini.svg" alt="logo" />--><h3 class="mb-0">ARRAHMAN SCHOOL</h3></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
@@ -350,7 +350,31 @@
 
 <?php
  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ADMISSION){
-  $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_term FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
+  
+  echo   '<li class="nav-item menu-items">
+              <a class="nav-link" data-bs-toggle="collapse" href="#register-payments" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-icon">
+                  <i class="mdi mdi-laptop"></i>
+                </span>
+                <span class="menu-title">Registered students</span>
+                <i class="menu-arrow"></i>
+              </a>
+
+              <div class="collapse" id="register-payments">
+                <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/pri-registered.php">Primary schools</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/sec-registered.php">Secondary schools</a></li>
+                  
+                </ul>
+              </div>
+            </li>
+           
+            
+           
+            
+            ';
+
+$query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_term FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
   while($term_rows = mysqli_fetch_array($query_term_start)){
     $start_var = $term_rows['term_start'];
     $end_var = $term_rows['term_end'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2022 at 12:17 AM
+-- Generation Time: Apr 29, 2022 at 06:47 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -44,7 +44,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
-(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-01-03 09:49:31'),
+(1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', '5f4dcc3b5aa765d61d8327deb882cf99', '9b52f5157c9894f3b1f243d269bd7841', '2022-01-03 09:49:31'),
 (2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-01-08 14:00:53'),
 (3, 1, 'admission', 'seye', 'alade', 'admission', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-04-06 14:28:14'),
 (4, 1, 'accountant', 'teni', 'alade', 'accountant', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-04-06 14:28:14'),
@@ -68,6 +68,25 @@ CREATE TABLE `admin_owner` (
 
 INSERT INTO `admin_owner` (`admin_owner_id`, `admin_pay_reg_toggle`, `admin_toggle_timestamp`) VALUES
 (1, 'open', '2022-04-26 14:16:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_registration`
+--
+
+CREATE TABLE `admin_registration` (
+  `admin_reg_id` int(11) NOT NULL,
+  `admin_reg_status` varchar(5) NOT NULL DEFAULT 'close',
+  `admin_reg_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin_registration`
+--
+
+INSERT INTO `admin_registration` (`admin_reg_id`, `admin_reg_status`, `admin_reg_timestamp`) VALUES
+(1, 'close', '2022-04-29 16:11:06');
 
 -- --------------------------------------------------------
 
@@ -254,7 +273,7 @@ CREATE TABLE `primary_school_students` (
   `pri_active` varchar(1) NOT NULL DEFAULT '1',
   `pri_paid` int(1) NOT NULL DEFAULT 0,
   `pri_admit` int(1) NOT NULL DEFAULT 0,
-  `pri_class_id` varchar(20) NOT NULL,
+  `pri_class_id` varchar(15) NOT NULL DEFAULT '0',
   `pri_school_term` varchar(20) NOT NULL DEFAULT 'First term',
   `pri_year` varchar(15) NOT NULL,
   `pri_firstname` varchar(20) NOT NULL,
@@ -278,7 +297,6 @@ CREATE TABLE `primary_school_students` (
 INSERT INTO `primary_school_students` (`primary_id`, `pri_active_email`, `pri_active`, `pri_paid`, `pri_admit`, `pri_class_id`, `pri_school_term`, `pri_year`, `pri_firstname`, `pri_surname`, `pri_age`, `pri_sex`, `pri_email`, `pri_photo`, `pri_phone`, `pri_address`, `pri_password`, `pri_email_hash`, `pri_cookie_session`, `pri_timestamp`) VALUES
 (1, 1, '1', 0, 0, '3', 'choose term', '2022', 'ahmed', 'olusesi', '5', 'Male', 'ola.sesi@yahoo.com', 'ab029b597c08b5f0757b4443fea3e4837d276b9a.png', '08074574512', 'Ikeja', 'password', '', '', '0000-00-00 00:00:00'),
 (2, 1, '1', 1, 1, '4', 'choose term', '2022', 'Rasheed', 'Raseed', '4', 'Male', 'oosodof@yahoo.com', '4862698757bed4eada1e9a9ebe2bf84e256773db.JPG', '08074574512', 'Ogba', '', '', '', '2022-01-05 14:36:13'),
-(3, 1, '1', 1, 1, '3', 'choose term', '2022', 'duro', 'media', '4', 'Male', 'dfasfds@yahoo.com', '5e8688a0fcf6dd98a52b1acafd7856d8b5fa59f6.JPG', '08074574512', 'Oshodi', '', '', '', '2022-01-05 15:01:22'),
 (4, 1, '0', 1, 0, '6', 'choose term', '', 'minus', 'olusesi', '', '', 'Eligendi@enim.com', 'default.jpg', '08074574512', 'Aut ex consequatur ', '', '', '', '2022-01-06 14:47:31'),
 (5, 1, '0', 1, 0, '4', 'choose term', '', 'Consequatur', 'Delectus', '', '', 'Corporis@aut.com', 'default.jpg', '08073454632', 'Corrupti dolore seq', '', '', '', '2022-01-06 14:47:31'),
 (6, 1, '1', 1, 1, '6', 'choose term', '2022', 'rasheed', 'rasheed', '', '', 'rasheed@test.com', '', '08074574512', 'Ikeja', 'password', '36660e59856b4de58a219bcf4e27eba3', '', '2022-01-14 09:48:57'),
@@ -287,7 +305,7 @@ INSERT INTO `primary_school_students` (`primary_id`, `pri_active_email`, `pri_ac
 (9, 0, '0', 0, 0, '0', 'Third term', '2000/2001', 'Elijah', 'Maynard', '', '', 'lizyqiq@mailinator.com', '', '08074574512', '', '$2y$10$37jrRWBQI7Wpd3woM7bxeuEda9jS757fsZaImjlFZ1f9ZcAK1O7de', '4e732ced3463d06de0ca9a15b6153677', '', '2022-04-26 08:08:31'),
 (10, 0, '1', 0, 0, '0', 'Third term', '2000/2001', 'Bernard', 'Avila', '', '', 'qeziwafaq@mailinator.com', '', '08074574512', '', '$2y$10$9rWMD9ZoPX5SwJGvQxB3M.tCuZ5U74J.PREImTjRcoT2nezC4VrPG', '3e89ebdb49f712c7d90d1b39e348bbbf', '', '2022-04-26 09:08:32'),
 (11, 1, '1', 1, 1, '0', '', '', 'Seth', 'Workman', '', '', 'legavunoz@mailinator.com', '', '08074574512', '', '$2y$10$ZY.NhAdpE7wl7foolq9dEukzH3E0FFyfxCeDYNnk/b5ANYifE7Ira', '99bcfcd754a98ce89cb86f73acc04645', '', '2022-04-26 09:29:57'),
-(12, 1, '1', 1, 1, '1', '', '', 'kiki', 'kiki', '', '', 'kiki@gmail.com', '', '08074574512', '', '$2y$10$yJ2XVr9JmESzREyzNsjzf.ktNNC2YWadByLP/VbJ2PyzT0caEQKi2', 'df263d996281d984952c07998dc54358', '', '2022-04-27 22:12:58');
+(12, 1, '0', 0, 1, '1', 'Second term', '', 'kiki', 'kiki', '', '', 'kiki@gmail.com', '', '08074574512', '', '$2y$10$yJ2XVr9JmESzREyzNsjzf.ktNNC2YWadByLP/VbJ2PyzT0caEQKi2', 'df263d996281d984952c07998dc54358', '', '2022-04-27 22:12:58');
 
 -- --------------------------------------------------------
 
@@ -636,7 +654,7 @@ CREATE TABLE `secondary_school_students` (
   `sec_active` int(1) NOT NULL DEFAULT 1,
   `sec_paid` int(1) NOT NULL DEFAULT 0,
   `sec_admit` int(1) NOT NULL DEFAULT 0,
-  `sec_class_id` int(1) NOT NULL,
+  `sec_class_id` varchar(15) NOT NULL DEFAULT '0',
   `sec_school_term` varchar(20) NOT NULL DEFAULT 'First term',
   `sec_year` varchar(15) NOT NULL,
   `sec_firstname` varchar(20) NOT NULL,
@@ -658,13 +676,13 @@ CREATE TABLE `secondary_school_students` (
 --
 
 INSERT INTO `secondary_school_students` (`secondary_id`, `sec_active_email`, `sec_active`, `sec_paid`, `sec_admit`, `sec_class_id`, `sec_school_term`, `sec_year`, `sec_firstname`, `sec_surname`, `sec_age`, `sec_sex`, `sec_email`, `sec_photo`, `sec_phone`, `sec_address`, `sec_password`, `sec_email_hash`, `sec_cookie_session`, `sec_timestamp`) VALUES
-(1, 1, 0, 0, 0, 1, 'Second term', '2001/2002', 'aaliyah', 'olusesi', '', '', 'aaliyaholusesi@gmail.com', '', '08074574512', '', '$2y$10$ECHenBkEy/S0v.laQCnsq.XdDxG9MyiEMGtCMkLLZPqqgwpJjYXU2', '41f1f19176d383480afa65d325c06ed0', '', '2022-04-22 15:44:48'),
-(2, 1, 0, 0, 0, 3, 'Second term', '2001/2002', 'ahmed', 'olusesi', '', 'Male', 'olusesia@gmail.com', 'default.jpg', '08074574512', '', '', '', '', '2022-04-22 14:19:24'),
-(3, 1, 0, 0, 0, 0, 'Third term', '2022/2023', 'anita', 'olusesi', '23', 'Male', 'olusesia@gmail.com', 'ae84f7205042cfa66705bd5ab3e17ec5879bdcfd.jpg', '08074574512', 'Ikeja', '', '', '', '2022-04-22 14:19:24'),
-(4, 0, 0, 0, 0, 0, 'Third term', '2000/2001', 'Michael', 'Mccoy', '', '', 'cuqiz@mailinator.com', '', '08074574512', '', '$2y$10$yDvicX5rdd.cIe2qCFmQqeAWy5Hrz/T9JxxJYjMwQu97VQeEp3zIi', 'd1f255a373a3cef72e03aa9d980c7eca', '', '2022-04-26 08:09:52'),
-(5, 1, 1, 0, 0, 0, '', '', 'Darrel', 'Hanson', '', '', 'goxy@mailinator.com', '', '08074574512', '', '$2y$10$Um6uq5Z9wmRN3eAAam1no.fbY9U/mVe6neWplHt9qbK9SUUflcWOS', 'cbb6a3b884f4f88b3a8e3d44c636cbd8', '', '2022-04-26 09:31:00'),
-(6, 1, 1, 1, 1, 1, '', '', 'Ahmed', 'Olusesi', '', '', 'ola.sesi@yahoo.com', '', '08074574512', '', '$2y$10$s19D5M9A7S51vsvErKiVI.oPivA4O2OBzoBeFiUFr.o4pWsfkbs.S', '71a3cb155f8dc89bf3d0365288219936', 'fd74d2f92f976cd868248549a0198913', '2022-04-27 16:25:08'),
-(7, 0, 1, 0, 0, 0, '', '', 'kiki', 'kiki', '', '', 'kiki@gmail.com', '', '08074574512', '', '$2y$10$sw5TlKBSTq7wd/TSbYlxZODVCMC0tRke8qizUVqM9kpzuUS1JOsa.', 'd709f38ef758b5066ef31b18039b8ce5', '', '2022-04-27 22:16:57');
+(1, 1, 0, 0, 0, '1', 'Second term', '2001/2002', 'aaliyah', 'olusesi', '', '', 'aaliyaholusesi@gmail.com', '', '08074574512', '', '$2y$10$ECHenBkEy/S0v.laQCnsq.XdDxG9MyiEMGtCMkLLZPqqgwpJjYXU2', '41f1f19176d383480afa65d325c06ed0', '', '2022-04-22 15:44:48'),
+(2, 1, 0, 0, 0, '3', 'Second term', '2001/2002', 'ahmed', 'olusesi', '', 'Male', 'olusesia@gmail.com', 'default.jpg', '08074574512', '', '', '', '', '2022-04-22 14:19:24'),
+(3, 1, 0, 0, 0, '0', 'Third term', '2022/2023', 'anita', 'olusesi', '23', 'Male', 'olusesia@gmail.com', 'ae84f7205042cfa66705bd5ab3e17ec5879bdcfd.jpg', '08074574512', 'Ikeja', '', '', '', '2022-04-22 14:19:24'),
+(4, 0, 0, 0, 0, '0', 'Third term', '2000/2001', 'Michael', 'Mccoy', '', '', 'cuqiz@mailinator.com', '', '08074574512', '', '$2y$10$yDvicX5rdd.cIe2qCFmQqeAWy5Hrz/T9JxxJYjMwQu97VQeEp3zIi', 'd1f255a373a3cef72e03aa9d980c7eca', '', '2022-04-26 08:09:52'),
+(5, 1, 1, 0, 0, '0', '', '', 'Darrel', 'Hanson', '', '', 'goxy@mailinator.com', '', '08074574512', '', '$2y$10$Um6uq5Z9wmRN3eAAam1no.fbY9U/mVe6neWplHt9qbK9SUUflcWOS', 'cbb6a3b884f4f88b3a8e3d44c636cbd8', '', '2022-04-26 09:31:00'),
+(6, 1, 1, 0, 1, '5', '', '', 'Ahmed', 'Olusesi', '', '', 'ola.sesi@yahoo.com', '', '08074574512', '', '$2y$10$s19D5M9A7S51vsvErKiVI.oPivA4O2OBzoBeFiUFr.o4pWsfkbs.S', '71a3cb155f8dc89bf3d0365288219936', 'fd74d2f92f976cd868248549a0198913', '2022-04-27 16:25:08'),
+(7, 1, 1, 0, 1, '5', '', '', 'kiki', 'kiki', '', '', 'kiki@gmail.com', '', '08074574512', '', '$2y$10$sw5TlKBSTq7wd/TSbYlxZODVCMC0tRke8qizUVqM9kpzuUS1JOsa.', 'd709f38ef758b5066ef31b18039b8ce5', '', '2022-04-27 22:16:57');
 
 -- --------------------------------------------------------
 
@@ -805,6 +823,12 @@ ALTER TABLE `admin_owner`
   ADD PRIMARY KEY (`admin_owner_id`);
 
 --
+-- Indexes for table `admin_registration`
+--
+ALTER TABLE `admin_registration`
+  ADD PRIMARY KEY (`admin_reg_id`);
+
+--
 -- Indexes for table `modules`
 --
 ALTER TABLE `modules`
@@ -921,6 +945,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `admin_owner`
   MODIFY `admin_owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `admin_registration`
+--
+ALTER TABLE `admin_registration`
+  MODIFY `admin_reg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `modules`
