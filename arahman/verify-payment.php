@@ -3,18 +3,19 @@ require_once ('../incs-arahman/config.php');
 require_once ('../incs-arahman/gen_serv_con.php');
 
 
+/*if(isset($_SESSION['primary_id'])){
+  header('Location:'.GEN_WEBSITE.'/home.php');
+exit();
+}
 
-if(!isset($_SESSION['primary_id'])){
-    header('Location:'.GEN_WEBSITE.'/school-fees-payment.php');
-  exit();
-  }
-  
-  
-  if($_SESSION['pri_admit'] == 1){   //logged in students dont have right to login again.
-      header('Location:'.GEN_WEBSITE.'/students/home.php');
-      exit();
-  }
-  
+
+if(isset($_SESSION['secondary_id'])){
+  header('Location:'.GEN_WEBSITE.'/home.php');
+exit();
+}*/
+
+
+
 
 
 $result = array();
@@ -26,7 +27,7 @@ curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt(
 $ch, CURLOPT_HTTPHEADER, [
-'Authorization: Bearer sk_test_*****************************']
+'Authorization: '. API]
 );
 $request = curl_exec($ch);
 curl_close($ch);
@@ -36,53 +37,75 @@ $result = json_decode($request, true);
 }
 
 if (array_key_exists('data', $result) && array_key_exists('status', $result['data']) && ($result['data']['status'] === 'success')) {
-
-    // $query_term_start_end = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
   
-    // while($whiling_term_start_end = mysqli_fetch_array($query_term_start_end)){
+  if($_SESSION['school_type'] == 'Primary school'){
 
-    //   $term = $whiling_term_start_end['choose_term'];
-    //   $session = $whiling_term_start_end['school_session'];
-    // }
+    mysqli_query($connect, "UPDATE primary_school_students SET pri_paid='1' WHERE pri_email = '".$_SESSION['email']."' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
 
 
-    mysqli_query($connect, "UPDATE primary_school_students SET pri_paid='1',  WHERE primary_id = '".$_SESSION['primary_id']."' AND pri_admit = '0' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
+    $query_id = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_email='".$_SESSION['email']."' AND pri_active_email='1'") or die(db_conn_error);
+    if(mysqli_num_rows($query_id) == 1){
+while($query_id_while = mysqli_fetch_array($query_id)){
 
-    // if(mysqli_affected_rows($connect) == 1){
-    
-    
-    // }
+  
+}
 
-    $query_term_session = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
-    while($loop_term_session=mysqli_fetch_array($query_term_session)){
-      $current_term = $loop_term_session['choose_term'];
-      $current_session_term = $loop_term_session['school_session'];
-     
     }
-    
-    
+
     $q = mysqli_query($connect,"INSERT INTO primary_payment (primary_payment_students_id, primary_payment_students_reference, primary_payment_term, primary_payment_session,primary_payment_fees,primary_payment_status) 
+        VALUES ('".$_SESSION['primary_id']."', '".$_GET['reference']."','".$current_term."','". $current_session_term."', '".$result['data']['amount']."', '".$result['data']['status']."')") or die(db_conn_error);
+    
+
+  }elseif($_SESSION['school_type'] == 'Secondary school'){
+    mysqli_query($connect, "UPDATE secondary_school_students SET sec_paid='1' WHERE sec_email = '".$_SESSION['email']."' AND sec_active_email = '1' AND sec_paid = '0'") or die(db_conn_error);
+
+
+
+
+  }
+
+  if(isset($_SESSION['primary_id'])){
+
+  }elseif(isset($_SESSION['secondary_id'])){}
+
+
+
+
+
+
+
+  if(!$_SESSION['primary_id']){
+
+  $query = mysqli_query($connect, "SELECT primary_id, pri_email FROM primary_school_students WHERE pri_email='".$_SESSION['email']."' AND pri_active_email='1'") or die(db_conn_error);
+
+  if(mysqli_num_rows($query) == 1){
+while($find_student = mysqli_fetch_array($query)){
+ mysqli_query($connect, "UPDATE primary_school_students SET pri_paid='1' WHERE pri_email = '".$_SESSION['email']."' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
+
+$q = mysqli_query($connect,"INSERT INTO primary_payment (primary_payment_students_id, primary_payment_students_reference, primary_payment_term, primary_payment_session,primary_payment_fees,primary_payment_status) 
     VALUES ('".$_SESSION['primary_id']."', '".$_GET['reference']."','".$current_term."','". $current_session_term."', '".$result['data']['amount']."', '".$result['data']['status']."')") or die(db_conn_error);
+}
+}elseif(mysqli_num_rows($query_sec) == 0){
+  $query_sec = mysqli_query($connect, "SELECT sec_email FROM secondary_school_students WHERE sec_email='".$_SESSION['email']."' AND sec_active_email='1'") or die(db_conn_error);
+  if(mysqli_num_rows($query_sec) == 1){
 
-          
+    mysqli_query($connect, "UPDATE secondary_school_students SET sec_paid='1' WHERE secondary_id = '".$_SESSION['email']."' pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
+   
+   $q_sec = mysqli_query($connect,"INSERT INTO primary_payment (primary_payment_students_id, primary_payment_students_reference, primary_payment_term, primary_payment_session,primary_payment_fees,primary_payment_status) 
+       VALUES ('".$_SESSION['primary_id']."', '".$_GET['reference']."','".$current_term."','". $current_session_term."', '".$result['data']['amount']."', '".$result['data']['status']."')") or die(db_conn_error);
+   
+   }
 
 
 
+}      
+}elseif($_SESSION['primary_id']){
+
+  echo 'This should come in the dashboard';
+}
 
   
-	
-
-    // $q = mysqli_query($connect,"INSERT INTO primary_school_students (pri_class_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, pri_password, pri_email_hash, pri_cookie_session) 
-    // VALUES ('".$radio."', '','".$firstname."','".$surname."', '', '','".$email."', '','".$phone."', '','".$encrypted."','".$hash."', '')") or die(db_conn_error);
-
-
-
-    
-    header('Location:'.GEN_WEBSITE.'/school-payment.php?ref='.$_GET['reference'].'&status='.$result['data']['status']);
-    exit();
-   
 //Perform necessary action
 }else{
-    header('Location:'.GEN_WEBSITE.'/school-payment.php?status=0');
-    exit();
+   echo 'Verification was not successful';
 }

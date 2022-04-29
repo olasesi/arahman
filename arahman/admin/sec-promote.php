@@ -30,7 +30,7 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
 
 
 
-
+    
   }  
  ?> 
 
@@ -112,7 +112,7 @@ include_once ('../../incs-arahman/recently-registered.php');
 
 
                 
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/pri-promote.php?");?> </nav>
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/show-registered.php?");?> </nav>
                 </div>
               </div>
             </div>
