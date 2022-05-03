@@ -42,7 +42,7 @@ $now = new DateTime();
 
 
 /*Primary Classroom name*/
-$class_range = array('Basic one'=>'1', 'Basic two'=>'2', 'Basic three'=>'3', 'Basic four'=>'4', 'Basic five'=>'5', 'Basic six'=>'6');   
+$pri_class_range = array('Basic one'=>'1', 'Basic two'=>'2', 'Basic three'=>'3', 'Basic four'=>'4', 'Basic five'=>'5', 'Basic six'=>'6');   
 
 /*secondary Classroom name*/
 $sec_class_range = array('JSS 1'=>'1', 'JSS 2'=>'2', 'JSS 3'=>'3', 'SSS 1'=>'4', 'SSS 2'=>'5', 'SSS 3'=>'6');   
@@ -51,7 +51,7 @@ $sec_class_range = array('JSS 1'=>'1', 'JSS 2'=>'2', 'JSS 3'=>'3', 'SSS 1'=>'4',
 
 /*Age range*/
 
-for($i=18;$i<70;$i++){
+for($i=7;$i<70;$i++){
     $age_range[] = $i;
 }
 
