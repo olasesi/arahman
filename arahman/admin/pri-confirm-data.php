@@ -131,7 +131,7 @@ while($loop_term_session=mysqli_fetch_array($query_term_session)){
 }
 
 
-mysqli_query($connect, "UPDATE primary_school_students SET pri_active='1', pri_admit = '1', pri_school_term = '".$current_term."' , pri_year = '".$current_session_term."', pri_firstname = '".$firstname."', pri_surname = '".$surname."', pri_age = '".$age."', pri_sex = '".$gender."', pri_class_id = '".$sec_class."', pri_photo = '".$new_name."', pri_address= '".$address."' WHERE primary_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_admit = '0' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
+mysqli_query($connect, "UPDATE primary_school_students SET pri_active='1', pri_admit = '1', pri_school_term = '".$current_term."' , pri_year = '".$current_session_term."', pri_firstname = '".$firstname."', pri_surname = '".$surname."', pri_age = '".$age."', pri_sex = '".$gender."', pri_class_id = '".$pri_class."', pri_photo = '".$new_name."', pri_address= '".$address."' WHERE primary_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND pri_admit = '0' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
 			if (mysqli_affected_rows($connect) == 1) {
 			
             $_POST = array();		
@@ -174,28 +174,7 @@ while ($row = mysqli_fetch_array($query)) {
 echo ' 
 <div class="main-panel">
   <div class="content-wrapper">
-    <div class="row">
-      <div class="col-12 grid-margin stretch-card">
-        <div class="card corona-gradient-card">
-          <div class="card-body py-0 px-0 px-sm-3">
-            <div class="row align-items-center">
-              <div class="col-4 col-sm-3 col-xl-2">
-                <img src="assets/images/dashboard/Group126@2x.png" class="gradient-corona-img img-fluid" alt="">
-              </div>
-              <div class="col-5 col-sm-7 col-xl-8 p-0">
-                <h4 class="mb-1 mb-sm-0">Want even more features?</h4>
-                <p class="mb-0 font-weight-normal d-none d-sm-block">Check out our Pro version with 5 unique layouts!</p>
-              </div>
-              <div class="col-3 col-sm-2 col-xl-2 ps-0 text-center">
-                <span>
-                  <a href="https://www.bootstrapdash.com/product/corona-admin-template/" target="_blank" class="btn btn-outline-light btn-rounded get-started-btn">Upgrade to PRO</a>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   
 
   
   <div class="row">
@@ -354,11 +333,11 @@ exit();
                         echo "<option>Choose school class</option>";
                                         
                         if(isset ($_POST['pri_class'])){
-                        foreach ($sec_class_range as $pri_pri_class=>$class_id){
+                        foreach ($pri_class_range as $pri_pri_class=>$class_id){
                         $sel_pri_class = ($pri_pri_class==$_POST['pri_class'])?"Selected='selected'":"";
                         echo '<option '.$sel_pri_class. 'value="'.$class_id.'">'.$pri_pri_class.'</option>';}
                         }else{
-                        foreach ($sec_class_range as $pri_pri_class=>$class_id){
+                        foreach ($pri_class_range as $pri_pri_class=>$class_id){
                         echo '<option value="'.$class_id.'">'.$pri_pri_class.'</option>';
                         }
                         }

@@ -11,8 +11,12 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
 
   }
   if(empty($start_var) || empty($end_var) || $choose_term_var != 'Third term'){ 
-    header("Location:".GEN_WEBSITE);
-    exit();
+    include ('../../incs-arahman/header-gen.php');
+include('../../incs-arahman/menu.php');
+   echo 'Registration for new session is closed';
+   include ('../../incs-arahman/footer.php');
+   exit();
+
   }
 ?>
 <?php

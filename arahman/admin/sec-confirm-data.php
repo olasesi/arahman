@@ -60,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
 	$gender = $_POST['gender'];
 	}
     
-  if ($_POST['pri_class'] == "Choose school class") {
-		$errors['pri_class'] = 'Please select school class';
+  if ($_POST['sec_class'] == "Choose school class") {
+		$errors['sec_class'] = 'Please select school class';
 	} else{
-	$pri_class = $_POST['pri_class'];
+	$sec_class = $_POST['sec_class'];
 	}
 
 
@@ -352,23 +352,23 @@ exit();
 
 
                       <div class="form-group">
-                        <label for="exampleSelectpri_class">School Class</label>
-                    <?php if (array_key_exists('pri_class', $errors)) {
-	                    echo '<p class="text-danger">'.$errors['pri_class'].'</p>';
+                        <label for="exampleSelectsec_class">School Class</label>
+                    <?php if (array_key_exists('sec_class', $errors)) {
+	                    echo '<p class="text-danger">'.$errors['sec_class'].'</p>';
 	                    }
                     ?>
-                        <select class="form-control" id="exampleSelectpri_class" name="pri_class">
+                        <select class="form-control" id="exampleSelectsec_class" name="sec_class">
                        <?php        
                        
                         echo "<option>Choose school class</option>";
                                         
-                        if(isset ($_POST['pri_class'])){
-                        foreach ($sec_class_range as $pri_pri_class=>$class_id){
-                        $sel_pri_class = ($pri_pri_class==$_POST['pri_class'])?"Selected='selected'":"";
-                        echo '<option '.$sel_pri_class. 'value="'.$class_id.'">'.$pri_pri_class.'</option>';}
+                        if(isset ($_POST['sec_class'])){
+                        foreach ($sec_class_range as $pri_sec_class=>$class_id){
+                        $sel_sec_class = ($pri_sec_class==$_POST['sec_class'])?"Selected='selected'":"";
+                        echo '<option '.$sel_sec_class. 'value="'.$class_id.'">'.$pri_sec_class.'</option>';}
                         }else{
-                        foreach ($sec_class_range as $pri_pri_class=>$class_id){
-                        echo '<option value="'.$class_id.'">'.$pri_pri_class.'</option>';
+                        foreach ($sec_class_range as $pri_sec_class=>$class_id){
+                        echo '<option value="'.$class_id.'">'.$pri_sec_class.'</option>';
                         }
                         }
                         ?>            

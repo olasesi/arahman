@@ -5,72 +5,41 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
-	header("Location:".GEN_WEBSITE.'/admin');
+	header("Location:/".GEN_WEBSITE.'/admin');
 	exit();
 }
 
-if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] != ADMISSION){
-	header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
+if($_SESSION['admin_type'] != ADMISSION){
+	header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 ?>
-<?php
-$query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_term FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
-  while($term_rows = mysqli_fetch_array($query_term_start)){
-    $start_var = $term_rows['term_start'];
-    $end_var = $term_rows['term_end'];
-    $choose_term_var = $term_rows['choose_term'];
-  }
-  if(!empty($start_var) && !empty($end_var) && $choose_term_var == 'Third term'){  
-   
-
-
-
-
-
-
-
-    
-  }  
- ?> 
 
 <?php require_once ('../../incs-arahman/dashboard.php');?>
-   
+<?php
+include_once ('../../incs-arahman/deny-student.php');
+?>
+
+
+        
+        
+        
+        
+        
+        
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <!-- <div class="row">
-              <div class="col-12 grid-margin stretch-card">
-                <div class="card corona-gradient-card">
-                  <div class="card-body py-0 px-0 px-sm-3">
-                    <div class="row align-items-center">
-                      <div class="col-4 col-sm-3 col-xl-2">
-                        <img src="assets/images/dashboard/Group126@2x.png" class="gradient-corona-img img-fluid" alt="">
-                      </div>
-                      <div class="col-5 col-sm-7 col-xl-8 p-0">
-                        <h4 class="mb-1 mb-sm-0">Want even more features?</h4>
-                        <p class="mb-0 font-weight-normal d-none d-sm-block">Check out our Pro version with 5 unique layouts!</p>
-                      </div>
-                      <div class="col-3 col-sm-2 col-xl-2 ps-0 text-center">
-                        <span>
-                          <a href="https://www.bootstrapdash.com/product/corona-admin-template/" target="_blank" class="btn btn-outline-light btn-rounded get-started-btn">Upgrade to PRO</a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-
+           
 
 <?php
-if(isset($_GET['confirm'])){
+
+if(isset($_GET['confirm-promotion'])){
 echo ' <div class="row ">
 <div class="col-12 grid-margin">
   <div class="card">
     <div class="card-body">
-<label class="badge badge-info">You have confirmed '.$_GET['confirm'].' admission. Student should proceed to make payment</label>
+<label class="badge badge-info">Student has been promoted successfully. Student should now proceed to make payment</label>
 </div>
 </div>
 </div>
@@ -79,40 +48,92 @@ echo ' <div class="row ">
 $_GET = array();	
 }
 ?>
-           
 <?php
 include_once ('../../incs-arahman/reject-student-status.php');
-?>
-
+?>           
 
 <?php
 include ('../../incs-arahman/paginate.php');
 
 
-$statement = "primary_school_students WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY `primary_id` DESC";
+$statement = "secondary_school_students WHERE (sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1' AND sec_class_id != '0') ORDER BY secondary_id DESC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
-          								// Set how many records do you want to display per page.
+            							// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
-        
-            $results = mysqli_query($connect,"SELECT primary_id, pri_paid, pri_firstname, pri_surname, pri_email, pri_phone, pri_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
+          
+            $results = mysqli_query($connect,"SELECT secondary_id, sec_paid, sec_firstname, sec_surname, sec_email, sec_phone, sec_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
             
 ?>
+
+
 
 
             <div class="row ">
               <div class="col-12 grid-margin">
                 <div class="card">
-                 
+                <div class="card-body">
+ <h4 class="card-title">Promote students (secondary)</h4>
+ <div class="table-responsive">
+   <table class="table">
+     <thead>
+       <tr>
+      
+         <th> Firstname </th>
+         <th> Surname </th>
+         <th> Email address </th>
+         <th> Phone number </th>
+       
+        <th>Date registered </th>
+     </tr>
+     </thead>
+     <tbody>
 
 <?php
-include_once ('../../incs-arahman/recently-registered.php');
+
+
+if (mysqli_num_rows($results) != 0){
+while ($row = mysqli_fetch_array($results)) {
+ echo '<tr>
+ 
+ <td>'.$row['sec_firstname'].'</td>
+ <td>'.$row['sec_surname'].' </td>
+ <td>'.$row['sec_email'].'</td>
+ <td>'.$row['sec_phone'].'</td>';
+
+ echo '<td> '.date('M j Y g:i A', strtotime($row['sec_timestamp'])).' </td>
+ <td>
+ <form action="'.GEN_WEBSITE.'/admin/sec-promote-students.php?id='.$row['secondary_id'].'" method="POST">
+
+ <button type="submit" class="btn btn-success me-2" name="paid_students">Edit</button>
+ </form>
+
+
+
+
+ </td>
+ 
+
+</tr>';
+
+}
+}else{
+echo '<h3 class="text-center">No result found</h3>';
+} 
+
 ?>
 
 
-                
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/show-registered.php?");?> </nav>
+</tbody>
+   </table>
+   
+ </div>
+ 
+</div>
+
+
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/sec-promote.php?");?> </nav>
                 </div>
               </div>
             </div>

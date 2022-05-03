@@ -55,7 +55,7 @@ include_once ('../../incs-arahman/reject-student-status.php');
 include ('../../incs-arahman/paginate.php');
 
 
-$statement = "primary_school_students WHERE (pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1') ORDER BY primary_id DESC";
+$statement = "primary_school_students WHERE (pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' AND pri_class_id = '0') ORDER BY primary_id DESC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
