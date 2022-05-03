@@ -363,7 +363,7 @@ include("../../incs-arahman/change-admin-pass.php");
 
 
             <div class="row">
-              <div class="col-md-4 grid-margin stretch-card">
+              <!-- <div class="col-md-4 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Students Population</h4>
@@ -371,7 +371,7 @@ include("../../incs-arahman/change-admin-pass.php");
                     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
                       <div class="text-md-center text-xl-left">
                         <h6 class="mb-1 text-success">Primary school for Green</h6>
-                        <!--<p class="text-muted mb-0"></p>-->
+                        <p class="text-muted mb-0"></p>
                       </div>
                       <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
                         <h6 class="font-weight-bold mb-0"></h6>
@@ -380,15 +380,15 @@ include("../../incs-arahman/change-admin-pass.php");
                     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
                       <div class="text-md-center text-xl-left">
                         <h6 class="mb-1 text-danger">Secondary school for Red</h6>
-                        <!--<p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>-->
+                        <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
                       </div>
                       <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                       <!-- <h6 class="font-weight-bold mb-0">$593</h6>-->
+                        <h6 class="font-weight-bold mb-0">$593</h6>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
 
@@ -403,13 +403,13 @@ include("../../incs-arahman/change-admin-pass.php");
 
 
 
-                $results = mysqli_query($connect,"SELECT pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                $results = mysqli_query($connect,"SELECT pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students  WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' AND pri_class_id = '0' ORDER BY primary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
-                echo '<div class="col-md-8 grid-margin stretch-card">
+                echo '<div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Registered students (Primary and Secondary)</h4>
+                      <h4 class="card-title mb-1">Registered students (Primary)</h4>
                       <p class="text-muted mb-1">Other details</p>
                       
                     </div>';
@@ -467,7 +467,7 @@ include("../../incs-arahman/change-admin-pass.php");
                                                   <p class="text-muted mb-0"></p>
                                                 </div>
                                                 <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                                                  <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/search-paid.php">See more...</a></p>
+                                                  <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/pri-registered.php">See more...</a></p>
                                                   <p class="text-muted mb-0"></p>
                                                 </div>
                                               </div>
@@ -485,14 +485,126 @@ include("../../incs-arahman/change-admin-pass.php");
                 } 
 
                 if(mysqli_num_rows($results) >= 0){               
-                echo '<form action="show-registered.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
+                echo '<form action="pri-registered.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> See more</button></form>';
               }
             echo '  </div>
             </div>
             </div>
             ';
 
- }
+
+
+
+
+
+
+
+            $results = mysqli_query($connect,"SELECT sec_firstname, sec_surname, sec_email, sec_phone FROM secondary_school_students  WHERE sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1' AND sec_class_id = '0' ORDER BY secondary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                
+            echo '<div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-row justify-content-between">
+                  <h4 class="card-title mb-1">Registered students (Secondary)</h4>
+                  <p class="text-muted mb-1">Other details</p>
+                  
+                </div>';
+
+
+            if (mysqli_num_rows($results) >= 1 && mysqli_num_rows($results) <= 5){
+               
+                          
+              
+                    if(mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 5){
+                          while ($row = mysqli_fetch_array($results)){
+                        
+                        
+                            echo '<div class="row">
+                              <div class="col-12">
+                                <div class="preview-list">
+                                  <div class="preview-item border-bottom">
+                                    <div class="preview-thumbnail">
+                                      <div class="preview-icon bg-primary">
+                                        <i class="mdi mdi-account-card-details"></i>
+                                      </div>
+                                    </div>
+                                    <div class="preview-item-content d-sm-flex flex-grow">
+                                      <div class="flex-grow">
+                                        <h6 class="preview-subject">'.$row['sec_surname'].' '.$row['sec_firstname'].'</h6>
+                                        <p class="text-muted mb-0">'.$row['sec_email'].'</p>
+                                      </div>
+                                      <div class="me-auto text-sm-right pt-2 pt-sm-0">
+                                        <p class="text-muted"></p>
+                                        
+                                        <p class="text-muted mb-0">'.$row['sec_phone'].'</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>';
+                        
+                        
+                        
+                            
+                          
+                          
+                        }
+                                          }elseif(mysqli_num_rows($results) > 5){
+                                    echo '<div class="row">
+                                    <div class="col-12">
+                                      <div class="preview-list">
+                                        <div class="preview-item border-bottom">
+                                          <div class="preview-thumbnail">
+                                          </div>
+                                          <div class="preview-item-content d-sm-flex flex-grow">
+                                            <div class="flex-grow">
+                                              <h6 class="preview-subject"></h6>
+                                              <p class="text-muted mb-0"></p>
+                                            </div>
+                                            <div class="me-auto text-sm-right pt-2 pt-sm-0">
+                                              <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/sec-registered.php">See more...</a></p>
+                                              <p class="text-muted mb-0"></p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>';
+                            }
+
+           
+
+            }elseif(mysqli_num_rows($results) == 0){
+              
+              echo '<h3 class="text-center">No result found</h3>';
+            } 
+
+            if(mysqli_num_rows($results) >= 0){               
+            echo '<form action="sec-registered.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> See more</button></form>';
+          }
+        echo '  </div>
+        </div>
+        </div>
+        ';
+
+}
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
               
               ?>
            
@@ -503,7 +615,7 @@ include("../../incs-arahman/change-admin-pass.php");
 
                 $results = mysqli_query($connect,"SELECT primary_payment_paid_percent, primary_id, pri_firstname, pri_surname, primary_class FROM primary_school_students INNER JOIN primary_school_classes ON primary_class_id = primary_id INNER JOIN primary_payment ON primary_payment_students_id = primary_id WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
-                echo '<div class="col-md-8 grid-margin stretch-card">
+                echo '<div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
@@ -600,7 +712,7 @@ echo '  </div>
 
 
                 $results = mysqli_query($connect,"SELECT type, admin_firstname, admin_lastname FROM admin ORDER BY admin_id ASC LIMIT 5") or die(db_conn_error); 
-                echo '<div class="col-md-8 grid-margin stretch-card">
+                echo '<div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
@@ -713,7 +825,7 @@ echo '</div>
                 
                  
                 
-                echo '<div class="col-md-8 grid-margin stretch-card">
+                echo '<div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
@@ -832,7 +944,7 @@ echo '</div>
                 
                  
                 
-                 echo '<div class="col-md-8 grid-margin stretch-card">
+                 echo '<div class="col-md-12 grid-margin stretch-card">
                  <div class="card">
                    <div class="card-body">
                      <div class="d-flex flex-row justify-content-between">
