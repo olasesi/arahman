@@ -41,6 +41,7 @@ if(isset($_POST['reset']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
   unset($_SESSION['email']);
   unset($_SESSION['school_fees']);
   unset($_SESSION['school_class_name']);
+  unset($_SESSION['percentage']);
   header('Location:'.GEN_WEBSITE.'/students/school-fees-payment.php');
   exit();
 
@@ -62,13 +63,17 @@ if(isset($_POST['post_school_fees'])){
 
  if(empty($signup_errors)){
 if($_SESSION['school_type'] == 'Primary school'){
- $email = $_SESSION['email'];
+  $_SESSION['percentage'] = $var_fees/$_SESSION['school_fees'] * 100; 
+
+$email = $_SESSION['email'];
  $class_price  = ceil($var_fees) * 100;
+
  include ('../../incs-arahman/pay.php');
 
 
 
 }elseif($_SESSION['school_type'] == 'Secondary school'){
+  $_SESSION['percentage'] = $var_fees/$_SESSION['school_fees'] * 100;
   $email = $_SESSION['email'];
   $class_price  = ceil($var_fees) * 100;
   include ('../../incs-arahman/pay.php');
