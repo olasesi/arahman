@@ -212,7 +212,25 @@ exit();
 include_once ('../../incs-arahman/header-admin.php');
 
 ?>
+<?php
+if(isset($_GET['reference'])){
+ $query_id = mysqli_query($connect, "SELECT	primary_payment_students_reference FROM primary_payment WHERE primary_payment_students_reference='".$_GET['reference']."'") or die(db_conn_error);
 
+if(mysqli_num_rows($query_id) == 1){
+  echo 'Payment was successful';
+}
+
+
+$query_id = mysqli_query($connect, "SELECT	secondary_payment_students_reference FROM secondary_payment WHERE secondary_payment_students_reference='".$_GET['reference']."'") or die(db_conn_error);
+
+if(mysqli_num_rows($query_id) == 1){
+  echo 'Payment was successful';
+}
+
+
+}
+
+?>
 
 <section class="contact-us" id="contact">
     <div class="container">
