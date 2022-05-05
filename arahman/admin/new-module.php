@@ -20,8 +20,9 @@ if($_SESSION['admin_type'] != ACCOUNTANT){
 
 <?php 
  $errors_new_module = array();
+ 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-    $errors = array();
+   
 
     if (preg_match ('/^[a-zA-Z 0-9]{3,50}$/i', trim($_POST['module']))) {	
 		$module = mysqli_real_escape_string ($connect, trim($_POST['module']));
@@ -57,7 +58,46 @@ if(isset($_GET['delete'])) {
 ?>
 
 
-          
+
+
+<?php 
+  $sec_errors_new_module = array();
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sec_submit'])) {
+   
+
+    if (preg_match ('/^[a-zA-Z 0-9]{3,50}$/i', trim($_POST['sec_module']))) {	
+		$sec_module = mysqli_real_escape_string ($connect, trim($_POST['sec_module']));
+       
+	} else {
+		$sec_errors_new_module['sec_module'] = 'Please enter valid name';
+	} 
+    
+
+    if (empty($sec_errors_new_module)) {
+       
+        mysqli_query($connect, "INSERT INTO secondary_modules (secondary_module_type) VALUES ('".$sec_module."')") or die(db_conn_error);
+        header('Location:'.GEN_WEBSITE.'/admin/new-module.php?confirm-new-module=1');
+
+    }
+}
+
+
+?>
+
+<?php 
+
+if(isset($_GET['sec_delete'])) {
+    $sec_the_module_id = mysqli_real_escape_string ($connect, trim($_GET['sec_delete']));
+    $sec_delete_query = mysqli_query($connect, "DELETE FROM secondary_modules WHERE secondary_module_id = '$sec_the_module_id'");
+    $sec_delete_query_price = mysqli_query($connect, "DELETE FROM secondary_module_price WHERE secondary_modules_id = '$sec_the_module_id'");
+    $sec_delete_query_join = mysqli_query($connect, "DELETE FROM secondary_module_join_students WHERE sec_module_type_id = '$the_module_id'");
+   
+    header('Location:'.GEN_WEBSITE.'/admin/new-module.php?confirm-delete-module=1');
+
+}
+
+?>
+
 
 
 
@@ -83,7 +123,7 @@ if(isset($_GET['delete'])) {
 
           
               
-                    </form>
+                 
                   </div>
                 </div>
               </div>
@@ -106,7 +146,7 @@ if(isset($_GET['delete'])) {
 
           
               
-                    </form>
+                  
                   </div>
                 </div>
               </div>
@@ -146,7 +186,7 @@ if(isset($_GET['delete'])) {
                                     </div>
                                     
                                     <?php if (array_key_exists('module', $errors_new_module)) {
-				echo '<p class="text-danger">'.$errors_new_module['module'].'</p>';}?>
+			                    	echo '<p class="text-danger">'.$errors_new_module['module'].'</p>';}?>
                                    
 
 
@@ -160,19 +200,18 @@ if(isset($_GET['delete'])) {
 
 
                                    
-                                <div class="card-body">
+                              
                                     <div class="table-responsive">
 
                                     <?php 
-       $fetch_module = mysqli_query($connect, "SELECT * FROM modules ORDER BY module_id DESC") or die(db_conn_error);
+                                 $fetch_module = mysqli_query($connect, "SELECT * FROM modules ORDER BY module_id DESC") or die(db_conn_error);
 
                                     ?>
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Module Name Primary</th>
-                                                    <th></th>
-                                                    <th></th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -197,14 +236,111 @@ if(isset($_GET['delete'])) {
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                            
-                            </div>
-                        </div>
-                             
-                            </div>
-                        </div>
-                    
+                                
+ </div>
+ </div>
+                                            </div>                  
+
+
+
+
+
+
+
+                                            <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    
+
+                                    <form class="forms-sample" action="" method="post">
+                                    <div class="form-group">
+                                        <label for="module">
+                                            
+                                  Add New Module (Secondary)
+                                           
+                                    </label>
+                                    <input type="text" class="form-control" id="module" name="sec_module" value="<?php 
+                                   
+                                    if(isset($_POST['sec_module'])){echo $_POST['sec_module'];}
+
+
+                                    ?>" >
+                                    </div>
+                                    
+                                    <?php if (array_key_exists('sec_module', $sec_errors_new_module)) {
+			                    	echo '<p class="text-danger">'.$sec_errors_new_module['sec_module'].'</p>';}?>
+                                   
+
+
+                                    <button type="submit" class="btn btn-primary me-2" name="sec_submit">
+
+                                       Submit
+                                    </button>
+                                    
+                                    </form>
+                                     
+
+
+                                   
+                              
+                                    <div class="table-responsive">
+
+                                    <?php 
+                                 $fetch_module = mysqli_query($connect, "SELECT * FROM secondary_modules ORDER BY secondary_module_id DESC") or die(db_conn_error);
+
+                                    ?>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Module Name Secondary</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php 
+                                                while($row = mysqli_fetch_array($fetch_module)) {
+                                                    $sec_fetch_know_status = mysqli_query($connect, "SELECT secondary_module_start_date, 	secondary_module_end_date, secondary_module_session FROM secondary_modules WHERE secondary_module_id = '".$row['secondary_module_id']."' AND secondary_module_start_date = '' AND secondary_module_end_date = '' AND secondary_module_session = ''") or die(db_conn_error);
+                                                   
+                                                    echo'
+                                                    <tr>
+                                                        <td>'.$row['secondary_module_type'].'</td>
+                                                       
+                                                        <td><a href="new-module.php?sec_delete='.$row['secondary_module_id'].'">Delete</a></td></td>
+                                                        <td>';
+                                                        if(mysqli_num_rows($sec_fetch_know_status) == 1){
+                                                        echo '<i>not set up</i>';
+                                                        }
+                                                    echo    '</td>
+                                                    </tr>';
+                                                }
+
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                
+ </div>
+ </div>
+                                            </div>                  
+
+
+
+
+
+
+
+
+
+                                          
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        </div>
                     
 
 

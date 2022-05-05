@@ -613,13 +613,13 @@ include("../../incs-arahman/change-admin-pass.php");
 
 
 
-                $results = mysqli_query($connect,"SELECT primary_payment_paid_percent, primary_id, pri_firstname, pri_surname, primary_class FROM primary_school_students INNER JOIN primary_school_classes ON primary_class_id = primary_id INNER JOIN primary_payment ON primary_payment_students_id = primary_id WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id ASC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                $results = mysqli_query($connect,"SELECT primary_payment_paid_percent, primary_id, pri_firstname, pri_surname, primary_class FROM primary_school_students INNER JOIN primary_school_classes ON primary_class_id = primary_id INNER JOIN primary_payment ON primary_payment_students_id = primary_id WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' ORDER BY primary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
                 echo '<div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Recently paid students</h4>
+                      <h4 class="card-title mb-1">Paid students (Primary)</h4>
                       <p class="text-muted mb-1"></p>
                     </div>';
 
@@ -672,7 +672,7 @@ include("../../incs-arahman/change-admin-pass.php");
                           <p class="text-muted mb-0"></p>
                         </div>
                         <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                          <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/search-paid.php">See more...</a></p>
+                          <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/search-paid.php?search-paid=&button-paid_students=">See more</a></p>
                           <p class="text-muted mb-0"></p>
                         </div>
                       </div>
@@ -690,13 +690,111 @@ include("../../incs-arahman/change-admin-pass.php");
                 } 
 
                 if(mysqli_num_rows($results) >= 0){               
-                  echo '<form action="show-registered.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
+                  echo '<form action="'.GEN_WEBSITE.'/admin/search-paid.php?search-paid=&button-paid_students=" method="POST"><button type="submit" class="btn btn-warning btn-fw"> See more</button></form>';
                 }
 
 echo '  </div>
 </div>
 </div>
 ';
+
+
+
+
+
+
+
+
+$results = mysqli_query($connect,"SELECT secondary_payment_paid_percent, secondary_id, sec_firstname, sec_surname, secondary_class FROM secondary_school_students INNER JOIN secondary_school_classes ON secondary_class_id = secondary_id INNER JOIN secondary_payment ON secondary_payment_students_id = secondary_id WHERE sec_paid = '1' AND sec_admit = '1' AND sec_active_email = '1' ORDER BY secondary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                
+echo '<div class="col-md-12 grid-margin stretch-card">
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex flex-row justify-content-between">
+      <h4 class="card-title mb-1">Paid students (Secondary)</h4>
+      <p class="text-muted mb-1"></p>
+    </div>';
+
+
+if (mysqli_num_rows($results) >= 1 && mysqli_num_rows($results) <= 5){
+   
+  if(mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 5){
+  while ($row = mysqli_fetch_array($results)){
+ 
+
+    echo '<div class="row">
+      <div class="col-12">
+        <div class="preview-list">
+          <div class="preview-item border-bottom">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-primary">
+                <i class="mdi mdi-file-document"></i>
+              </div>
+            </div>
+            <div class="preview-item-content d-sm-flex flex-grow">
+              <div class="flex-grow">
+                <h6 class="preview-subject">'.$row['sec_surname'].' '.$row['sec_firstname'].'</h6>
+                <p class="text-muted mb-0">'.$row['secondary_class'].'</p>
+              </div>
+              <div class="me-auto text-sm-right pt-2 pt-sm-0">
+              <div class="badge badge-outline-success">'.$row['secondary_payment_paid_percent'].'%</div>
+                <p class="text-muted mb-0"></p>
+              </div>
+            </div>
+          </div>
+         </div>
+      </div>
+    </div>';
+
+
+
+    
+   
+}
+}elseif(mysqli_num_rows($results) > 5){
+ echo '<div class="row">
+<div class="col-12">
+  <div class="preview-list">
+    <div class="preview-item border-bottom">
+      <div class="preview-thumbnail">
+       </div>
+      <div class="preview-item-content d-sm-flex flex-grow">
+        <div class="flex-grow">
+          <h6 class="preview-subject"></h6>
+          <p class="text-muted mb-0"></p>
+        </div>
+        <div class="me-auto text-sm-right pt-2 pt-sm-0">
+          <p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/admin/sec-search-paid.php?search-paid-sec=&button-paid_students-sec=">See more</a></p>
+          <p class="text-muted mb-0"></p>
+        </div>
+      </div>
+    </div>
+   </div>
+</div>
+</div>';
+}
+
+
+
+}elseif(mysqli_num_rows($results) == 0){
+  
+  echo '<h3 class="text-center">No result found</h3>';
+} 
+
+if(mysqli_num_rows($results) >= 0){               
+  echo '<form action="'.GEN_WEBSITE.'/admin/sec-search-paid.php?search-paid-sec=&button-paid_students-sec=" method="POST"><button type="submit" class="btn btn-warning btn-fw"> See more</button></form>';
+}
+
+echo '  </div>
+</div>
+</div>
+';
+
+
+
+
+
+
 
  }
               

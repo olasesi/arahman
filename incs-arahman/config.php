@@ -47,6 +47,8 @@ $pri_class_range = array('Basic one'=>'1', 'Basic two'=>'2', 'Basic three'=>'3',
 /*secondary Classroom name*/
 $sec_class_range = array('JSS 1'=>'1', 'JSS 2'=>'2', 'JSS 3'=>'3', 'SSS 1'=>'4', 'SSS 2'=>'5', 'SSS 3'=>'6');   
 
+/*common-entrance-fee*/
+define('COMMON_ENTRANCE_FEE', 5000);
 
 
 /*Age range*/
@@ -55,14 +57,14 @@ for($i=7;$i<70;$i++){
     $age_range[] = $i;
 }
 
-/*Primary class school fees in kobo*/
+/*Primary class school fees in kobo
 define("BASIC_ONE_FEES", 100000);
 define("BASIC_TWO_FEES", 200000);
 define("BASIC_THREE_FEES", 300000);
 define("BASIC_FOUR_FEES", 400000);
 define("BASIC_FIVE_FEES", 500000);
 define("BASIC_SIX_FEES", 600000);
-
+*/
 
 /*API keys*/
 define('API', 'Bearer sk_test_4cab8d4d937b1ab5f847c78c0014a2f6a6e3405c');

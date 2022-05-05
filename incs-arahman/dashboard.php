@@ -279,7 +279,33 @@
               </ul>
             </div>
           </li>
-           '; }       
+           
+          <li class="nav-item menu-items">
+          <a class="nav-link" data-bs-toggle="collapse" href="#recent-payments_common" aria-expanded="false" aria-controls="ui-basic">
+            <span class="menu-icon">
+              <i class="mdi mdi-laptop"></i>
+            </span>
+            <span class="menu-title">Common Entrance</span>
+            <i class="menu-arrow"></i>
+          </a>
+
+          <div class="collapse" id="recent-payments_common">
+            <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/common-entrance-list.php">Common entrance fee</a></li>
+           
+              
+            </ul>
+          </div>
+        </li>
+          
+          
+          
+          
+          '; 
+          
+          
+          
+          }       
           
 ?>
 <?php
@@ -333,7 +359,7 @@
 
               <div class="collapse" id="recent-payments_common">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/">Common entrance fee</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/common-entrance-list.php">Common entrance fee</a></li>
                
                   
                 </ul>
