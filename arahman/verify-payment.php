@@ -38,7 +38,7 @@ $result = json_decode($request, true);
 
 if (array_key_exists('data', $result) && array_key_exists('status', $result['data']) && ($result['data']['status'] === 'success')) {
 
-  $query_term_session = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(mysqli_error($connect));
+  $query_term_session = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
   while($loop_term_session=mysqli_fetch_array($query_term_session)){
     $current_term = $loop_term_session['choose_term'];
     $current_session_term = $loop_term_session['school_session'];
@@ -47,10 +47,10 @@ if (array_key_exists('data', $result) && array_key_exists('status', $result['dat
   
   if($_SESSION['school_type'] == 'Primary school'){
 
-    mysqli_query($connect, "UPDATE primary_school_students SET pri_paid='1' WHERE pri_email = '".$_SESSION['email']."' AND pri_active_email = '1' AND pri_paid = '0'") or die(mysqli_error($connect));
+    mysqli_query($connect, "UPDATE primary_school_students SET pri_paid='1' WHERE pri_email = '".$_SESSION['email']."' AND pri_active_email = '1' AND pri_paid = '0'") or die(db_conn_error);
 
 
-    $query_id = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_email='".$_SESSION['email']."' AND pri_active_email='1'") or die(mysqli_error($connect));
+    $query_id = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_email='".$_SESSION['email']."' AND pri_active_email='1'") or die(db_conn_error);
     if(mysqli_num_rows($query_id) == 1){
 while($query_id_while = mysqli_fetch_array($query_id)){
  if($_SESSION['percentage'] == 100){
@@ -59,7 +59,7 @@ while($query_id_while = mysqli_fetch_array($query_id)){
   $status = 0;
  }
   $q = mysqli_query($connect,"INSERT INTO primary_payment (primary_payment_students_id, primary_payment_students_reference, primary_payment_term, primary_payment_session,primary_payment_fees, primary_payment_paid_percent, primary_payment_completion_status) 
-  VALUES ('".$query_id_while['primary_id']."', '".$_GET['reference']."','". $current_term."','".  $current_session_term."', '".$_SESSION['school_fees']."', '".$_SESSION['percentage']."', '".$status."')") or die(mysqli_error($connect));
+  VALUES ('".$query_id_while['primary_id']."', '".$_GET['reference']."','". $current_term."','".  $current_session_term."', '".$_SESSION['school_fees']."', '".$_SESSION['percentage']."', '".$status."')") or die(db_conn_error);
 
 unset($_SESSION['school_type']);
 unset($_SESSION['email']);
@@ -80,10 +80,10 @@ exit();
 
   }elseif($_SESSION['school_type'] == 'Secondary school'){
    
-    mysqli_query($connect, "UPDATE secondary_school_students SET sec_paid='1' WHERE sec_email = '".$_SESSION['email']."' AND sec_active_email = '1' AND sec_paid = '0'") or die(mysqli_error($connect));
+    mysqli_query($connect, "UPDATE secondary_school_students SET sec_paid='1' WHERE sec_email = '".$_SESSION['email']."' AND sec_active_email = '1' AND sec_paid = '0'") or die(db_conn_error);
 
 
-    $query_id = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_email='".$_SESSION['email']."' AND sec_active_email='1'") or die(mysqli_error($connect));
+    $query_id = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_email='".$_SESSION['email']."' AND sec_active_email='1'") or die(db_conn_error);
     if(mysqli_num_rows($query_id) == 1){
 while($query_id_while = mysqli_fetch_array($query_id)){
  if($_SESSION['percentage'] == 100){
@@ -92,7 +92,7 @@ while($query_id_while = mysqli_fetch_array($query_id)){
   $status = 0;
  }
   $q = mysqli_query($connect,"INSERT INTO secondary_payment (secondary_payment_students_id, secondary_payment_students_reference, secondary_payment_term, secondary_payment_session,secondary_payment_fees, secondary_payment_paid_percent, secondary_payment_completion_status) 
-  VALUES ('".$query_id_while['secondary_id']."', '".$_GET['reference']."','". $current_term."','".  $current_session_term."', '".$_SESSION['school_fees']."', '".$_SESSION['percentage']."', '".$status."')") or die(mysqli_error($connect));
+  VALUES ('".$query_id_while['secondary_id']."', '".$_GET['reference']."','". $current_term."','".  $current_session_term."', '".$_SESSION['school_fees']."', '".$_SESSION['percentage']."', '".$status."')") or die(db_conn_error);
 
 unset($_SESSION['school_type']);
 unset($_SESSION['email']);
@@ -115,12 +115,12 @@ exit();
 
 if(isset($_SESSION['common_entrance_email']) AND isset($_SESSION['choose_session'])){
 
-  $query_id = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_email='".$_SESSION['common_entrance_email']."' AND sec_active_email='1' AND sec_paid = '0' AND sec_admit = '0' AND sec_class_id = '0'") or die(mysqli_error($connect));
+  $query_id = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_email='".$_SESSION['common_entrance_email']."' AND sec_active_email='1' AND sec_paid = '0' AND sec_admit = '0' AND sec_class_id = '0'") or die(db_conn_error);
   if(mysqli_num_rows($query_id) == 1){
 while($query_id_while = mysqli_fetch_array($query_id)){
 
   $q = mysqli_query($connect,"INSERT INTO secondary_common_e (secondary_common_e_students_id, secondary_common_e_session, secondary_common_e_price, secondary_common_e_reference, secondary_common_e_status) 
-  VALUES ('".$query_id_while['secondary_id']."', '".$_SESSION['choose_session']."','". COMMON_ENTRANCE_FEE ."','".  $_GET['reference']."', '1')") or die(mysqli_error($connect));
+  VALUES ('".$query_id_while['secondary_id']."', '".$_SESSION['choose_session']."','". COMMON_ENTRANCE_FEE ."','".  $_GET['reference']."', '1')") or die(db_conn_error);
 
 unset($_SESSION['choose_session']);
 unset($_SESSION['common_entrance_email']);
@@ -136,6 +136,17 @@ exit();
 
 
  
+
+
+}
+
+
+if(isset($_SESSION['primary_id'])){
+  mysqli_query($connect, "UPDATE primary_payment SET primary_payment_students_reference='".$_GET['reference']."', primary_payment_paid_percent = '100', primary_payment_completion_status = '1' WHERE primary_payment_students_id = '".$_SESSION['primary_id']."'") or die(db_conn_error);
+
+  header('Location:'.GEN_WEBSITE.'/students/home.php?reference='.$_GET['reference']);
+  exit();
+  
 
 
 }
