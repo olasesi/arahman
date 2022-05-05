@@ -147,7 +147,7 @@ mysqli_query($connect, "UPDATE secondary_school_students SET sec_active='1', sec
 			$_FILES = array();
 				
 			unset($_FILES['img'], $_SESSION['images']);
-            header('Location:'.GEN_WEBSITE.'/admin/show-registered.php?confirm='.$firstname);
+            header('Location:'.GEN_WEBSITE.'/admin/sec-registered.php?confirm='.$firstname);
             exit();
            
             

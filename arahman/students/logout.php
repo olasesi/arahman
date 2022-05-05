@@ -8,11 +8,6 @@ if(!isset($_SESSION['primary_id'])){
 	exit();
 }
 
-if(isset($_SESSION['primary_id']) AND $_SESSION['pri_admit'] == 0){  
-	header('Location:'.GEN_WEBSITE.'/school-payment.php');
-	  exit();
-  }
-  
 
 
 

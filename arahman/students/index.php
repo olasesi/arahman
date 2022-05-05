@@ -83,14 +83,14 @@ if(preg_match('/^.{6,100}$/i',$_POST['password'])){
 
 $_SESSION['primary_id'] = $row[0];
 $_SESSION['pri_class_id'] = $row[5];
-$_SESSION['pri_firstname'] = $row[7];
-$_SESSION['pri_surname'] = $row[8];
-$_SESSION['pri_age'] = $row[9];
-$_SESSION['pri_sex'] = $row[10];
-$_SESSION['pri_email'] = $row[11];
-$_SESSION['pri_photo'] = $row[12];
-$_SESSION['pri_phone'] = $row[13];
-$_SESSION['pri_address'] = $row[14];
+$_SESSION['pri_firstname'] = $row[8];
+$_SESSION['pri_surname'] = $row[9];
+$_SESSION['pri_age'] = $row[10];
+$_SESSION['pri_sex'] = $row[11];
+$_SESSION['pri_email'] = $row[12];
+$_SESSION['pri_photo'] = $row[13];
+$_SESSION['pri_phone'] = $row[14];
+$_SESSION['pri_address'] = $row[15];
 
 
 header('Location:'.GEN_WEBSITE.'/students/home.php');
@@ -165,17 +165,19 @@ header('Location:'.GEN_WEBSITE.'/students/home.php');
 	setcookie("students_remember_me", $cookie_value_if_empty[0], time() + 4*24*3600);	//4 days for cookie to expire
 	}
 
+ 
+
 
 $_SESSION['secondary_id'] = $row[0];
 $_SESSION['sec_class_id'] = $row[5];
-$_SESSION['sec_firstname'] = $row[7];
-$_SESSION['sec_surname'] = $row[8];
-$_SESSION['sec_age'] = $row[9];
-$_SESSION['sec_sex'] = $row[10];
-$_SESSION['sec_email'] = $row[11];
-$_SESSION['sec_photo'] = $row[12];
-$_SESSION['sec_phone'] = $row[13];
-$_SESSION['sec_address'] = $row[14];
+$_SESSION['sec_firstname'] = $row[8];
+$_SESSION['sec_surname'] = $row[9];
+$_SESSION['sec_age'] = $row[10];
+$_SESSION['sec_sex'] = $row[11];
+$_SESSION['sec_email'] = $row[12];
+$_SESSION['sec_photo'] = $row[13];
+$_SESSION['sec_phone'] = $row[14];
+$_SESSION['sec_address'] = $row[15];
  
 
 header('Location:'.GEN_WEBSITE.'/students/home.php');

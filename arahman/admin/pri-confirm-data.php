@@ -138,7 +138,7 @@ mysqli_query($connect, "UPDATE primary_school_students SET pri_active='1', pri_a
 			$_FILES = array();
 				
 			unset($_FILES['img'], $_SESSION['images']);
-            header('Location:'.GEN_WEBSITE.'/admin/show-registered.php?confirm='.$firstname);
+            header('Location:'.GEN_WEBSITE.'/admin/pri-registered.php?confirm='.$firstname);
             exit();
            
             
