@@ -5,12 +5,12 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
-	header('Location:/'.GEN_WEBSITE.'/admin');
+	header('Location:'.GEN_WEBSITE.'/admin');
 	exit();
 }
 
 if($_SESSION['admin_type'] != ACCOUNTANT){
-	header('Location:/'.GEN_WEBSITE.'/admin/dashboard.php');
+	header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 
 }
@@ -78,7 +78,9 @@ $errorp = array();
                 mysqli_query($connect, "UPDATE primary_school_classes SET primary_class_fees ='".$basic_six."' WHERE primary_class_id = '6'") or die(db_conn_error);
 
             
-
+                header('Location:'.GEN_WEBSITE.'/admin/bill-setting.php?bill-setting=1');
+                exit();
+            
             
 
         }
@@ -146,7 +148,8 @@ $errors = array();
                 mysqli_query($connect, "UPDATE secondary_school_classes SET secondary_class_fees ='".$sss_two."' WHERE secondary_class_id = '5'") or die(db_conn_error);
                 mysqli_query($connect, "UPDATE secondary_school_classes SET secondary_class_fees ='".$sss_three."' WHERE secondary_class_id = '6'") or die(db_conn_error);
 
-            
+                header('Location:'.GEN_WEBSITE.'/admin/bill-setting.php?bill-setting=1');
+                exit();
 
             
 
@@ -166,6 +169,30 @@ $errors = array();
 
             <div class="main-panel">
                 <div class="content-wrapper">
+
+                <?php         
+    if(isset($_GET['bill-setting']) AND $_GET['bill-setting'] == 1){
+           
+        echo '<div class="row">
+
+<div class="col-12 grid-margin stretch-card">
+   <div class="card">
+     <div class="card-body">
+       <h4 class="card-title">School fees has been successfully changed</h4>
+     
+
+          
+              
+                  </div>
+                </div>
+              </div>
+
+            </div>';
+}
+          
+            ?>
+
+
                     <div class="page-header">
                         <h3 class="page-title"> School Fees Setting</h3>
                     </div>

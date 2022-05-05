@@ -29,7 +29,7 @@ if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Secondary School fees</h4>
+                    <h4 class="card-title">Common Entrance fee</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -37,12 +37,12 @@ if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
                           
                             <th> Firstname </th>
                             <th> Surname </th>
-                            <th>Fees </th>
-                            <th> Completion status</th>
-                            <th> Term</th>
+                            <th>Amount </th>
+                            <th>Payment status</th>
+                            <th>Reference no</th>
                             <th> Session</th>
-                            <th>Date paid(fees) </th>
-                            <th>Modules</th>
+                            <th>Date paid </th>
+                           
                         </tr>
                         </thead>
                         <tbody>
@@ -53,33 +53,29 @@ if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
            
                                         <?php
                               include ('../../incs-arahman/paginate.php');
-                              $statement = "secondary_school_students INNER JOIN secondary_payment ON secondary_payment_students_id = secondary_id  WHERE (sec_paid = '1' AND sec_admit = '1' AND sec_active_email = '1') ORDER BY secondary_id ASC";
+                              $statement = "secondary_common_e INNER JOIN secondary_school_students ON secondary_common_e_students_id = secondary_id ORDER BY secondary_id ASC";
                                         
                               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
                                           if ($page <= 0) $page = 1;
                                                         // Set how many records do you want to display per page.
                                           $startpoint = ($page * $per_page) - $per_page;
-                                          $results = mysqli_query($connect,"SELECT secondary_payment_fees, secondary_payment_session, secondary_payment_term,  secondary_payment_paid_percent, secondary_payment_timestamp,  secondary_id, sec_paid, sec_firstname, secondary_payment_completion_status, sec_surname, sec_email, sec_phone FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
+                                          $results = mysqli_query($connect,"SELECT secondary_common_e_session, secondary_common_e_price, secondary_common_e_reference, secondary_common_e_status, sec_firstname, sec_surname, secondary_common_e_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
                                           if (mysqli_num_rows($results) != 0){
                                               while ($row = mysqli_fetch_array($results)) {
                                                   
-                                                $num_of_joins = mysqli_query($connect,"SELECT * FROM modules LEFT JOIN module_join_students ON module_id = module_type_id WHERE module_students = '".$row['secondary_id']."'") or die(mysqli_error($connect));
+                                              
                                                 echo '<tr>
                                                 
                                                   <td>'.$row['sec_firstname'].'</td>
                                                   <td>'.$row['sec_surname'].' </td>
-                                                  <td>&#8358;'.number_format($row['secondary_payment_fees']).' </td>
-                                                  <td><div class="badge badge-outline-success">'.$row['secondary_payment_paid_percent'].'% </div></td>
-                                                  <td>'.$row['secondary_payment_term'].' </td>
-                                                  <td>'.$row['secondary_payment_session'].' </td>
-                                                  <td>'.date('M j Y g:i A', strtotime($row['secondary_payment_timestamp']. OFFSET_TIME  )).'</td>';
+                                                  <td>&#8358;'.number_format($row['secondary_common_e_price']).' </td>
+                                                  <td>';if($row['secondary_common_e_status'] == 1){echo 'paid';}
+                                                  echo '</td>
+                                                  <td>'.$row['secondary_common_e_reference'].' </td>
+                                                  <td>'.$row['secondary_common_e_session'].' </td>
+                                                  <td>'.date('M j Y g:i A', strtotime($row['secondary_common_e_timestamp']. OFFSET_TIME  )).'</td>';
                               echo '<td>';
-                                                  while ($row_answer = mysqli_fetch_array($num_of_joins)) {
-                                                  
-                                                    echo '<div class="badge badge-outline-success">'.$row_answer['module_type'].'</div>';
-                                                  
-                                                  }
-
+                                               
                               echo '</td>';
 
                               echo                '</tr>';
@@ -102,7 +98,7 @@ if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
                     </div>
                     
                   </div>
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/secondary-school-payment.php?");?> </nav>
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/common-entrance-list.php?");?> </nav>
                 </div>
               </div>
             </div>

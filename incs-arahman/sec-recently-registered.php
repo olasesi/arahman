@@ -9,7 +9,8 @@
          <th> Surname </th>
          <th> Email address </th>
          <th> Phone number </th>
-         <th> Entrance Exam(Absent/Present) </th>
+       
+         <th> Entrance exam payment</th>
         <th>Date paid </th>
      </tr>
      </thead>
@@ -26,8 +27,8 @@ while ($row = mysqli_fetch_array($results)) {
  <td>'.$row['sec_surname'].' </td>
  <td>'.$row['sec_email'].'</td>
  <td>'.$row['sec_phone'].'</td>';
-echo ($row['secondary_common_e_exam'] == NULL)?'<td><button type="button" class="btn btn-danger me-2 disabled">Exam in View/Was Absent</button></td>':'<td><button type="button"  class="btn btn-success me-2 disabled">Exam in View/Was Present</button></td>';
 
+if($row['secondary_common_e_status'] == 1){echo '<td>Paid</td>';}else{echo '<td>Not Paid</td>';}
 
  echo '<td> '.date('M j Y g:i A', strtotime($row['sec_timestamp'])).' </td>
  <td>

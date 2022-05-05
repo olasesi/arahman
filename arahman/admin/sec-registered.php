@@ -68,7 +68,7 @@ $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             							// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
           
-            $results = mysqli_query($connect,"SELECT secondary_id, sec_paid, sec_firstname, sec_surname, sec_email, sec_phone,secondary_common_e_exam, sec_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
+            $results = mysqli_query($connect,"SELECT secondary_common_e_status, secondary_id, sec_paid, sec_firstname, sec_surname, sec_email, sec_phone, sec_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));
             
 ?>
 
