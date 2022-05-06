@@ -919,7 +919,7 @@ echo '</div>
 
                 }
 
-                $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active,  primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_sex, primary_teacher_qualification, primary_class_id, primary_class FROM primary_teachers, primary_school_classes WHERE primary_class =	primary_teacher_class_id ORDER BY primary_teacher_id DESC LIMIT 5") or die(db_conn_error); 
+                $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active,  primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_sex, primary_teacher_qualification, primary_class_id, primary_class FROM primary_teachers, primary_school_classes WHERE primary_class_id =	primary_teacher_class_id ORDER BY primary_teacher_id DESC LIMIT 5") or die(db_conn_error); 
                 
                  
                 

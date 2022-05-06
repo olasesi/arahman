@@ -180,7 +180,7 @@ $_SESSION['sec_phone'] = $row[14];
 $_SESSION['sec_address'] = $row[15];
  
 
-header('Location:'.GEN_WEBSITE.'/students/home.php');
+header('Location:'.GEN_WEBSITE.'/students/home-secondary.php');
 exit;
 
 

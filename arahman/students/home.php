@@ -14,8 +14,15 @@ if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
   if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['pay'])){
                 $class_price = $_POST['balance'] * 100;
                 $email = $_SESSION['pri_email'];
-                //var_dump ($email);
-                //var_dump ($_POST['balance']);
+               
+                require_once ('../../incs-arahman/pay.php');
+ } ?>
+<?php 
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['pay_module'])){
+                $_SESSION['module'] = $_POST['module'];
+                $class_price = $_POST['module_price'] * 100;
+                $email = $_SESSION['pri_email'];
+              
                 require_once ('../../incs-arahman/pay.php');
  } ?>
 <?php include("../../incs-arahman/header-students.php");?>
@@ -141,6 +148,86 @@ echo
 }
 ?>
 
+<?php
+   $query_modules = mysqli_query($connect, "SELECT 	module_id, module_price, module_type, module_end_date FROM modules, module_price WHERE module_id = modules_id AND module_class_id = '".$_SESSION['pri_class_id']."'") or die(db_conn_error);		
+  
+  echo '<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+          <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                  <div>
+                      <p class="mb-2 text-md-center text-lg-left">Other school activities payment</p>
+                      <h1 class="mb-0 text-danger"></h1>
+                  </div>
+                  
+              </div>';
+   
+        while($rows_modules = mysqli_fetch_array($query_modules)){ 
+       
+          		           
+
+echo
+'
+                                    <form class="form d-flex flex-column align-items-center justify-content-between w-100" method="post" action="">
+                                           <input type="hidden" name="module" value="'.$rows_modules['module_id'].'"/> 
+                                           
+                                           <input type="hidden" name="module_price" value="'.$rows_modules['module_price'].'"/>
+                                           
+                                    <button class="btn btn-success btn-rounded mt-1" type="submit" name="pay_module">'.$rows_modules['module_type'].'</button>
+                                </form>
+                               
+
+';
+
+
+
+
+}
+echo ' </div> 
+</div>
+
+
+</div>
+
+</div>
+';
+?>
+<?php
+  $query_inner = mysqli_query($connect, "SELECT module_type_id, module_type_id FROM module_join_students, modules WHERE module_id=module_type_id AND module_students = '".$_SESSION['primary_id']."'") or die(db_conn_error);
+  
+  
+   
+        while($rows_paid = mysqli_fetch_array($query_inner)){ 
+                                            
+echo
+'<div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                        <div>
+                                            <p class="mb-2 text-md-center text-lg-left">Paid activities</p>
+                                            <h1 class="mb-0 text-danger">'.$rows_paid['module_type_id'].'</h1>
+                                        </div>
+                                     
+                                    </div>
+                                   
+                                </div> 
+                            </div>
+                           
+
+                        </div>
+                       
+</div>
+
+
+';
+
+}
+
+?>
+
                     <div class="row">
                         <div class="col-xl-6 grid-margin stretch-card flex-column">
                             <h5 class="mb-2 text-titlecase mb-4">Class statistics</h5>
@@ -149,7 +236,7 @@ echo
                                     <div class="card">
                                         <div class="card-body d-flex flex-column justify-content-between">
                                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <?php $classes_in_school = mysqli_query($connect, "SELECT primary_class FROM primary_school_classes WHERE primary_class_id = '".$_SESSION['sec_class_id']."'") or die(db_conn_error);?>    
+                                            
                                             <p class="mb-0 text-muted">Students in </p>
                                                 <!-- <p class="mb-0 text-muted">+1.37%</p> -->
                                             </div>
@@ -276,15 +363,15 @@ echo
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-4 grid-margin stretch-card">
+                        <!-- <div class="col-xl-4 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body border-bottom">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Overall sales</h6>
+                                        <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Activities</h6>
                                         <div class="dropdown">
                                             <button class="btn bg-white p-0 pb-1 text-muted btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Last 30 days
-                      </button> 
+                                        Last 30 days
+                                    </button> 
                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
                                                 <h6 class="dropdown-header">Settings</h6>
                                                 <a class="dropdown-item" href="javascript:;">Action</a>
@@ -340,10 +427,10 @@ echo
                                     </div> 
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4 grid-margin stretch-card">
+                        </div> -->
+                        <div class="col-md-12 col-xl-12 grid-margin stretch-card">
                             <div class="row">
-                               <div class="col-md-12 grid-margin stretch-card">
+                               <!-- <div class="col-md-12 grid-margin stretch-card">
                                     <div class="card newsletter-card bg-gradient-warning">
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center justify-content-center h-100">
@@ -357,7 +444,7 @@ echo
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>  -->
                                 <div class="col-md-12 stretch-card">
                                     <div class="card profile-card bg-gradient-primary">
                                         <div class="card-body">
@@ -373,7 +460,7 @@ echo
                                                     <p class="text-white text-center text-md-left"><?= $_SESSION['pri_email']; ?></p>
                                                     <div class="d-flex align-items-center justify-content-between info pt-2">
                                                         <div>
-                                                            <p class="text-white font-weight-bold">Class</p>
+                                                          
                                                             <p class="text-white font-weight-bold">Sex</p>
 															<p class="text-white font-weight-bold">Age</p>
 															<p class="text-white font-weight-bold">Phone</p>
@@ -382,7 +469,7 @@ echo
 															
                                                         </div>
                                                         <div>
-                                                            <p class="text-white"><?=$_SESSION['primary_class'];?></p>
+                                                            <p class="text-white"></p>
 															<p class="text-white"><?=$_SESSION['pri_sex'];?></p>
 															<p class="text-white"><?=$_SESSION['pri_age'];?></p>
 															<p class="text-white"><?=$_SESSION['pri_phone'];?></p>
@@ -403,15 +490,15 @@ echo
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-4 grid-margin stretch-card">
+                        <!-- <div class="col-md-6 col-xl-4 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body border-bottom">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Sales statistics</h6>
                                         <div class="dropdown">
                                              <button class="btn bg-white p-0 pb-1 text-muted btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Last 7 days
-                      </button> 
+                                            Last 7 days
+                                        </button> 
                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4">
                                                 <h6 class="dropdown-header">Settings</h6>
                                                 <a class="dropdown-item" href="javascript:;">Action</a>
@@ -427,10 +514,10 @@ echo
                                     <canvas id="sales-chart-d" height="320"></canvas>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-4 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
@@ -474,7 +561,7 @@ echo
                             </div>
                         </div>
                     </div> 
-
+ -->
 
 
 
