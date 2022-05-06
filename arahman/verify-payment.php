@@ -153,17 +153,21 @@ if(isset($_SESSION['primary_id'])){
 
 
 
-  // if(isset($_SESSION['primary_id'])){
-
-  // }elseif(isset($_SESSION['secondary_id'])){
-
-  // }
 
 
+if(isset($_SESSION['module'])){
+ 
+   mysqli_query($connect,"INSERT INTO module_join_students (module_students, module_type_id, module_reference, module_status) 
+  VALUES ('".$_SESSION['primary_id']."', '".$_SESSION['module']."','".$_GET['reference']."','1')") or die(db_conn_error);
+ 
+
+ unset($_SESSION['module']);
+ header('Location:'.GEN_WEBSITE.'/students/home.php?reference='.$_GET['reference']);
+ exit();
+ 
 
 
-
-
+}
 
   
 

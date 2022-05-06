@@ -11,10 +11,10 @@ if(isset($_SESSION['admin_id'])){   //logged in admins dont have right to teache
 ?>
 
 <?php
-if(isset($_SESSION['prospective_id'])){   //logged in students dont have right to teachers login.
-	header('Location:'.GEN_WEBSITE.'/prospective-students/home.php');
-	exit();
-}
+//if(isset($_SESSION['prospective_id'])){   //logged in students dont have right to teachers login.
+	//header('Location:'.GEN_WEBSITE.'/prospective-students/home.php');
+	//exit();
+//}
 ?>
 
 <?php

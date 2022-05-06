@@ -167,11 +167,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
                         echo '<option>Choose class</option>';
                                         
                         if(isset ($_POST['class'])){
-                        foreach ($class_range as $pri_class=>$class_number){
+                        foreach ($pri_class_range as $pri_class=>$class_number){
                         $sel_class = ($pri_class==$_POST['class'])?'Selected="selected"':'';
                         echo '<option value="'.$class_number.'" '.$sel_class.'>'.$pri_class.'</option>';}
                         }else{
-                            foreach ($class_range as $pri_class=>$class_number){
+                            foreach ($pri_class_range as $pri_class=>$class_number){
                               
                                 echo '<option value="'.$class_number.'">'.$pri_class.'</option>';}
 
