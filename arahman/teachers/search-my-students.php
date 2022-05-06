@@ -16,7 +16,7 @@ $_GET['students_name']= "";
 }
 
 include_once ('../../incs-arahman/paginate.php');
-$statement = "primary_school_students, primary_school_classes WHERE (primary_class_id = pri_class_id) AND primary_class_id = '".$_SESSION['primary_teacher_class_id']."' AND (pri_firstname LIKE '%".mysqli_real_escape_string ($connect,$_GET['students_name'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string ($connect,$_GET['students_name'])."%') ORDER BY primary_id DESC"; 
+$statement = "primary_school_students, primary_school_classes WHERE (primary_class_id = pri_class_id AND pri_active_email = '1' AND pri_paid = '1' AND pri_admit = '1') AND primary_class_id = '".$_SESSION['primary_teacher_class_id']."' AND (pri_firstname LIKE '%".mysqli_real_escape_string ($connect,$_GET['students_name'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string ($connect,$_GET['students_name'])."%') ORDER BY primary_id DESC"; 
 
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;

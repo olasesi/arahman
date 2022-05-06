@@ -50,10 +50,10 @@ include ('../incs-arahman/header.php');
                                 <a href="javascript:void(0)">Portals</a>
                                 <ul class="sub-menu">
                                     <li><a href="<?php echo GEN_WEBSITE.'/prospective-students'; ?>">Prospective Students</a></li>
-                                    <li><a href="">Returning Students</a></li>
-                                    <li><a href="">Parents</a></li>
-                                    <li><a href="">Staff</a></li>
-                                    <li><a href="">Admin</a></li>
+                                    <li><a href="<?php echo GEN_WEBSITE.'/students'; ?>">Returning Students</a></li>
+                                   
+                                    <li><a href="<?php echo GEN_WEBSITE.'/admin'; ?>">Admin</a></li>
+                                    <li><a href="<?php echo GEN_WEBSITE.'/teachers'; ?>">Teachers</a></li>
 
                                 </ul>
                             </li>
