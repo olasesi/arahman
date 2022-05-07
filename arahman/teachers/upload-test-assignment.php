@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
  
 if (is_uploaded_file($_FILES['img']['tmp_name']) AND $_FILES['img']['error'] == UPLOAD_ERR_OK){ 
 		
-			if($_FILES['img']['size'] > 2097152){ 		//conditions for the file size 2MB
-				$errors['editfile_size']="File size is too big. Max file size 2MB";
+			if($_FILES['img']['size'] > 5242880){ 		//conditions for the file size 2MB
+				$errors['editfile_size']="File size is too big. Max file size 5MB";
 			}
 		
 			$editallowed_extensions = array('.pdf');		
@@ -110,7 +110,6 @@ if (mysqli_affected_rows($connect) == 1) {
             <div class="main-panel">
                 <div class="content-wrapper">
 
-                  
 
 
 
@@ -150,7 +149,7 @@ if (mysqli_affected_rows($connect) == 1) {
                         ?>
             <input type="file" name="img" class="file-upload-default">
             <div class="input-group col-xs-12">
-              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload pdf">
               <span class="input-group-append">
                 <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
               </span>

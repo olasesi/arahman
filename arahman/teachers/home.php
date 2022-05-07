@@ -25,6 +25,16 @@ exit();
 }
 
 ?>
+<?php
+if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['delete_assignment'])){
+	mysqli_query($connect, "DELETE FROM primary_test_assignment_upload WHERE primary_test_upload_id  = '".$_POST['delete_assignment']."'") or die(db_conn_error);
+
+    header('Location:'.GEN_WEBSITE.'/teachers/home.php?confirm_delete=1');
+    exit();
+
+    
+}
+?>
 
 
 <?php include("../../incs-arahman/header-teacher-students.php");?>
@@ -34,6 +44,55 @@ exit();
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
+
+
+
+                <?php
+if(isset($_GET['confirm_file']) AND $_GET['confirm_file']=1){
+echo '
+<div class="row">
+					   <div class="col-md-12 grid-margin stretch-card">
+						   <div class="card">
+							   <div class="card-body primary">
+								   <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+									   <div>
+										  
+										   <h3 class="mb-0 text-center">Resources has been submitted</h3>
+									   </div>
+									 
+								   </div>
+								  
+							   </div>
+						   </div>
+					   </div>
+					 
+					 
+				   </div> ';
+}
+?>              
+  <?php
+if(isset($_GET['confirm_delete']) AND $_GET['confirm_delete']=1){
+echo '
+<div class="row">
+					   <div class="col-md-12 grid-margin stretch-card">
+						   <div class="card">
+							   <div class="card-body primary">
+								   <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+									   <div>
+										  
+										   <h3 class="mb-0 text-center">Resources has been deleted</h3>
+									   </div>
+									 
+								   </div>
+								  
+							   </div>
+						   </div>
+					   </div>
+					 
+					 
+				   </div> ';
+}
+?>              
 
                     <div class="row">
                         <div class="col-xl-6 grid-margin stretch-card flex-column">
@@ -331,10 +390,10 @@ exit();
                                             <tr>
                                                 <th class="ml-5">Firstname</th>
                                                 <th>Surname</th>
-                                                
                                                 <th>Age</th>
                                                 <th>Sex</th>
                                                 <th>Year registered</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -343,25 +402,21 @@ exit();
 
                     <?php
 //Highlight Students details
-$results = mysqli_query($connect,"SELECT primary_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_photo, primary_class FROM primary_school_students, primary_school_classes WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' AND primary_class_id = pri_class_id AND pri_class_id = '".$_SESSION['primary_teacher_class_id']."' ORDER BY primary_id ASC LIMIT 12") or die(db_conn_error); // Sec. students will be added to the select lists later.
+$results = mysqli_query($connect,"SELECT primary_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_photo, primary_class FROM primary_school_students, primary_school_classes WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' AND primary_class_id = pri_class_id AND pri_class_id = '".$_SESSION['primary_teacher_class_id']."' ORDER BY primary_id ASC LIMIT 20") or die(db_conn_error); // Sec. students will be added to the select lists later.
   
 if (mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 12){
 	if (mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 12){
 	while ($row_student = mysqli_fetch_array($results)) {
 		echo '<tr>';
-        echo '<td>'.$row_student['pri_firstname'].'<td>';
-		echo '<td>'.$row_student['pri_surname'].'<td>';
-       echo '<td>'.$row_student['pri_age'].'<td>';
-		echo '<td>'.$row_student['pri_sex'].'<td>';
-	 echo '<td>'.$row_student['pri_year'].'<td>';
+        echo '<td>'.$row_student['pri_firstname'].'</td>';
+		echo '<td>'.$row_student['pri_surname'].'</td>';
+       echo '<td>'.$row_student['pri_age'].'</td>';
+		echo '<td>'.$row_student['pri_sex'].'</td>';
+	 echo '<td>'.$row_student['pri_year'].'</td>';
 
 
-        echo '<td> <div class="d-flex align-items-center">';
-		echo '<form action="" method="GET">
-        <button type="submit" class="class="btn btn-danger btn-sm btn-icon-text mr-3" name="show_students" value="'.$row_student['primary_id'].'">Show more details</button>
-		</form>';
-        echo '<div><td>';
-	
+      
+	echo '</tr>';
 	}
 
 
@@ -370,10 +425,12 @@ if (mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 12){
 	//$more_results = mysqli_query($connect,"SELECT primary_id FROM primary_school_students WHERE pri_paid = '1' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id ASC") or die(db_conn_error); // Sec. students will be added to the select lists later.
 	
 
-}else{
-echo '<p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/teachers/students-lists.php">See more...</a></p>';	 
 }
-
+echo '<td> <div class="d-flex align-items-center">';
+echo '<form action="search-my-students.php?students_name=&search_button=" method="GET">
+<button type="submit" class="btn btn-success btn-sm btn-icon-text mr-3" name="show_students" value="">Show more details</button>
+</form>';
+echo '<div></td>';
 }elseif(mysqli_num_rows($results) == 0){
 	echo '<h3 class="text-center">No registered students</h3>';
 
@@ -414,7 +471,11 @@ echo '<p class="text-muted text-center"><a href="'.GEN_WEBSITE.'/teachers/studen
 	mysqli_query($connect, "UPDATE primary_test_assignment_upload SET primary_test_upload_class_status = 'Open' WHERE primary_test_upload_class_status = 'Close' AND primary_test_upload_id = '".$_POST['open_assignment']."'") or die(db_conn_error);
 }
 
-$query_read = mysqli_query ($connect, "SELECT primary_test_upload_testname, primary_test_upload_id, primary_test_upload_class_status, primary_test_upload_filename, primary_class, primary_test_upload_timestamp FROM primary_test_assignment_upload, primary_school_classes WHERE primary_class_id = primary_test_upload_class_id AND primary_test_upload_class_id='".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_upload_id ASC LIMIT 12") or die(db_conn_error);
+
+
+
+
+$query_read = mysqli_query ($connect, "SELECT primary_test_upload_testname, primary_test_upload_id, primary_test_upload_class_status, primary_test_upload_filename, primary_class, primary_test_upload_timestamp FROM primary_test_assignment_upload, primary_school_classes WHERE primary_class_id = primary_test_upload_class_id AND primary_test_upload_class_id='".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_upload_id DESC LIMIT 20") or die(db_conn_error);
 
 //
 ?>
@@ -428,9 +489,9 @@ $query_read = mysqli_query ($connect, "SELECT primary_test_upload_testname, prim
                                     <table class="table table-striped project-orders-table">
                                         <thead>
                                             <tr>
-                                                <th class="ml-5">ID</th>
+                                            <th>Resource/test name</th>
                                                 <th>Date given</th>
-                                                <th>Resource/test name</th>
+                                             
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -440,9 +501,9 @@ $query_read = mysqli_query ($connect, "SELECT primary_test_upload_testname, prim
                                            <?php if (mysqli_num_rows($query_read) != 0){
 	while ($row_read = mysqli_fetch_array($query_read)) {
         echo ' <tr>';
-echo '<td>'.$row_read['primary_test_upload_id'].'</td>';
-echo '<td>'.$row_read['primary_test_upload_timestamp'].'</td>';
-echo '<td>'.$row_read['primary_test_upload_testname'].'</td>';
+        echo '<td>'.$row_read['primary_test_upload_testname'].'</td>';
+echo '<td>'.date('M j Y g:i A', strtotime($row_read['primary_test_upload_timestamp']. OFFSET_TIME)).'</td>';
+
 echo '<td>'.$row_read['primary_test_upload_class_status'].'</td>';	
 
 
@@ -462,12 +523,30 @@ echo '<form action="" method="POST">
 echo '
 </div>
 </td>';
+
+
+echo '<td>
+    <div class="d-flex align-items-center">';
+
+	
+    echo '
+    <form action="" method="POST">
+	 <button type="submit" class="btn btn-danger btn-sm btn-icon-text mr-3" name="delete_assignment" value="'.$row_read['primary_test_upload_id'].'">Delete</button>
+	</form>';
+
+echo '
+</div>
+</td>';
+
+
+
+
 echo '</tr>';
 }
 
-$query_read_more = mysqli_query ($connect, "SELECT primary_test_upload_id FROM primary_test_assignment_upload, primary_school_classes WHERE primary_class_id = primary_test_upload_class_id AND primary_test_upload_class_id='".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_upload_id ASC") or die(db_conn_error);
+$query_read_more = mysqli_query ($connect, "SELECT primary_test_upload_id FROM primary_test_assignment_upload, primary_school_classes WHERE primary_class_id = primary_test_upload_class_id AND primary_test_upload_class_id='".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_upload_id DESC") or die(db_conn_error);
 
-if(mysqli_num_rows($query_read_more) > 12){
+if(mysqli_num_rows($query_read_more) > 20){
 	echo '<td>';
     echo '<a href="'.GEN_WEBSITE.'/teachers/more-assignments.php"><h6 class="preview-subject">See more...</h6></a>';
     echo '</td>';

@@ -587,7 +587,7 @@ echo
                     <?php
 
 
-$query_read = mysqli_query ($connect, "SELECT primary_test_upload_id, primary_test_upload_testname,  primary_test_upload_filename, primary_test_upload_timestamp FROM primary_test_assignment_upload WHERE primary_test_upload_class_id = '".$_SESSION['pri_class_id']."'ORDER BY primary_test_upload_id DESC LIMIT 12") or die(db_conn_error);
+$query_read = mysqli_query ($connect, "SELECT primary_test_upload_id, primary_test_upload_testname,  primary_test_upload_filename, primary_test_upload_timestamp FROM primary_test_assignment_upload WHERE primary_test_upload_class_id = '".$_SESSION['pri_class_id']."' AND primary_test_upload_class_status = 'Open' ORDER BY primary_test_upload_id DESC LIMIT 12") or die(db_conn_error);
 
 //
 ?>
@@ -601,9 +601,9 @@ $query_read = mysqli_query ($connect, "SELECT primary_test_upload_id, primary_te
                                     <table class="table table-striped project-orders-table">
                                         <thead>
                                             <tr>
-                                                <th class="ml-5">ID</th>
+                                            <th>Resource/test name</th>
+
                                                 <th>Date given</th>
-                                                <th>Resource/test name</th>
                                                 <!-- <th>Date</th> -->
                                             </tr>
                                         </thead>
@@ -613,9 +613,9 @@ $query_read = mysqli_query ($connect, "SELECT primary_test_upload_id, primary_te
                                            <?php if (mysqli_num_rows($query_read) != 0){
 	while ($row_read = mysqli_fetch_array($query_read)) {
         echo ' <tr>';
-echo '<td>'.$row_read['primary_test_upload_id'].'</td>';
-echo '<td>'.$row_read['primary_test_upload_timestamp'].'</td>';
-echo '<td>'.$row_read['primary_test_upload_testname'].'</td>';
+        echo '<td>'.$row_read['primary_test_upload_testname'].'</td>';
+
+echo '<td>'.date('M j Y g:i A', strtotime($row_read['primary_test_upload_timestamp']. OFFSET_TIME)).'</td>';
 
 
 

@@ -36,8 +36,8 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-                     <a class="navbar-brand brand-logo" href="<?= GEN_WEBSITE.'/teachers/home.php';?>"><img src="../images/logo.svg" alt="logo" /></a> 
-                    <a class="navbar-brand brand-logo-mini" href="<?= GEN_WEBSITE.'/teachers/home.php';?>"><img src="../images/logo-mini.svg" alt="logo" /></a>
+                     <a class="navbar-brand brand-logo" href="<?= GEN_WEBSITE.'/teachers/home.php';?>"><h5>ARRAHMAN</h5></a> 
+                    <a class="navbar-brand brand-logo-mini" href="<?= GEN_WEBSITE.'/teachers/home.php';?>"><h5>ARRAHMAN</h5></a>
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="typcn typcn-th-menu"></span>
           </button>
@@ -434,12 +434,20 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/teachers/upload-exam-results.php'; ?>">
+                        <a class="nav-link" href="<?= GEN_WEBSITE.'/teachers/resources.php'; ?>">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
-                            <span class="menu-title">Upload exam result</span>
+                            <span class="menu-title">Resources
+</span>
                             <!--<div class="badge badge-danger">new</div>-->
                         </a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Upload exam result</span>
+                            <div class="badge badge-danger">new</div>
+                        </a>
+                    </li> -->
                     <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                             <i class="typcn typcn-document-text menu-icon"></i>

@@ -20,7 +20,7 @@ $statement = "primary_school_students, primary_school_classes WHERE (primary_cla
 
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
-            $per_page = 12; 		
+        		
             $startpoint = ($page * $per_page) - $per_page;
            
             $results = mysqli_query($connect,"SELECT DISTINCT primary_id, pri_active, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, primary_class FROM ".$statement." LIMIT $startpoint, $per_page") or die(db_conn_error);
