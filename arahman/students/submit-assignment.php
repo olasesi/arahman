@@ -11,13 +11,6 @@ if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
 }
 
 
-if(isset($_SESSION['primary_id']) AND $_SESSION['pri_admit'] == 0){  
-	header('Location:'.GEN_WEBSITE.'/school-payment.php');
-	  exit();
-  }
-  
-
-
 
 
 ?>
@@ -40,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
  
 if (is_uploaded_file($_FILES['img']['tmp_name']) AND $_FILES['img']['error'] == UPLOAD_ERR_OK){ 
 		
-			if($_FILES['img']['size'] > 2097152){ 		//conditions for the file size 2MB
-				$errors['editfile_size']="File size is too big. Max file size 2MB";
+			if($_FILES['img']['size'] > 5242880){ 		//conditions for the file size 2MB
+				$errors['editfile_size']="File size is too big. Max file size 5MB";
 			}
 		
 			$editallowed_extensions = array('.pdf');		
@@ -73,7 +66,7 @@ if (is_uploaded_file($_FILES['img']['tmp_name']) AND $_FILES['img']['error'] == 
 			$_SESSION['remind']['new_name'] = $new_name;
 			$_SESSION['remind']['file_name'] = $_FILES['img']['name'];
 			
-mysqli_query($connect, "INSERT INTO  primary_test_assignment_submit (primary_test_upload_submit_name, primary_test_upload_classid, primary_test_upload_submit_file) VALUES ('".$assignment_name."', '".$_SESSION['pri_class_id']."', '".$new_name."')") or die(db_conn_error);
+mysqli_query($connect, "INSERT INTO  primary_test_assignment_submit (primary_test_upload_submit_name, primary_test_upload_classid, primary_test_upload_pri_id, primary_test_upload_submit_file) VALUES ('".$assignment_name."', '".$_SESSION['pri_class_id']."','".$_SESSION['primary_id']."' ,'".$new_name."')") or die(db_conn_error);
         
 
 
@@ -156,7 +149,7 @@ if (mysqli_affected_rows($connect) == 1) {
                         ?>
             <input type="file" name="img" class="file-upload-default">
             <div class="input-group col-xs-12">
-              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload pdf">
               <span class="input-group-append">
                 <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
               </span>

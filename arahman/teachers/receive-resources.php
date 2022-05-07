@@ -1,7 +1,7 @@
 <?php
 require_once ('../../incs-arahman/config.php');
 require_once ('../../incs-arahman/gen_serv_con.php');
-include("../../incs-arahman/cookie_for_most-teachers.php");
+//include("../../incs-arahman/cookie_for_most-teachers.php");
 
 ?>
 <?php
@@ -22,13 +22,24 @@ if(!isset($_SESSION['primary_teacher_id'])){   //Not a teacher? Please leave
 
                 
                 <?php
+include_once ('../../incs-arahman/paginate.php');
 
-
-$query_receive = mysqli_query ($connect, "SELECT pri_firstname, pri_surname, primary_test_upload_submit_name, primary_test_upload_submit_file,  primary_test_submit_timestamp FROM primary_test_assignment_submit, primary_school_students WHERE primary_id = primary_test_upload_classid AND primary_test_upload_classid = '".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_submit_id DESC LIMIT 30") or die(db_conn_error);
+$statement = "primary_test_assignment_submit, primary_school_students WHERE primary_id = primary_test_upload_pri_id AND primary_test_upload_classid = '".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_submit_id DESC";
 
 //
 ?>
 
+<?php
+$page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
+            if ($page <= 0) $page = 1;
+        		
+            $startpoint = ($page * $per_page) - $per_page;
+
+
+
+
+            $query_receive = mysqli_query ($connect, "SELECT pri_firstname, pri_surname, primary_test_upload_submit_name, primary_test_upload_submit_file,  primary_test_submit_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(db_conn_error);
+?>
                     <div class="row">
                         <div class="col-md-12">
                         <h5 class="mb-2 mt-4 text-titlecase mb-4">Resources/assigment recieved</h5>
@@ -52,7 +63,7 @@ $query_receive = mysqli_query ($connect, "SELECT pri_firstname, pri_surname, pri
         echo ' <tr>';
 echo '<td>'.$row_query_receive['primary_test_upload_submit_name'].'</td>';
 echo '<td>'.$row_query_receive['pri_firstname'].' '.$row_query_receive['pri_surname'].'</td>';
-echo '<td>'.$row_query_receive['primary_test_submit_timestamp'].'</td>';
+echo '<td>'.date('M j Y g:i A', strtotime($row_query_receive['primary_test_submit_timestamp']. OFFSET_TIME)).'</td>';
 
 
 
@@ -111,7 +122,7 @@ echo '</tr>';
 
 
                 </div>
-               
+                <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE.'/teachers/receive-resources.php?'); ?>
 				<?php include_once("../../incs-arahman/footer-teacher-students.php"); ?>
 
 
