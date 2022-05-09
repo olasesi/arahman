@@ -36,8 +36,8 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-                     <a class="navbar-brand brand-logo" href="<?= GEN_WEBSITE.'/teachers/home.php';?>"><h5>ARRAHMAN</h5></a> 
-                    <a class="navbar-brand brand-logo-mini" href="<?= GEN_WEBSITE.'/teachers/home.php';?>"><h5>ARRAHMAN</h5></a>
+                     <a class="navbar-brand brand-logo" href="<?php if(isset($_SESSION['primary_teacher_id'])){echo GEN_WEBSITE.'/teachers/home.php';}elseif(isset($_SESSION['secondary_teacher_id'])){echo GEN_WEBSITE.'/teachers/sec-home.php';} ?>"><h5>ARRAHMAN</h5></a> 
+                    <a class="navbar-brand brand-logo-mini" href="<?php if(isset($_SESSION['primary_teacher_id'])){echo GEN_WEBSITE.'/teachers/home.php';}elseif(isset($_SESSION['secondary_teacher_id'])){echo GEN_WEBSITE.'/teachers/sec-home.php';} ?>"><h5>ARRAHMAN</h5></a>
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="typcn typcn-th-menu"></span>
           </button>
@@ -47,8 +47,8 @@
                 <ul class="navbar-nav mr-lg-2">
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link" data-toggle="dropdown" id="profileDropdown">
-                            <img src="../admin/<?= 'teachers/'.$_SESSION['primary_teacher_image'];?>" alt="profile" />
-                            <span class="nav-profile-name"><?= $_SESSION['primary_teacher_firstname'].' '.$_SESSION['primary_teacher_surname'];?></span>
+                            <img src="../admin/teachers/<?php if(isset($_SESSION['primary_teacher_id'])){echo $_SESSION['primary_teacher_image'];}elseif(isset($_SESSION['secondary_teacher_id'])){echo $_SESSION['secondary_teacher_image'];} ?>" alt="profile" />
+                            <span class="nav-profile-name"><?php if(isset($_SESSION['primary_teacher_id'])){echo $_SESSION['primary_teacher_firstname'].' '.$_SESSION['primary_teacher_surname'];}elseif(isset($_SESSION['secondary_teacher_id'])){echo $_SESSION['secondary_teacher_firstname'].' '.$_SESSION['secondary_teacher_surname'];}?></span>
                         </a>
                         <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
@@ -214,7 +214,7 @@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-search d-none d-md-block mr-0">
                         
-                    <form method="GET" action="'.GEN_WEBSITE.'/teachers/search-my-students.php">
+                    <form method="GET" action="'; if(isset($_SESSION['primary_teacher_id'])){echo GEN_WEBSITE.'/teachers/search-my-students.php';}elseif(isset($_SESSION['secondary_teacher_id'])){echo GEN_WEBSITE.'/teachers/sec-search-my-students.php';} echo '">
                         <div class="input-group">
                             <input type="text" name="students_name" class="form-control" placeholder="Search my students..." aria-label="search" aria-describedby="search"';
                             
@@ -413,28 +413,28 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/teachers/home.php'; ?>">
+                        <a class="nav-link" href="<?php if(isset($_SESSION['primary_teacher_id'])){echo GEN_WEBSITE.'/teachers/home.php';}elseif(isset($_SESSION['secondary_teacher_id'])){echo  GEN_WEBSITE.'/teachers/sec-home.php';} ?>">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                             <!--<div class="badge badge-danger">new</div>-->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/teachers/upload-test-assignment.php'; ?>">
+                        <a class="nav-link" href="<?php if(isset($_SESSION['primary_teacher_id'])){echo  GEN_WEBSITE.'/teachers/upload-test-assignment.php'; }elseif(isset($_SESSION['secondary_teacher_id'])){echo  GEN_WEBSITE.'/teachers/sec-upload-test-assignment.php';}  ?>">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Upload test <br> or resources</span>
                             <!--<div class="badge badge-danger">new</div>-->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/teachers/receive-resources.php'; ?>">
+                        <a class="nav-link" href="<?php if(isset($_SESSION['primary_teacher_id'])){echo   GEN_WEBSITE.'/teachers/receive-resources.php'; }elseif(isset($_SESSION['secondary_teacher_id'])){echo  GEN_WEBSITE.'/teachers/sec-receive-resources.php';}  ?>">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Resources received</span>
                             <!--<div class="badge badge-danger">new</div>-->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/teachers/resources.php'; ?>">
+                        <a class="nav-link" href="<?php if(isset($_SESSION['primary_teacher_id'])){echo GEN_WEBSITE.'/teachers/resources.php'; }elseif(isset($_SESSION['secondary_teacher_id'])){echo GEN_WEBSITE.'/teachers/sec-resources.php';}  ?>">
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Resources
 </span>

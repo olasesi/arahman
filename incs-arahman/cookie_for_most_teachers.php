@@ -4,7 +4,7 @@ if(!isset($_SESSION['primary_teacher_id'])){
 if(isset($_COOKIE['teacher_remember_me'])){ 
 	
 	$cookiesessions = $_COOKIE['teacher_remember_me'];
-$query = mysqli_query($connect, "SELECT * FROM primary_teachers, primary_school_classes WHERE primary_class_id=primary_teacher_class_id AND primary_teacher_email='".$email."' AND primary_teacher_password='".$password."' AND primary_teacher_active='1' AND primary_teacher_cookie='".$cookiesessions."' ") or die(db_conn_error);
+$query = mysqli_query($connect, "SELECT * FROM primary_teachers, primary_school_classes WHERE primary_class_id=primary_teacher_class_id  AND primary_teacher_active='1' AND primary_teacher_cookie='".$cookiesessions."' ") or die(db_conn_error);
  
 
 if(mysqli_num_rows($query)== 1){

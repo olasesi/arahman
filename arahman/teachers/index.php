@@ -23,7 +23,12 @@ if(isset($_SESSION['primary_teacher_id'])){   //logged in teachers dont have rig
 	exit();
 }
 ?>
-
+<?php
+if(isset($_SESSION['secondary_teacher_id'])){   //logged in teachers dont have right to teachers login.
+	header('Location:'.GEN_WEBSITE.'/teachers/sec-home.php');
+	exit();
+}
+?>
 <?php
 include ('../../incs-arahman/header-admin.php');
 
@@ -46,15 +51,30 @@ if(preg_match('/^.{6,100}$/i',$_POST['password'])){
     $signup_errors['password'] = "Minimum of 6 characters";
   }
 
+  if(isset($_POST['school_type'])){
+    $pri_school_type =  $_POST['school_type'];
+   }else{
+    $signup_errors['school_type'] = "Select school";
+
+   }
+
+
 
 
 if(empty($signup_errors)){
-  $query = mysqli_query($connect, "SELECT * FROM primary_teachers, primary_school_classes WHERE primary_class_id=primary_teacher_class_id AND primary_teacher_email='".$email."' AND primary_teacher_password='".$password."' AND primary_teacher_active='1'") or die(db_conn_error);
+
+  if($pri_school_type == 'Primary school'){
+
+  $query = mysqli_query($connect, "SELECT * FROM primary_teachers, primary_school_classes WHERE primary_class_id=primary_teacher_class_id AND primary_teacher_email='".$email."' AND primary_teacher_password = '".$password."' AND primary_teacher_active='1'") or die(db_conn_error);
   if(mysqli_num_rows($query)== 1){
-    $row = mysqli_fetch_array ($query, MYSQLI_NUM);
+
+    while($row = mysqli_fetch_array ($query, MYSQLI_NUM)){
+      //if(password_verify($password,$row[6])){
+
+    //$row = mysqli_fetch_array ($query, MYSQLI_NUM);
 
   $value = md5(uniqid(rand(), true));
-	$query_confirm_sessions = mysqli_query ($connect, "SELECT primary_teacher_cookie FROM primary_teachers WHERE primary_teacher_email='".$email."'") or die(db_conn_error);
+	$query_confirm_sessions = mysqli_query ($connect, "SELECT primary_teacher_cookie FROM primary_teachers WHERE primary_teacher_email='".$email."'  AND primary_teacher_active='1'") or die(db_conn_error);
 	$cookie_value_if_empty = mysqli_fetch_array($query_confirm_sessions);
 	
 	if (empty($cookie_value_if_empty[0])){
@@ -85,12 +105,15 @@ header('Location:'.GEN_WEBSITE.'/teachers/home.php');
  exit;
 
 
+    // }else{
+
+    //   $signup_errors['email'] = 'Invalid login details or you have been banned';
+    // }
 
 
 
 
-
-
+  }
 
 
 
@@ -103,6 +126,82 @@ header('Location:'.GEN_WEBSITE.'/teachers/home.php');
    
 
   }
+
+}elseif($pri_school_type == 'Secondary school'){
+
+  $query = mysqli_query($connect, "SELECT * FROM secondary_teachers, secondary_school_classes WHERE secondary_class_id=secondary_teacher_class_id AND secondary_teacher_email='".$email."' AND secondary_teacher_password = '".$password."' AND secondary_teacher_active='1'") or die(db_conn_error);
+  if(mysqli_num_rows($query)== 1){
+
+    while($row = mysqli_fetch_array ($query, MYSQLI_NUM)){
+      //if(password_verify($password,$row[6])){
+
+    //$row = mysqli_fetch_array ($query, MYSQLI_NUM);
+
+  $value = md5(uniqid(rand(), true));
+	$query_confirm_sessions = mysqli_query ($connect, "SELECT secondary_teacher_cookie FROM secondary_teachers WHERE secondary_teacher_email='".$email."'  AND secondary_teacher_active='1'") or die(db_conn_error);
+	$cookie_value_if_empty = mysqli_fetch_array($query_confirm_sessions);
+	
+	if (empty($cookie_value_if_empty[0])){
+	mysqli_query($connect,"UPDATE secondary_teachers SET secondary_teacher_cookie = '".$value."' WHERE secondary_teacher_email='".$email."'") or die(db_conn_error);		
+	setcookie("sec_teacher_remember_me", $value, time() + 4*24*3600);	//4 days for cookie to expire
+	
+	}else if(!empty($cookie_value_if_empty[0])){
+	
+	setcookie("sec_teacher_remember_me", $cookie_value_if_empty[0], time() + 4*24*3600);	//4 days for cookie to expire
+	}
+  
+
+$_SESSION['secondary_teacher_id'] = $row[0];
+$_SESSION['secondary_teacher_class_id'] = $row[2];
+$_SESSION['secondary_teacher_firstname'] = $row[3];
+$_SESSION['secondary_teacher_surname'] = $row[4];
+$_SESSION['secondary_teacher_email'] = $row[5];
+$_SESSION['secondary_teacher_sex'] = $row[7];
+$_SESSION['secondary_teacher_age'] = $row[8];
+$_SESSION['secondary_teacher_phone'] = $row[9];
+$_SESSION['secondary_teacher_qualification'] = $row[10];
+$_SESSION['secondary_teacher_address'] = $row[11];
+$_SESSION['secondary_teacher_image'] = $row[12];
+$_SESSION['secondary_class'] = $row[16];
+ 
+
+header('Location:'.GEN_WEBSITE.'/teachers/sec-home.php');
+ exit;
+
+
+    // }else{
+
+    //   $signup_errors['email'] = 'Invalid login details or you have been banned';
+    // }
+
+
+
+
+  }
+
+
+
+
+  }else{
+
+
+
+    $signup_errors['email'] = 'Invalid login details or you have been banned';
+   
+
+  }
+
+
+
+
+
+}
+
+
+
+
+
+
 
 
 }
@@ -121,7 +220,7 @@ header('Location:'.GEN_WEBSITE.'/teachers/home.php');
               <form id="contact" action="" method="post">
                 <div class="row">
                   <div class="col-lg-12">
-                    <h2>Admin login</h2>
+                    <h2>Teachers login</h2>
                   </div>
                  
                  
@@ -139,7 +238,17 @@ header('Location:'.GEN_WEBSITE.'/teachers/home.php');
                     <input name="password" type="password" id="password" placeholder="Password" value="<?php if(isset($_POST['password'])){echo '';} ?>" >
                   </fieldset>
 </div>
-                  
+    
+<label for="gridRadios2">Primary school</label>
+        <input class="form-check-input" type="radio" name="school_type" id="gridRadios2" value="Primary school" <?php if(isset($_POST['school_type']) && $_POST['school_type'] =='Primary school'){echo 'checked="checked"';} ?>>
+        
+        <label for="gridRadios3">Secondary school</label>
+        <input class="form-check-input" type="radio" name="school_type" id="gridRadios3" value="Secondary school" <?php if(isset($_POST['school_type']) && $_POST['school_type'] == 'Secondary school'){echo 'checked="checked"';} ?>>
+        <?php if(array_key_exists('school_type', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['school_type'].'</small>';}?>        
+
+
+        
+<div class="col-lg-12">              
                 
 <div class="col-lg-12">
                     <fieldset>
