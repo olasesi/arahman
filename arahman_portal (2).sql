@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2022 at 08:44 PM
+-- Generation Time: May 13, 2022 at 07:04 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -45,10 +45,10 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`admin_id`, `admin_active`, `type`, `admin_firstname`, `admin_lastname`, `admin_email`, `admin_password`, `admin_cookie_session`, `admin_timestamp`) VALUES
 (1, 1, 'owner', 'Ahmed', 'Olusesi', 'owner', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-01-03 09:49:31'),
-(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', '5f4dcc3b5aa765d61d8327deb882cf99', '66661ab50baca136ede664cd4ee6fe3f', '2022-01-08 14:00:53'),
+(2, 1, 'headmaster', 'Headmaster', '1', 'headmaster1', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-01-08 14:00:53'),
 (3, 1, 'admission', 'seye', 'alade', 'admission', '5f4dcc3b5aa765d61d8327deb882cf99', '404da2ec431e12a65ec464e08d141f22', '2022-04-06 14:28:14'),
 (4, 1, 'accountant', 'teni', 'alade', 'accountant', '5f4dcc3b5aa765d61d8327deb882cf99', '8e3d4713559bb15bc9db170ade55dc34', '2022-04-06 14:28:14'),
-(5, 1, 'principal', 'anita', 'anita', 'principal', '5f4dcc3b5aa765d61d8327deb882cf99', '', '2022-04-06 14:28:14');
+(5, 1, 'principal', 'anita', 'anita', 'principal', '5f4dcc3b5aa765d61d8327deb882cf99', '7c58329d9930c51ec1dbd671f0060523', '2022-04-06 14:28:14');
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,9 @@ CREATE TABLE `primary_class_subjects` (
 
 INSERT INTO `primary_class_subjects` (`primary_class_subjects_id`, `primary_class_id_class`, `primary_subject_id_subject`) VALUES
 (1, 6, 3),
-(2, 6, 4);
+(2, 6, 4),
+(3, 1, 3),
+(4, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -337,9 +339,9 @@ CREATE TABLE `primary_teachers` (
 --
 
 INSERT INTO `primary_teachers` (`primary_teacher_id`, `primary_teacher_active`, `primary_teacher_class_id`, `primary_teacher_firstname`, `primary_teacher_surname`, `primary_teacher_email`, `primary_teacher_password`, `primary_teacher_sex`, `primary_teacher_age`, `primary_teacher_phone`, `primary_teacher_qualification`, `primary_teacher_address`, `primary_teacher_image`, `primary_teacher_cookie`, `primary_teacher_timestamp`) VALUES
-(1, 1, '1', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 27, '08074573234', 'M.sc', 'ikotun', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
-(2, 1, '4', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 35, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '', '2022-01-10 08:32:38'),
-(3, 1, '6', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 55, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', '', '2022-01-23 09:51:47');
+(1, 1, '3', 'rahmah', 'teacher', 'ola.sesi@yahoo.com', 'password', 'Female', 27, '08074573234', 'M.sc', 'ikotun', '450f6307c6327ed088ccbf7c931026f7e439e135.jpg', '', '2022-01-08 14:11:09'),
+(2, 1, '5', 'Idrees', 'Laspotech', 'pri@teacher.com', 'password', 'Male', 35, '08074574512', 'B.sc', 'Ogba', '579d8d8e6983afb313f49fd9cf987c2ffeed8a9c.jpg', '', '2022-01-10 08:32:38'),
+(3, 1, '5', 'duro', 'media', 'info@doromedia.com.ng', 'password', 'Male', 55, '08074574512', 'P.hd', 'ogba', '5625a360e085f5137a58023d2a04754da349dc8d.png', '', '2022-01-23 09:51:47');
 
 -- --------------------------------------------------------
 
@@ -467,7 +469,10 @@ CREATE TABLE `secondary_class_subjects` (
 
 INSERT INTO `secondary_class_subjects` (`secondary_class_subjects_id`, `secondary_class_id_class`, `secondary_subject_id_subject`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 3, 4),
+(4, 3, 2),
+(5, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -674,7 +679,8 @@ CREATE TABLE `secondary_subject` (
 
 INSERT INTO `secondary_subject` (`secondary_subjects_id`, `secondary_subjects_name`, `secondary_subjects_timestamp`) VALUES
 (1, 'Mathematics', '2022-05-09 17:40:56'),
-(2, 'English', '2022-05-09 17:40:56');
+(2, 'English', '2022-05-09 17:40:56'),
+(4, 'Economics', '2022-05-12 19:26:07');
 
 -- --------------------------------------------------------
 
@@ -691,8 +697,8 @@ CREATE TABLE `secondary_teachers` (
   `secondary_teacher_email` varchar(255) NOT NULL,
   `secondary_teacher_password` varchar(255) NOT NULL,
   `secondary_teacher_sex` varchar(6) NOT NULL,
-  `primary_teacher_age` int(2) NOT NULL,
-  `primary_teacher_phone` varchar(11) NOT NULL,
+  `secondary_teacher_age` int(2) NOT NULL,
+  `secondary_teacher_phone` varchar(11) NOT NULL,
   `secondary_teacher_qualification` varchar(30) NOT NULL,
   `secondary_teacher_address` varchar(255) NOT NULL,
   `secondary_teacher_image` varchar(255) NOT NULL,
@@ -704,8 +710,8 @@ CREATE TABLE `secondary_teachers` (
 -- Dumping data for table `secondary_teachers`
 --
 
-INSERT INTO `secondary_teachers` (`secondary_teacher_id`, `secondary_teacher_active`, `secondary_teacher_class_id`, `secondary_teacher_firstname`, `secondary_teacher_surname`, `secondary_teacher_email`, `secondary_teacher_password`, `secondary_teacher_sex`, `primary_teacher_age`, `primary_teacher_phone`, `secondary_teacher_qualification`, `secondary_teacher_address`, `secondary_teacher_image`, `secondary_teacher_cookie`, `secondary_teacher_timestamp`) VALUES
-(1, 1, 1, 'aaliyah', 'olusesi', 'olusesiaaliyah@gmail.com', 'password', '', 0, '', '', '', '', 'cffb03451254c22934b675572294aeb7', '2022-05-09 13:23:35');
+INSERT INTO `secondary_teachers` (`secondary_teacher_id`, `secondary_teacher_active`, `secondary_teacher_class_id`, `secondary_teacher_firstname`, `secondary_teacher_surname`, `secondary_teacher_email`, `secondary_teacher_password`, `secondary_teacher_sex`, `secondary_teacher_age`, `secondary_teacher_phone`, `secondary_teacher_qualification`, `secondary_teacher_address`, `secondary_teacher_image`, `secondary_teacher_cookie`, `secondary_teacher_timestamp`) VALUES
+(1, 1, 6, 'aaliyah', 'olusesi', 'olusesiaaliyah@gmail.com', 'password', 'Female', 22, '08074574512', 'P.hd', 'ikeja', '', '', '2022-05-09 13:23:35');
 
 -- --------------------------------------------------------
 
@@ -1004,7 +1010,7 @@ ALTER TABLE `module_price`
 -- AUTO_INCREMENT for table `primary_class_subjects`
 --
 ALTER TABLE `primary_class_subjects`
-  MODIFY `primary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `primary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `primary_payment`
@@ -1034,7 +1040,7 @@ ALTER TABLE `primary_test_assignment_upload`
 -- AUTO_INCREMENT for table `secondary_class_subjects`
 --
 ALTER TABLE `secondary_class_subjects`
-  MODIFY `secondary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `secondary_class_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `secondary_common_e`
@@ -1076,7 +1082,7 @@ ALTER TABLE `secondary_school_students`
 -- AUTO_INCREMENT for table `secondary_subject`
 --
 ALTER TABLE `secondary_subject`
-  MODIFY `secondary_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `secondary_subjects_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `secondary_teachers`
