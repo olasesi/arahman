@@ -10,7 +10,7 @@ if(!isset($_SESSION['admin_active'])){      //If you are not admin
 }
 
 
-if($_SESSION['admin_type'] != HEADMASTER){      // if not headmaster
+if($_SESSION['admin_type'] != PRINCIPAL){      // if not headmaster
 	header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
@@ -28,7 +28,7 @@ if(!isset($_GET['id'])){
 
 
 <?php
-$query = mysqli_query($connect, "SELECT primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname,	primary_teacher_email, primary_teacher_sex, primary_teacher_age, primary_teacher_phone, primary_teacher_qualification, primary_teacher_address FROM primary_teachers WHERE primary_teacher_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+$query = mysqli_query($connect, "SELECT secondary_teacher_class_id, secondary_teacher_firstname, secondary_teacher_surname,	secondary_teacher_email, secondary_teacher_sex, secondary_teacher_age, secondary_teacher_phone, secondary_teacher_qualification, secondary_teacher_address FROM secondary_teachers WHERE secondary_teacher_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
 
 
 
@@ -100,13 +100,13 @@ if ($_POST['age'] == "Enter age") {
 	//now to edit the product	
 	if (empty($errors)){
 
-mysqli_query($connect, "UPDATE primary_teachers SET primary_teacher_class_id = '".$class."', primary_teacher_firstname = '".$firstname."',  primary_teacher_surname = '".$surname."', primary_teacher_email = '".$email."', primary_teacher_sex = '".$gender."', primary_teacher_age = '".$age."', primary_teacher_phone = '".$phone."', primary_teacher_qualification = '".$qualification."', primary_teacher_address = '".$address."' WHERE primary_teacher_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+mysqli_query($connect, "UPDATE secondary_teachers SET secondary_teacher_class_id = '".$class."', secondary_teacher_firstname = '".$firstname."',  secondary_teacher_surname = '".$surname."', secondary_teacher_email = '".$email."', secondary_teacher_sex = '".$gender."', secondary_teacher_age = '".$age."', secondary_teacher_phone = '".$phone."', secondary_teacher_qualification = '".$qualification."', secondary_teacher_address = '".$address."' WHERE secondary_teacher_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
 
 
 			if (mysqli_affected_rows($connect) == 1) {
                 
           
-            header('Location:'.GEN_WEBSITE.'/admin/show-teachers.php?info-edited='.$firstname);
+            header('Location:'.GEN_WEBSITE.'/admin/sec-show-teachers.php?info-edited='.$firstname);
             exit();
            
             
@@ -125,15 +125,15 @@ while ($row = mysqli_fetch_array($query)) {
 	
     
     
-	$pri_class = $row['primary_teacher_class_id'];      //This is the class e.g Basic 4
-	$pri_firstname = $row['primary_teacher_firstname'];
-	$pri_surname = $row['primary_teacher_surname'];
-    $pri_email = $row['primary_teacher_email'];
-	$pri_gender = $row['primary_teacher_sex'];
-	$pri_age = $row['primary_teacher_age'];
-    $pri_phone = $row['primary_teacher_phone'];
-    $pri_qualification = $row['primary_teacher_qualification'];
-	$pri_address = $row['primary_teacher_address'];
+	$pri_class = $row['secondary_teacher_class_id'];      //This is the class e.g Basic 4
+	$pri_firstname = $row['secondary_teacher_firstname'];
+	$pri_surname = $row['secondary_teacher_surname'];
+    $pri_email = $row['secondary_teacher_email'];
+	$pri_gender = $row['secondary_teacher_sex'];
+	$pri_age = $row['secondary_teacher_age'];
+    $pri_phone = $row['secondary_teacher_phone'];
+    $pri_qualification = $row['secondary_teacher_qualification'];
+	$pri_address = $row['secondary_teacher_address'];
 	
 	
 	}
@@ -144,7 +144,6 @@ echo '
 <div class="main-panel">
   <div class="content-wrapper">
    
-
   
   <div class="row">
 
@@ -305,20 +304,22 @@ exit();
                     ?>
                         <select class="form-control" id="exampleSelectpri_class" name="class">
                        <?php        
-                        //$pri_class_range = array('Basic one', 'Basic two', 'Basic three', 'Basic four', 'Basic five', 'Basic six');    
+                        //$sec_class = array('JSS 1', 'JSS 2', 'JSS3', 'SSS 1', 'SSS 2', 'SSS 3');    
                         echo "<option>Choose school class</option>";
-                                        
-                        foreach($pri_class_range as $as_class=>$class_number){	
+                       
+                        foreach($sec_class_range as $as_class=>$class_number){	
                             if(!isset ($_POST['class'])){
                                 $editsel_class = ($class_number==$pri_class)?"Selected='selected'":"";
                                 }else{
                                 $editsel_class = ($class_number==$_POST['class'])?"Selected='selected'":"";			
                                 }
                                 echo '<option '.$editsel_class.' value="'.$class_number.'">'.$as_class.'</option>';
-                        }   
+                        }     
                         ?>            
                         </select>
                       </div>
+
+
                       <div class="form-group">
                         <label for="phone">Phone number</label>
                         <?php if (array_key_exists('phone', $errors)) {
