@@ -1028,121 +1028,121 @@ echo '</div>
             ?>
 
 <?php    
-               if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == PRINCIPAL){
+              if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == PRINCIPAL){
                 
-                 if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['ban_teacher'])){
-                   mysqli_query($connect, "UPDATE primary_teachers SET primary_teacher_active = '0', primary_teacher_cookie = '' WHERE primary_teacher_active = '1' AND primary_teacher_id = '".$_POST['ban_teacher']."'") or die(db_conn_error);
+                if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['ban_teacher'])){
+                  mysqli_query($connect, "UPDATE secondary_teachers SET secondary_teacher_active = '0', secondary_teacher_cookie = '' WHERE secondary_teacher_active = '1' AND secondary_teacher_id = '".$_POST['ban_teacher']."'") or die(db_conn_error);
 
-                 }elseif($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['unban_teacher'])){
-                   mysqli_query($connect, "UPDATE primary_teachers SET primary_teacher_active = '1' WHERE  primary_teacher_active = '0' AND primary_teacher_id = '".$_POST['unban_teacher']."'") or die(db_conn_error);
+                }elseif($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['unban_teacher'])){
+                  mysqli_query($connect, "UPDATE secondary_teachers SET secondary_teacher_active = '1' WHERE  secondary_teacher_active = '0' AND secondary_teacher_id = '".$_POST['unban_teacher']."'") or die(db_conn_error);
 
-                 }
+                }
 
-                 $results = mysqli_query($connect,"SELECT primary_teacher_id, primary_teacher_active, primary_teacher_class_id, primary_teacher_firstname, primary_teacher_surname, primary_teacher_sex, primary_teacher_qualification, primary_class_id, primary_class FROM primary_teachers, primary_school_classes WHERE primary_class =	primary_teacher_class_id ORDER BY primary_teacher_id DESC LIMIT 5") or die(db_conn_error); 
+                $results = mysqli_query($connect,"SELECT secondary_teacher_id, secondary_teacher_active,  secondary_teacher_class_id, secondary_teacher_firstname, secondary_teacher_surname, secondary_teacher_sex, secondary_teacher_qualification, secondary_class_id, secondary_class FROM secondary_teachers, secondary_school_classes WHERE secondary_class_id =	secondary_teacher_class_id ORDER BY secondary_teacher_id DESC LIMIT 5") or die(db_conn_error); 
                 
                  
                 
-                 echo '<div class="col-md-12 grid-margin stretch-card">
-                 <div class="card">
-                   <div class="card-body">
-                     <div class="d-flex flex-row justify-content-between">
-                       <h4 class="card-title mb-1">Primary School teachers</h4>
-                       <p class="text-muted mb-1"></p>
-                     </div>';
+                echo '<div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between">
+                      <h4 class="card-title mb-1">Secondary School teachers</h4>
+                      <p class="text-muted mb-1"></p>
+                    </div>';
 
-                     if (mysqli_num_rows($results) >= 1 && mysqli_num_rows($results) <= 5){
+                    if (mysqli_num_rows($results) >= 1 && mysqli_num_rows($results) <= 5){
 
               
-                       if(mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 5){
-                         while ($row = mysqli_fetch_array($results)){
+                      if(mysqli_num_rows($results) >= 1 AND mysqli_num_rows($results) <= 5){
+                        while ($row = mysqli_fetch_array($results)){
                       
-                     echo '
-                     <div class="row">
-                       <div class="col-12">
-                         <div class="preview-list">
-                           <a href="'.GEN_WEBSITE.'/admin/show-teachers.php" style="text-decoration:none; color:inherit;"><div class="preview-item border-bottom">
-                             <div class="preview-thumbnail">
-                               <div class="preview-icon bg-primary">
-                                 <i class="mdi mdi-file-document"></i>
-                               </div>
-                             </div>
-                             <div class="preview-item-content d-sm-flex flex-grow">
-                               <div class="flex-grow">
-                                 <h6 class="preview-subject">'.$row['primary_teacher_firstname'].' '.$row['primary_teacher_surname'].'</h6>
-                                 <p class="text-muted mb-0">'.$row['primary_class'].', '.$row['primary_teacher_sex'].'</p>
-                               </div>
-                             </div>
+                    echo '
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="preview-list">
+                          <a href="'.GEN_WEBSITE.'/admin/sec-show-teachers.php" style="text-decoration:none; color:inherit;"><div class="preview-item border-bottom">
+                            <div class="preview-thumbnail">
+                              <div class="preview-icon bg-primary">
+                                <i class="mdi mdi-file-document"></i>
+                              </div>
+                            </div>
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="flex-grow">
+                                <h6 class="preview-subject">'.$row['secondary_teacher_firstname'].' '.$row['secondary_teacher_surname'].'</h6>
+                                <p class="text-muted mb-0">'.$row['secondary_class'].', '.$row['secondary_teacher_sex'].'</p>
+                              </div>
+                            </div>
 
-                             <td>
-                               <form action="'.GEN_WEBSITE.'/admin/edit-teacher-data.php" method="GET">
-                                 <button type="submit" class="btn btn-success me-2" name="id" value="'.$row['primary_teacher_id'].'">Edit</button>
-                               </form>
-                             </td>
+                            <td>
+                              <form action="'.GEN_WEBSITE.'/admin/sec-edit-teacher-data.php" method="GET">
+                                <button type="submit" class="btn btn-success me-2" name="id" value="'.$row['secondary_teacher_id'].'">Edit</button>
+                              </form>
+                            </td>
         
-                             <td>';
-                               if($row['primary_teacher_active'] == 1){
-                                 echo '
-                                 <form action="" method="POST">
-                                   <button type="submit" class="btn btn-danger me-2" name="ban_teacher" value="'.$row['primary_teacher_id'].'">Ban</button>
-                                 </form>';
-                               } elseif($row['primary_teacher_active'] == 0){
-                                 echo '
-                                 <form action="" method="POST">
-                                   <button type="submit" class="btn btn-danger me-2" name="unban_teacher" value="'.$row['primary_teacher_id'].'">Unban</button>
-                                 </form>';
-                               } 
-                               echo  '
-                             </td>
-                             </div>
-                           </a>
-                         </div>
-                       </div>
-                     </div>
+                            <td>';
+                              if($row['secondary_teacher_active'] == 1){
+                                echo '
+                                <form action="" method="POST">
+                                  <button type="submit" class="btn btn-danger me-2" name="ban_teacher" value="'.$row['secondary_teacher_id'].'">Ban</button>
+                                </form>';
+                              } elseif($row['secondary_teacher_active'] == 0){
+                                echo '
+                                <form action="" method="POST">
+                                  <button type="submit" class="btn btn-danger me-2" name="unban_teacher" value="'.$row['secondary_teacher_id'].'">Unban</button>
+                                </form>';
+                              } 
+                              echo  '
+                            </td>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                     
                     
-                     ';
-                 }
+                    ';
+                }
                
               
 
-               }elseif(mysqli_num_rows($results) > 5){
-                   echo '<div class="row">
-                   <div class="col-12">
-                     <div class="preview-list">
-                       <div class="preview-item border-bottom">
-                         <div class="preview-thumbnail">
+              }elseif(mysqli_num_rows($results) > 5){
+                  echo '<div class="row">
+                  <div class="col-12">
+                    <div class="preview-list">
+                      <div class="preview-item border-bottom">
+                        <div class="preview-thumbnail">
                          
-                         </div>
-                         <div class="preview-item-content d-sm-flex flex-grow">
-                           <div class="flex-grow">
-                            <a href="'.GEN_WEBSITE.'/admin/show-teachers.php"> <h6 class="preview-subject">See more...</h6></a>
+                        </div>
+                        <div class="preview-item-content d-sm-flex flex-grow">
+                          <div class="flex-grow">
+                           <a href="'.GEN_WEBSITE.'/admin/sec-show-teachers.php"> <h6 class="preview-subject">See more...</h6></a>
                            
-                           </div>
-                           <div class="me-auto text-sm-right pt-2 pt-sm-0">
+                          </div>
+                          <div class="me-auto text-sm-right pt-2 pt-sm-0">
                            
-                           </div>
-                         </div>
-                       </div>
+                          </div>
+                        </div>
                       </div>
-                   </div>
-                 </div>';
+                     </div>
+                  </div>
+                </div>';
 
-                 }
+                }
 
-               }elseif(mysqli_num_rows($results) == 0){
+              }elseif(mysqli_num_rows($results) == 0){
                 
-                 echo '<h3 class="text-center">No secondary school teacher</h3>';
-               } 
-               if(mysqli_num_rows($results) >= 0){               
-                 echo '<form action="show-teachers.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
-               }
-               echo '  
-               </div>
-               </div>
-               </div>
-               ';
+                echo '<h3 class="text-center">No secondary school teacher</h3>';
+              } 
+              if(mysqli_num_rows($results) >= 0){               
+                echo '<form action="sec-show-teachers.php" method="POST"><button type="submit" class="btn btn-warning btn-fw"> More details..</button></form>';
+              }
+              echo '  
+              </div>
+              </div>
+              </div>
+              ';
 
-               }
+              }
               
             ?>
 

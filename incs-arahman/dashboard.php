@@ -478,32 +478,32 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
 
           
 <?php
-  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == PRINCIPAL){
-        echo   '<li class="nav-item menu-items">
-             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicsubjects" aria-expanded="false" aria-controls="ui-basic">
-               <span class="menu-icon">
-                 <i class="mdi mdi-laptop"></i>
-               </span>
-               <span class="menu-title">Sec. Subjects</span>
-               <i class="menu-arrow"></i>
-             </a>
+ if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == PRINCIPAL){
+       echo   '<li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicsubjects" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+              <span class="menu-title">Sec. Subjects</span>
+              <i class="menu-arrow"></i>
+            </a>
 
 
-             <div class="collapse" id="ui-basicsubjects">
-               <ul class="nav flex-column sub-menu">
+            <div class="collapse" id="ui-basicsubjects">
+              <ul class="nav flex-column sub-menu">
                 
               
          
               
-                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/add-subjects.php">Add new subjects</a>
-                 <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/link-subject-class.php">Give classes<br> to subjects</a></li>
-                 </li>
-               </ul>
-             </div>
-           </li>   
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/sec-add-subjects.php">Add new subjects</a>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/sec-link-subject-class.php">Give classes<br> to subjects</a></li>
+                </li>
+              </ul>
+            </div>
+          </li>   
               
-   ';
-  }       
+  ';
+ }       
           
 ?>
 
