@@ -4,11 +4,8 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 
 ?>
 <?php
+$query = mysqli_query($connect, "DELETE FROM primary_school_students WHERE pri_timestamp < '".date("Y-m-d H:i:s", strtotime("-48 hours"))."' AND pri_active_email='0'") or die(db_conn_error);
 
-// if(isset($_SESSION['primary_id']) AND $_SESSION['pri_admit'] == 0){  
-//   header('Location:'.GEN_WEBSITE.'/school-payment.php');
-// 	exit();
-// }
 
 
 if(isset($_SESSION['primary_id'])){
@@ -17,9 +14,11 @@ exit();
 }
 
 if(isset($_SESSION['secondary_id'])){
-  header('Location:'.GEN_WEBSITE.'/students/home.php');
+  header('Location:'.GEN_WEBSITE.'/students/home-secondary.php');
 exit();
 }
+
+
 ?>
 
 
@@ -158,11 +157,11 @@ header('Location:'.GEN_WEBSITE.'/students/home.php');
 	
 	if (empty($cookie_value_if_empty[0])){
 	mysqli_query($connect,"UPDATE secondary_school_students SET sec_cookie_session = '".$value."' WHERE sec_email='".$email."'") or die(db_conn_error);		
-	setcookie("students_remember_me", $value, time() + 4*24*3600);	//4 days for cookie to expire
+	setcookie("sec_students_remember_me", $value, time() + 4*24*3600);	//4 days for cookie to expire
 	
 	}else if(!empty($cookie_value_if_empty[0])){
 	
-	setcookie("students_remember_me", $cookie_value_if_empty[0], time() + 4*24*3600);	//4 days for cookie to expire
+	setcookie("sec_students_remember_me", $cookie_value_if_empty[0], time() + 4*24*3600);	//4 days for cookie to expire
 	}
 
  
@@ -281,7 +280,10 @@ include_once ('../../incs-arahman/header-admin.php');
                     </fieldset>
                   </div>
                 </div>
+                <a href="forget-password.php">forget password?</a>
               </form>
+
+              
             </div>
           </div>
         </div>

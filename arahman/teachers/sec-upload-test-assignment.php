@@ -33,12 +33,12 @@ if (is_uploaded_file($_FILES['img']['tmp_name']) AND $_FILES['img']['error'] == 
 				$errors['editfile_size']="File size is too big. Max file size 5MB";
 			}
 		
-			$editallowed_extensions = array('.pdf');		
-			$editallowed_mime = array('application/pdf');
+			$editallowed_extensions = array('.pdf', '.doc', 'docx');		
+			$editallowed_mime = array('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 			$ext = substr($_FILES['img']['name'], -4);
 			
 			if (!in_array($_FILES['img']['type'], $editallowed_mime) || !in_array($ext, $editallowed_extensions)){
-				$errors['wrong_upload'] = "Please choose a PDF file";
+				$errors['wrong_upload'] = "Please choose a PDF or DOC file";
 				
 			}
 			
@@ -117,13 +117,13 @@ if (mysqli_affected_rows($connect) == 1) {
                 <div class="col-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Upload test/resources (.pdf)</h4>
+        <h4 class="card-title">Upload test/resources (.pdf or doc or .doc)</h4>
         <p class="card-description">
           Test - Assignments - Resources for students
         </p>
         <form class="forms-sample" method="POST" action="" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="exampleInputName1">Resource/test name</label>
+           or DOC  <label for="exampleInputName1">Resource/test name</label>
             <?php if (array_key_exists('assignment_name', $errors)) {
 				echo '<p class="text-danger">'.$errors['assignment_name'].'</p>';}?>
             <input type="text" class="form-control" id="exampleInputName1" placeholder="e.g maths assignment" name="assignment_name" value="<?php if(isset($_POST['assignment_name'])){echo $_POST['assignment_name'];}?>">
@@ -149,14 +149,14 @@ if (mysqli_affected_rows($connect) == 1) {
                         ?>
             <input type="file" name="img" class="file-upload-default">
             <div class="input-group col-xs-12">
-              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload pdf">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload pdf or doc">
               <span class="input-group-append">
                 <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
               </span>
             </div>
           </div>
 
-          
+          or DOC 
          
           <button type="submit" class="btn btn-primary mr-2" name="submit">Submit</button>
           

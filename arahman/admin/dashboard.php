@@ -57,7 +57,7 @@ include("../../incs-arahman/change-admin-pass.php");
                         </div>
                       </div>
                     </div>
-                    <h6 class="text-muted font-weight-normal">Primary sch. students</h6>
+                    <h6 class="text-muted font-weight-normal">Primary sch. students<br>(Paid in full or part)</h6>
                   </div>
                 </div>
               </div>
@@ -100,7 +100,7 @@ include("../../incs-arahman/change-admin-pass.php");
                         </div>
                       </div>
                     </div>
-                    <h6 class="text-muted font-weight-normal">Secondary sch. students</h6>
+                    <h6 class="text-muted font-weight-normal">Secondary sch. students<br>(Paid in full or part)</h6>
                   </div>
                 </div>
               </div>
@@ -141,10 +141,11 @@ include("../../incs-arahman/change-admin-pass.php");
                                   
                                     <h3 class="mb-0">
                                     <?php
-                            $find = mysqli_query ($connect,"SELECT count(*) AS total FROM primary_school_students WHERE pri_active_email = '1' AND pri_admit = '1'") or die(mysqli_error($connect));
 
-                                    $result=mysqli_fetch_assoc ($find);
-                                    echo $result['total'];
+                                    
+                            $find = mysqli_query ($connect,"SELECT * FROM primary_school_students WHERE pri_active_email = '1' AND pri_admit = '1' AND pri_paid = '0'") or die(db_conn_error);
+
+                                    echo mysqli_num_rows($find);
                                     ?>
                                     </h3>
                                   
@@ -156,7 +157,7 @@ include("../../incs-arahman/change-admin-pass.php");
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">Admmitted Students <br>For the term</h6>
+                                <h6 class="text-muted font-weight-normal">Admitted Students <br>Not paid for the term (pri)</h6>
                             </div>
                             </div>
                         </div>
@@ -168,10 +169,13 @@ include("../../incs-arahman/change-admin-pass.php");
                                     <div class="d-flex align-items-center align-self-start">
                                     <h3 class="mb-0">
                                     <?php
-                            $find = mysqli_query ($connect,"SELECT count(*) AS total FROM primary_school_students WHERE pri_active_email = '1' AND pri_admit = '1' AND pri_paid = '1'") or die(mysqli_error($connect));
 
-                                    $result=mysqli_fetch_assoc ($find);
-                                    echo $result['total'];
+
+
+                            $find = mysqli_query ($connect,"SELECT count(*) AS total FROM primary_payment WHERE primary_payment_paid_percent = '100' AND primary_payment_completion_status = '1' AND primary_payment_term = '".$the_term."' AND primary_payment_session = '".$the_session."'") or die(db_conn_error);
+
+                                   echo mysqli_num_rows($find);
+                                   
                                     ?>    
 
                                   </h3>
@@ -184,27 +188,7 @@ include("../../incs-arahman/change-admin-pass.php");
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">Fully Paid students<br> for the term</h6>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                            <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                <div class="col-9">
-                                    <div class="d-flex align-items-center align-self-start">
-                                    <h3 class="mb-0">12.34</h3>
-                                   
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="icon icon-box-success">
-                                    <span class="mdi mdi-arrow-top-right icon-item"></span>
-                                    </div>
-                                </div>
-                                </div>
-                                <h6 class="text-muted font-weight-normal">Previous outstanding</h6>
+                                <h6 class="text-muted font-weight-normal">Fully Paid students<br> for the term(pri)</h6>
                             </div>
                             </div>
                         </div>
@@ -215,8 +199,47 @@ include("../../incs-arahman/change-admin-pass.php");
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
                                     <h3 class="mb-0">
-                                        
-                                  
+                                     <?php 
+                           
+                           
+                           $find = mysqli_query ($connect,"SELECT * FROM secondary_school_students WHERE sec_active_email = '1' AND sec_admit = '1' AND sec_paid = '0'") or die(db_conn_error);
+
+                                echo  mysqli_num_rows($find);
+                                    
+                           
+                           
+                           
+                           
+                          
+                                    ?>    
+ 
+                                </h3>
+                                   
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-success">
+                                    <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                    </div>
+                                </div>
+                                </div>
+                                <h6 class="text-muted font-weight-normal">Admitted Students Not paid for the term (sec)</h6>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                            <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">
+                                     <?php   
+                                    $find = mysqli_query ($connect,"SELECT * FROM secondary_payment WHERE secondary_payment_paid_percent = '100' AND secondary_payment_completion_status = '1' AND secondary_payment_term = '".$the_term."' AND secondary_payment_session = '".$the_session."'") or die(db_conn_error);
+
+echo mysqli_num_rows($find);
+?>
+
                                     </h3>
                                    
                                     </div>
@@ -227,7 +250,8 @@ include("../../incs-arahman/change-admin-pass.php");
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">Total Income</h6>
+                                <h6 class="text-muted font-weight-normal">Fully Paid students
+for the term(sec)</h6>
                             </div>
                             </div>
                         </div>
@@ -244,10 +268,16 @@ include("../../incs-arahman/change-admin-pass.php");
                                   
                                     <h3 class="mb-0">
                                     <?php
-                            $find = mysqli_query ($connect,"SELECT count(*) AS total FROM primary_school_students WHERE pri_active_email = '1' AND pri_admit = '1'") or die(mysqli_error($connect));
 
-                                    $result=mysqli_fetch_assoc ($find);
-                                    echo $result['total'];
+ 
+
+
+                                    $find = mysqli_query ($connect,"SELECT * FROM primary_payment WHERE primary_payment_paid_percent != '100' AND primary_payment_completion_status = '0' AND primary_payment_session != '".$the_session."'") or die(db_conn_error);
+
+
+echo mysqli_num_rows ($find);
+
+
                                     ?>
                                     </h3>
                                   
@@ -259,7 +289,7 @@ include("../../incs-arahman/change-admin-pass.php");
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">Admmitted Students <br>For the term</h6>
+                                <h6 class="text-muted font-weight-normal">Students <br>With Outstanding from previous(pri)</h6>
                             </div>
                             </div>
                         </div>
@@ -271,10 +301,10 @@ include("../../incs-arahman/change-admin-pass.php");
                                     <div class="d-flex align-items-center align-self-start">
                                     <h3 class="mb-0">
                                     <?php
-                            $find = mysqli_query ($connect,"SELECT count(*) AS total FROM primary_school_students WHERE pri_active_email = '1' AND pri_admit = '1' AND pri_paid = '1'") or die(mysqli_error($connect));
+                           $find = mysqli_query ($connect,"SELECT DISTINCT module_students FROM module_join_students ") or die(db_conn_error);
 
-                                    $result=mysqli_fetch_assoc ($find);
-                                    echo $result['total'];
+                                   
+                                    echo mysqli_num_rows($find);
                                     ?>    
 
                                   </h3>
@@ -287,27 +317,7 @@ include("../../incs-arahman/change-admin-pass.php");
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">Fully Paid students<br> for the term</h6>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                            <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                <div class="col-9">
-                                    <div class="d-flex align-items-center align-self-start">
-                                    <h3 class="mb-0">12.34</h3>
-                                   
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="icon icon-box-success">
-                                    <span class="mdi mdi-arrow-top-right icon-item"></span>
-                                    </div>
-                                </div>
-                                </div>
-                                <h6 class="text-muted font-weight-normal">Previous outstanding</h6>
+                                <h6 class="text-muted font-weight-normal">Students<br> with at least one module(Pri)</h6>
                             </div>
                             </div>
                         </div>
@@ -318,7 +328,42 @@ include("../../incs-arahman/change-admin-pass.php");
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
                                     <h3 class="mb-0">
-                                        
+                                    <?php
+  
+                             $find = mysqli_query ($connect,"SELECT * FROM secondary_payment WHERE secondary_payment_paid_percent != '100' AND secondary_payment_completion_status = '0' AND secondary_payment_session != '".$the_session."'") or die(db_conn_error);
+
+                            
+                             echo mysqli_num_rows($find); 
+                             
+                                    ?>    
+
+                                    </h3>
+                                   
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon icon-box-success">
+                                    <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                    </div>
+                                </div>
+                                </div>
+                                <h6 class="text-muted font-weight-normal">All Students
+With Outstanding(Sec)</h6>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                            <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                <div class="col-9">
+                                    <div class="d-flex align-items-center align-self-start">
+                                    <h3 class="mb-0">
+                                    <?php
+                           $find = mysqli_query ($connect,"SELECT DISTINCT secondary_module_students FROM secondary_module_join_students") or die(db_conn_error);
+
+                                    echo mysqli_num_rows($find);
+                                    ?>       
                                   
                                     </h3>
                                    
@@ -330,7 +375,8 @@ include("../../incs-arahman/change-admin-pass.php");
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">Total Income</h6>
+                                <h6 class="text-muted font-weight-normal">Students
+with modules(Sec)</h6>
                             </div>
                             </div>
                         </div>
@@ -1151,19 +1197,36 @@ echo '</div>
             </div>
 
             <?php    
-              if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == OWNER){
+              if((isset($_SESSION['admin_active'])) AND ($_SESSION['admin_type'] == OWNER || $_SESSION['admin_type'] == ACCOUNTANT )){
            echo '<div class="row">
               <div class="col-sm-4 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h5>Revenue</h5>
+                    <h5>Revenue (pri)</h5>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-8 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">&#8358;0</h2>
-                          <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
+                          <h2 class="mb-0">&#8358;';
+                          
+
+                          
+                          $find = mysqli_query ($connect,"SELECT primary_payment_fees, primary_payment_paid_percent FROM primary_payment WHERE primary_payment_session = '".$the_session."' AND primary_payment_term = '".$the_term."'") or die(db_conn_error);
+                          
+                 
+            $sum = array();
+                          while($result=mysqli_fetch_array ($find)){
+                          $sum[] = $result['primary_payment_fees'] - ( $result['primary_payment_fees'] * ($result['primary_payment_paid_percent']/100));
+
+                         
+                          }
+
+                          echo number_format(array_sum($sum));
+
+                          
+                          echo '</h2>
+                         
                         </div>
-                        <h6 class="text-muted font-weight-normal">11.38% Since last month</h6>
+                        <h6 class="text-muted font-weight-normal">This term</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
@@ -1175,14 +1238,29 @@ echo '</div>
               <div class="col-sm-4 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h5>Sales</h5>
+                    <h5>Total outstanding (pri)</h5>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-8 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">$45850</h2>
-                          <p class="text-success ms-2 mb-0 font-weight-medium">+8.3%</p>
+                          <h2 class="mb-0">&#8358;';
+                          
+
+                          $find = mysqli_query ($connect,"SELECT 	primary_payment_fees, primary_payment_paid_percent FROM primary_payment WHERE primary_payment_paid_percent != '100'") or die(db_conn_error);
+
+$sum = array();
+                          while($result=mysqli_fetch_array ($find)){
+                          $sum[] = ($result['primary_payment_fees'] - ( $result['primary_payment_fees'] * ($result['primary_payment_paid_percent']/100)));
+
+                         
+                          }
+
+                          echo number_format(array_sum($sum));
+
+                          
+                          echo '</h2>
+                          <p class="text-success ms-2 mb-0 font-weight-medium"></p>
                         </div>
-                        <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>
+                        <h6 class="text-muted font-weight-normal"> This term</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <i class="icon-lg mdi mdi-wallet-travel text-danger ms-auto"></i>
@@ -1194,14 +1272,32 @@ echo '</div>
               <div class="col-sm-4 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h5>Purchase</h5>
+                    <h5>Module activities (Pri)</h5>
                     <div class="row">
                       <div class="col-8 col-sm-12 col-xl-8 my-auto">
                         <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">$2039</h2>
-                          <p class="text-danger ms-2 mb-0 font-weight-medium">-2.1% </p>
+                          <h2 class="mb-0">
+                          &#8358;';
+                          
+
+                          $find = mysqli_query ($connect,"SELECT module_price FROM module_price") or die(db_conn_error);
+
+$sum = array();
+                          while($result=mysqli_fetch_array ($find)){
+                          $sum[] = $result['module_price'];
+
+                         
+                          }
+                          echo number_format(array_sum($sum));
+                         
+
+                          
+                          echo '
+                          
+                          </h2>
+                          <p class="text-danger ms-2 mb-0 font-weight-medium"> </p>
                         </div>
-                        <h6 class="text-muted font-weight-normal">2.27% Since last month</h6>
+                        <h6 class="text-muted font-weight-normal">This term</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <i class="icon-lg mdi mdi-monitor text-success ms-auto"></i>
@@ -1210,72 +1306,173 @@ echo '</div>
                   </div>
                 </div>
               </div>
-            </div>';}
+
+
+
+
+
+
+
+              <div class="col-sm-4 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Revenue (Sec)</h5>
+                  <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                      <div class="d-flex d-sm-block d-md-flex align-items-center">
+                        <h2 class="mb-0">&#8358;';
+                        
+
+                        
+                        $find = mysqli_query ($connect,"SELECT secondary_payment_fees, secondary_payment_paid_percent FROM secondary_payment WHERE secondary_payment_session = '".$the_session."' AND secondary_payment_term = '".$the_term."'") or die(db_conn_error);
+                
+                 
+$sum = array();
+                        while($result=mysqli_fetch_array ($find)){
+                        $sum[] = $result['secondary_payment_fees'] - ( $result['secondary_payment_fees'] * ($result['secondary_payment_paid_percent']/100));
+
+                       
+                        }
+
+                        echo number_format(array_sum($sum));
+
+                        
+                        echo '</h2>
+                       
+                      </div>
+                      <h6 class="text-muted font-weight-normal">This term</h6>
+                    </div>
+                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                      <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Total outstanding (Sec)</h5>
+                  <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                      <div class="d-flex d-sm-block d-md-flex align-items-center">
+                        <h2 class="mb-0">&#8358;';
+                        
+
+                        $find = mysqli_query ($connect,"SELECT 	secondary_payment_fees, secondary_payment_paid_percent FROM secondary_payment WHERE secondary_payment_paid_percent != '100'") or die(db_conn_error);
+
+$sum = array();
+                        while($result=mysqli_fetch_array ($find)){
+                        $sum[] = ($result['secondary_payment_fees'] - ( $result['secondary_payment_fees'] * ($result['secondary_payment_paid_percent']/100)));
+
+                       
+                        }
+
+                        echo number_format(array_sum($sum));
+
+                        
+                        echo '</h2>
+                        <p class="text-success ms-2 mb-0 font-weight-medium"></p>
+                      </div>
+                      <h6 class="text-muted font-weight-normal"> This term</h6>
+                    </div>
+                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                      <i class="icon-lg mdi mdi-wallet-travel text-danger ms-auto"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5>Module activities (Sec)</h5>
+                  <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                      <div class="d-flex d-sm-block d-md-flex align-items-center">
+                        <h2 class="mb-0">
+                        &#8358;';
+                        
+
+                        $find = mysqli_query ($connect,"SELECT secondary_module_price FROM secondary_module_price") or die(db_conn_error);
+
+$sum = array();
+                        while($result=mysqli_fetch_array ($find)){
+                        $sum[] = $result['secondary_module_price'];
+
+                       
+                        }
+                        echo number_format(array_sum($sum));
+                       
+
+                        
+                        echo '
+                        
+                        </h2>
+                        <p class="text-danger ms-2 mb-0 font-weight-medium"> </p>
+                      </div>
+                      <h6 class="text-muted font-weight-normal">This term</h6>
+                    </div>
+                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                      <i class="icon-lg mdi mdi-monitor text-success ms-auto"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-sm-12 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h5>Common Entrance Payment(Sec)</h5>
+                <div class="row">
+                  <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                    <div class="d-flex d-sm-block d-md-flex align-items-center">
+                      <h2 class="mb-0">
+                      &#8358;';
+                      
+
+                      $find = mysqli_query ($connect,"SELECT secondary_common_e_price FROM secondary_common_e") or die(db_conn_error);
+
+$sum = array();
+                      while($result=mysqli_fetch_array ($find)){
+                      $sum[] = $result['secondary_common_e_price'];
+
+                     
+                      }
+                      echo number_format(array_sum($sum));
+                     
+
+                      
+                      echo '
+                      
+                      </h2>
+                      <p class="text-danger ms-2 mb-0 font-weight-medium"> </p>
+                    </div>
+                    <h6 class="text-muted font-weight-normal">This term</h6>
+                  </div>
+                  <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                    <i class="icon-lg mdi mdi-monitor text-success ms-auto"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+            
+            
+            
+            
+            </div>';
+          
+          
+          
+          
+          
+          }
             ?>
 
-<?php    
-              if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == ACCOUNTANT){
-           echo '<div class="row">
-              <div class="col-sm-4 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Revenue</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">&#8358;0</h2>
-                          <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
-                        </div>
-                        <h6 class="text-muted font-weight-normal">11.38% Since last month</h6>
-                      </div>
-                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Sales</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">$45850</h2>
-                          <p class="text-success ms-2 mb-0 font-weight-medium">+8.3%</p>
-                        </div>
-                        <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6>
-                      </div>
-                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-wallet-travel text-danger ms-auto"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h5>Purchase</h5>
-                    <div class="row">
-                      <div class="col-8 col-sm-12 col-xl-8 my-auto">
-                        <div class="d-flex d-sm-block d-md-flex align-items-center">
-                          <h2 class="mb-0">$2039</h2>
-                          <p class="text-danger ms-2 mb-0 font-weight-medium">-2.1% </p>
-                        </div>
-                        <h6 class="text-muted font-weight-normal">2.27% Since last month</h6>
-                      </div>
-                      <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-monitor text-success ms-auto"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>';}
-            ?>
-    
+
            
             <?php require_once ('../../incs-arahman/dashboard-footer.php'); ?>
 

@@ -5,7 +5,7 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 ?>
 <?php
-if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
+if(!isset($_SESSION['secondary_id'])){   //Not a student? Please leave
 	header('Location:'.GEN_WEBSITE.'/students');
 	exit();
 }
@@ -66,7 +66,7 @@ if (is_uploaded_file($_FILES['img']['tmp_name']) AND $_FILES['img']['error'] == 
 			$_SESSION['remind']['new_name'] = $new_name;
 			$_SESSION['remind']['file_name'] = $_FILES['img']['name'];
 			
-mysqli_query($connect, "INSERT INTO  primary_test_assignment_submit (primary_test_upload_submit_name, primary_test_upload_classid, primary_test_upload_pri_id, primary_test_upload_submit_file) VALUES ('".$assignment_name."', '".$_SESSION['pri_class_id']."','".$_SESSION['primary_id']."' ,'".$new_name."')") or die(db_conn_error);
+mysqli_query($connect, "INSERT INTO  secondary_test_assignment_submit (secondary_test_upload_submit_name, secondary_test_upload_classid, secondary_test_upload_pri_id, secondary_test_upload_submit_file) VALUES ('".$assignment_name."', '".$_SESSION['sec_class_id']."','".$_SESSION['secondary_id']."' ,'".$new_name."')") or die(db_conn_error);
         
 
 
@@ -76,7 +76,7 @@ if (mysqli_affected_rows($connect) == 1) {
 			$_FILES = array();
 				
 			unset($_FILES['img'], $_SESSION['remind']);
-            header('Location:'.GEN_WEBSITE.'/students/home.php?confirm_file=1');
+            header('Location:'.GEN_WEBSITE.'/students/home-secondary.php?confirm_file=1');
             exit();
            
             

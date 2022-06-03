@@ -71,7 +71,7 @@ echo '<td>'.date('M j Y g:i A', strtotime($row_query_receive['secondary_test_sub
 echo '<td>
     <div class="d-flex align-items-center">';
 	echo'
-	<a href="../../incs-storage/submit-assignments/'.$row_query_receive['secondary_test_upload_submit_file'].'" download="'.$row_query_receive['secondary_test_upload_submit_name'].'">Download pdf</a>
+	<a href="../../incs-storage/submit-assignments/'.$row_query_receive['secondary_test_upload_submit_file'].'" download="'.$row_query_receive['secondary_test_upload_submit_name'].'">Download</a>
 	';
     //echo '
   
