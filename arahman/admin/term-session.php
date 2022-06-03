@@ -73,7 +73,8 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
 
           mysqli_query($connect, "DELETE FROM modules") or die(db_conn_error);
 
-         
+         mysqli_query($connect, "DELETE FROM primary_payment WHERE primary_payment_paid_percent = '100' AND 	primary_payment_completion_status = '1'") or die(db_conn_error);
+
           
 
 
@@ -93,9 +94,10 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
  
            mysqli_query($connect, "DELETE FROM secondary_modules") or die(db_conn_error);
  
-           mysqli_query($connect, "DELETE FROM secondary_payment WHERE secondary_payment_paid_percent ='100'") or die(db_conn_error);
+           mysqli_query($connect, "DELETE FROM secondary_payment WHERE secondary_payment_paid_percent ='100' AND 	secondary_payment_completion_status = '1'") or die(db_conn_error);
            //Debtors details still available in the history
 
+           mysqli_query($connect, "DELETE FROM secondary_common_e") or die(db_conn_error);
          
    
                 }*/

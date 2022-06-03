@@ -68,7 +68,7 @@
               echo '<br><br>';
               echo '<div class="badge badge-outline-warning">'.$the_term=$rows['choose_term'].'</div>'; 
               echo '<br><br>';
-              echo '<div class="badge badge-outline-success">'.$rows['school_session'].'</div>';
+              echo '<div class="badge badge-outline-success">'.$the_session=$rows['school_session'].'</div>';
                
             }
   ?>
@@ -471,6 +471,37 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
           </li>   
               
   ';
+
+  echo   '<li class="nav-item menu-items">
+  <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicclasses" aria-expanded="false" aria-controls="ui-basic">
+    <span class="menu-icon">
+      <i class="mdi mdi-laptop"></i>
+    </span>
+    <span class="menu-title">Pri. Classes</span>
+    <i class="menu-arrow"></i>
+  </a>
+
+
+  <div class="collapse" id="ui-basicclasses">
+    <ul class="nav flex-column sub-menu">
+      
+    
+
+    
+      <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/add-classes.php">Add new classes</a>
+     
+      </li>
+    </ul>
+  </div>
+</li>   
+    
+';
+
+
+
+
+
+
  }       
           
 ?>

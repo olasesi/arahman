@@ -149,6 +149,13 @@ if(isset($_SESSION['primary_id'])){
   
 
 
+}elseif(isset($_SESSION['secondary_id'])){
+
+  mysqli_query($connect, "UPDATE secondary_payment SET secondary_payment_students_reference='".$_GET['reference']."', secondary_payment_paid_percent = '100', secondary_payment_completion_status = '1' WHERE secondary_payment_students_id = '".$_SESSION['secondary_id']."'") or die(db_conn_error);
+
+  header('Location:'.GEN_WEBSITE.'/students/home-secondary.php?reference='.$_GET['reference']);
+  exit();
+
 }
 
 
@@ -166,6 +173,17 @@ if(isset($_SESSION['module'])){
  exit();
  
 
+
+}elseif(isset($_SESSION['secondary_module'])){
+
+  mysqli_query($connect,"INSERT INTO secondary_module_join_students (secondary_module_students, secondary_module_type_id, secondary_module_reference, secondary_module_status) 
+  VALUES ('".$_SESSION['secondary_id']."', '".$_SESSION['secondary_module']."','".$_GET['reference']."','1')") or die(db_conn_error);
+ 
+
+ unset($_SESSION['secondary_module']);
+ header('Location:'.GEN_WEBSITE.'/students/home-secondary.php?reference='.$_GET['reference']);
+ exit();
+ 
 
 }
 

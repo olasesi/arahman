@@ -36,8 +36,23 @@
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
-                     <a class="navbar-brand brand-logo" href="<?= GEN_WEBSITE.'/students/home.php';?>"><h5>ARRAHMAN</h5></a> 
-                    <a class="navbar-brand brand-logo-mini" href="<?= GEN_WEBSITE.'/students/home.php';?>"><h5>ARRAHMAN</h5></a>
+                <?php  
+                    if(isset($_SESSION['primary_id'])){
+                       echo '<a class="navbar-brand brand-logo" href="'.GEN_WEBSITE.'/students/home.php"><h5>ARRAHMAN</h5></a> 
+                       <a class="navbar-brand brand-logo-mini" href="'.GEN_WEBSITE.'/students/home.php"><h5>ARRAHMAN</h5></a>';}
+
+                        ?>
+                         <?php  
+                    if(isset($_SESSION['secondary_id'])){
+                        echo '<a class="navbar-brand brand-logo" href="'.GEN_WEBSITE.'/students/home-secondary.php"><h5>ARRAHMAN</h5></a> 
+                        <a class="navbar-brand brand-logo-mini" href="'.GEN_WEBSITE.'/students/home-secondary.php"><h5>ARRAHMAN</h5></a>';}
+ 
+
+                        ?>     
+                
+              
+                   
+                   
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="typcn typcn-th-menu"></span>
           </button>
@@ -46,10 +61,22 @@
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav mr-lg-2">
                     <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link" data-toggle="dropdown" id="profileDropdown">
-                            <img src="../admin/<?= 'students/'.$_SESSION['pri_photo'];?>" alt="profile" />
-                            <span class="nav-profile-name"><?= $_SESSION['pri_firstname'].' '.$_SESSION['pri_surname'];?></span>
-                        </a>
+                    <?php  
+                    if(isset($_SESSION['primary_id'])){
+                       echo '<a class="nav-link" data-toggle="dropdown" id="profileDropdown">
+                            <img src="../admin/students/'.$_SESSION['pri_photo'].'" alt="profile" />
+                            <span class="nav-profile-name">'.$_SESSION['pri_firstname'].' '.$_SESSION['pri_surname'].'</span>
+                        </a>';}
+
+                        ?>
+                         <?php  
+                    if(isset($_SESSION['secondary_id'])){
+                       echo '<a class="nav-link" data-toggle="dropdown" id="profileDropdown">
+                            <img src="../admin/students/'.$_SESSION['sec_photo'].'" alt="profile" />
+                            <span class="nav-profile-name">'.$_SESSION['sec_firstname'].' '.$_SESSION['sec_surname'].'</span>
+                        </a>';}
+
+                        ?>
                         <!-- <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
                                 <i class="typcn typcn-cog-outline text-primary"></i> Settings
@@ -155,7 +182,17 @@
                                     </p>
                                 </div>
                             </a> -->
-                            <a class="dropdown-item preview-item" href="<?php echo GEN_WEBSITE.'/students/logout.php';?>">
+                            <?php
+if(isset($_SESSION['primary_id'])){
+echo ' <a class="dropdown-item preview-item" href="'.GEN_WEBSITE.'/students/logout.php">';
+}
+                            ?>
+                             <?php
+if(isset($_SESSION['secondary_id'])){
+echo ' <a class="dropdown-item preview-item" href="'.GEN_WEBSITE.'/students/sec-logout.php">';
+}
+                            ?>
+                           
                                 <div class="preview-thumbnail">
                                     <div class="preview-icon bg-info">
                                         <i class="typcn typcn-user mx-0"></i>
@@ -385,27 +422,44 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/students/home.php'; ?>">
+                    <?php
+if(isset($_SESSION['primary_id'])){
+echo ' <a class="nav-link" href="'.GEN_WEBSITE.'/students/home.php">';
+}
+                            ?>
+                             <?php
+if(isset($_SESSION['secondary_id'])){
+    echo ' <a class="nav-link" href="'.GEN_WEBSITE.'/students/home-secondary.php">';
+}
+                            ?>
+                   
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                             <!--<div class="badge badge-danger">new</div>-->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/students/submit-assignment.php'; ?>">
+                    <?php
+if(isset($_SESSION['primary_id'])){
+echo ' <a class="nav-link" href="'.GEN_WEBSITE.'/students/submit-assignment.php">';
+}
+                            ?>
+                             <?php
+if(isset($_SESSION['secondary_id'])){
+    echo ' <a class="nav-link" href="'.GEN_WEBSITE.'/students/sec-submit-assignment.php">';
+
+}
+                            ?>
+
+
+                       
                             <i class="typcn typcn-device-desktop menu-icon"></i>
                             <span class="menu-title">Submit assignment</span>
                             <!--<div class="badge badge-danger">new</div>-->
                         </a>
                     </li>
                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= GEN_WEBSITE.'/students/download-exam-result.php'; ?>">
-                            <i class="typcn typcn-device-desktop menu-icon"></i>
-                            <span class="menu-title">Download exam <br> result</span>
-                            <!--<div class="badge badge-danger">new</div>-->
-                        </a>
-                    </li>
+                  
                     <!-- <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                             <i class="typcn typcn-document-text menu-icon"></i>

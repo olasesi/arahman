@@ -5,7 +5,10 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 ?>
 <?php
-if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
+$query = mysqli_query($connect, "DELETE FROM secondary_school_students WHERE sec_timestamp < '".date("Y-m-d H:i:s", strtotime("-48 hours"))."' AND sec_active_email='0'") or die(db_conn_error);
+
+
+if(!isset($_SESSION['secondary_id'])){   //Not a student? Please leave
 	header('Location:'.GEN_WEBSITE.'/students');
 	exit();
 }
@@ -13,15 +16,15 @@ if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
   <?php 
   if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['pay'])){
                 $class_price = $_POST['balance'] * 100;
-                $email = $_SESSION['pri_email'];
+                $email = $_SESSION['sec_email'];
                
                 require_once ('../../incs-arahman/pay.php');
  } ?>
 <?php 
   if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['pay_module'])){
-                $_SESSION['module'] = $_POST['module'];
+                $_SESSION['secondary_module'] = $_POST['module'];
                 $class_price = $_POST['module_price'] * 100;
-                $email = $_SESSION['pri_email'];
+                $email = $_SESSION['sec_email'];
               
                 require_once ('../../incs-arahman/pay.php');
  } ?>
@@ -29,13 +32,13 @@ if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
 
 <?php
 	
-	$query_banning = mysqli_query($connect, "SELECT pri_active FROM primary_school_students WHERE pri_active = '0' AND primary_id = '".$_SESSION['primary_id']."'") or die(db_conn_error); 
+	$query_banning = mysqli_query($connect, "SELECT sec_active FROM secondary_school_students WHERE sec_active = '0' AND secondary_id = '".$_SESSION['secondary_id']."'") or die(db_conn_error); 
 	
 if (mysqli_affected_rows($connect) == 1) {
 
- mysqli_query($connect,"UPDATE primary_school_students SET pri_cookie_session = '' WHERE primary_id = '".$_SESSION['primary_id']."'") or die(db_conn_error);	
+ mysqli_query($connect,"UPDATE secondary_school_students SET sec_cookie_session = '' WHERE secondary_id = '".$_SESSION['secondary_id']."'") or die(db_conn_error);	
 session_destroy();
-setcookie("students_remember_me", "", time() - 31104000);		
+setcookie("sec_students_remember_me", "", time() - 31104000);		
 	
 header('Location:'.GEN_WEBSITE.'/students');
 exit();
@@ -75,7 +78,7 @@ echo '
 
 <?php
 if(isset($_GET['reference'])){
-    $query_ref = mysqli_query($connect, "SELECT primary_payment_students_reference FROM primary_payment WHERE primary_payment_students_reference = '".$_GET['reference']."' AND primary_payment_students_id = '".$_SESSION['primary_id']."'") or die(db_conn_error);  
+    $query_ref = mysqli_query($connect, "SELECT secondary_payment_students_reference FROM secondary_payment WHERE secondary_payment_students_reference = '".$_GET['reference']."' AND secondary_payment_students_id = '".$_SESSION['secondary_id']."'") or die(db_conn_error);  
     if(mysqli_num_rows($query_ref) == 1){
 echo '
 <div class="row">
@@ -111,7 +114,7 @@ echo '
 
 
 <?php
-   $query_students_no = mysqli_query($connect, "SELECT primary_payment_fees, primary_payment_paid_percent FROM primary_payment WHERE primary_payment_students_id = '".$_SESSION['primary_id']."' AND primary_payment_paid_percent != '100' AND primary_payment_completion_status='0'") or die(db_conn_error);		
+   $query_students_no = mysqli_query($connect, "SELECT secondary_payment_fees, secondary_payment_paid_percent FROM secondary_payment WHERE secondary_payment_students_id = '".$_SESSION['secondary_id']."' AND secondary_payment_paid_percent != '100' AND secondary_payment_completion_status='0'") or die(db_conn_error);		
   
   
     if(mysqli_num_rows($query_students_no) == 1){
@@ -125,12 +128,12 @@ echo
                                     <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
                                         <div>
                                             <p class="mb-2 text-md-center text-lg-left">Amount owed</p>
-                                            <h1 class="mb-0 text-danger">&#8358;'.number_format((((100 - $rows['primary_payment_paid_percent'])/100) * $rows['primary_payment_fees'])).'</h1>
+                                            <h1 class="mb-0 text-danger">&#8358;'.number_format((((100 - $rows['secondary_payment_paid_percent'])/100) * $rows['secondary_payment_fees'])).'</h1>
                                         </div>
                                         <i class="typcn typcn-briefcase icon-xl text-secondary"></i>
                                     </div>
                                     <form class="form d-flex flex-column align-items-center justify-content-between w-100" method="post" action="">
-                                           <input type="hidden" name="balance" value="'.(((100 - $rows['primary_payment_paid_percent'])/100) * $rows['primary_payment_fees']).'"/>        
+                                           <input type="hidden" name="balance" value="'.(((100 - $rows['secondary_payment_paid_percent'])/100) * $rows['secondary_payment_fees']).'"/>        
                                     <button class="btn btn-danger btn-rounded mt-1" type="submit" name="pay">Pay now</button>
                                 </form>
                                 </div> 
@@ -149,7 +152,7 @@ echo
 ?>
 
 <?php
-   $query_modules = mysqli_query($connect, "SELECT 	module_id, module_price, module_type, module_end_date FROM modules, module_price WHERE module_id = modules_id AND module_class_id = '".$_SESSION['pri_class_id']."'") or die(db_conn_error);		
+   $query_modules = mysqli_query($connect, "SELECT 	secondary_module_id, secondary_module_price, secondary_module_type, secondary_module_end_date FROM secondary_modules, secondary_module_price WHERE secondary_module_id = secondary_modules_id AND secondary_module_class_id = '".$_SESSION['sec_class_id']."'") or die(db_conn_error);		
   
   echo '<div class="row">
   <div class="col-md-12 grid-margin stretch-card">
@@ -170,11 +173,11 @@ echo
 echo
 '
                                     <form class="form d-flex flex-column align-items-center justify-content-between w-100" method="post" action="">
-                                           <input type="hidden" name="module" value="'.$rows_modules['module_id'].'"/> 
+                                           <input type="hidden" name="module" value="'.$rows_modules['secondary_module_id'].'"/> 
                                            
-                                           <input type="hidden" name="module_price" value="'.$rows_modules['module_price'].'"/>
+                                           <input type="hidden" name="module_price" value="'.$rows_modules['secondary_module_price'].'"/>
                                            
-                                    <button class="btn btn-success btn-rounded mt-1" type="submit" name="pay_module">'.$rows_modules['module_type'].'</button>
+                                    <button class="btn btn-success btn-rounded mt-1" type="submit" name="pay_module">'.$rows_modules['secondary_module_type'].'</button>
                                 </form>
                                
 
@@ -194,7 +197,7 @@ echo ' </div>
 ';
 ?>
 <?php
-  $query_inner = mysqli_query($connect, "SELECT module_type_id, module_type_id FROM module_join_students, modules WHERE module_id=module_type_id AND module_students = '".$_SESSION['primary_id']."'") or die(db_conn_error);
+  $query_inner = mysqli_query($connect, "SELECT secondary_module_type_id, secondary_module_type_id FROM secondary_module_join_students, secondary_modules WHERE secondary_module_id=secondary_module_type_id AND secondary_module_students = '".$_SESSION['secondary_id']."'") or die(db_conn_error);
   
   
    
@@ -208,7 +211,7 @@ echo
                                     <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
                                         <div>
                                             <p class="mb-2 text-md-center text-lg-left">Paid activities</p>
-                                            <h1 class="mb-0 text-danger">'.$rows_paid['module_type_id'].'</h1>
+                                            <h1 class="mb-0 text-danger">'.$rows_paid['secondary_module_type_id'].'</h1>
                                         </div>
                                      
                                     </div>
@@ -240,7 +243,7 @@ echo
                                             <p class="mb-0 text-muted">Students in </p>
                                                 <!-- <p class="mb-0 text-muted">+1.37%</p> -->
                                             </div>
-                                            <?php $query_students_no = mysqli_query($connect, "SELECT * FROM primary_school_students, primary_school_classes WHERE primary_class_id=pri_class_id AND pri_paid='1' AND pri_admit='1' AND pri_class_id = '".$_SESSION['pri_class_id']."'") or die(db_conn_error);			//To link to primary_school_classes later. For now we use primary_teacher_class_id
+                                            <?php $query_students_no = mysqli_query($connect, "SELECT * FROM secondary_school_students, secondary_school_classes WHERE secondary_class_id=sec_class_id AND sec_paid='1' AND sec_admit='1' AND sec_class_id = '".$_SESSION['sec_class_id']."'") or die(db_conn_error);			//To link to primary_school_classes later. For now we use primary_teacher_class_id
 
 
 
@@ -257,7 +260,7 @@ echo
                                         <div class="card-body d-flex flex-column justify-content-between">
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <div>
-                                                <?php $query_students_male = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_sex = 'Male' AND pri_paid='1' AND pri_admit='1' AND pri_class_id = '".$_SESSION['pri_class_id']."'") or die(db_conn_error);?>
+                                                <?php $query_students_male = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_sex = 'Male' AND sec_paid='1' AND sec_admit='1' AND sec_class_id = '".$_SESSION['sec_class_id']."'") or die(db_conn_error);?>
                                                     <p class="mb-2 text-muted">Male</p>
                                                     <h6 class="mb-0"><?=mysqli_num_rows($query_students_male);?></h6>
                                                 </div>
@@ -282,7 +285,7 @@ echo
                                             <p class="text-muted">Class percentage of school</p>
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <h3 class="mb-"></h3>
-                                                <?php $query_all_students = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_paid='1' AND pri_admit='1'") or die(db_conn_error);	
+                                                <?php $query_all_students = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_paid='1' AND sec_admit='1'") or die(db_conn_error);	
 ?>
                                                 
                                                 <h3 class="mb-"><?= floor((mysqli_num_rows($query_students_no)/mysqli_num_rows($query_all_students))*100) ?>%</h3>
@@ -293,10 +296,10 @@ echo
                                 </div>
                                 
                                 
-                                <?php $query_students_no_male = mysqli_query($connect, "SELECT pri_age FROM primary_school_students WHERE pri_paid='1' AND pri_sex='Male' AND pri_admit='1' AND pri_class_id = '".$_SESSION['pri_class_id']."'") or die(db_conn_error);		
+                                <?php $query_students_no_male = mysqli_query($connect, "SELECT sec_age FROM secondary_school_students WHERE sec_paid='1' AND sec_sex='Male' AND sec_admit='1' AND sec_class_id = '".$_SESSION['sec_class_id']."'") or die(db_conn_error);		
                                 
                                 while($male_students = mysqli_fetch_array($query_students_no_male)){
-                                    $arraying_male = $male_students['pri_age'];
+                                    $arraying_male = $male_students['sec_age'];
                                     $adding_male[] = $arraying_male;
 
                                 }
@@ -317,10 +320,10 @@ echo
                                                     <canvas id="cpu-chart" class="mt-auto"></canvas>
                                                 </div>
                                                 
-                                                <?php $query_students_no_female = mysqli_query($connect, "SELECT pri_age FROM primary_school_students WHERE pri_paid='1' AND pri_sex='Female' AND pri_admit='1' AND pri_class_id = '".$_SESSION['pri_class_id']."'") or die(db_conn_error);		
+                                                <?php $query_students_no_female = mysqli_query($connect, "SELECT sec_age FROM secondary_school_students WHERE sec_paid='1' AND sec_sex='Female' AND sec_admit='1' AND sec_class_id = '".$_SESSION['sec_class_id']."'") or die(db_conn_error);		
                                 
                                 while($female_students = mysqli_fetch_array($query_students_no_female)){
-                                    $arraying_female = $female_students['pri_age'];
+                                    $arraying_female = $female_students['sec_age'];
                                     $adding_female[] = $arraying_female;
 
                                 }
@@ -349,7 +352,7 @@ echo
                                             <div class="d-flex justify-content-between align-items-start flex-wrap">
                                                 <div>
                                                     <p class="mb-3"></p>
-                                                    <?php $query_no_resource = mysqli_query($connect, "SELECT primary_test_upload_id FROM primary_test_assignment_upload WHERE (	primary_test_upload_class_id = '".$_SESSION['pri_class_id']."')") or die(db_conn_error);	?>
+                                                    <?php $query_no_resource = mysqli_query($connect, "SELECT secondary_test_upload_id FROM secondary_test_assignment_upload WHERE (secondary_test_upload_class_id = '".$_SESSION['sec_class_id']."')") or die(db_conn_error);	?>
                                                     <h3><?= mysqli_num_rows($query_no_resource );?></h3>
                                                 </div>
                                                 <div id="income-chart-legend" class="d-flex flex-wrap mt-1 mt-md-0"></div>
@@ -451,13 +454,13 @@ echo
                                             <div class="row align-items-center h-100">
                                                 <div class="col-md-4">
                                                     <figure class="avatar mx-auto mb-4 mb-md-0">
-                                                        <img src="../admin/<?= 'students/'.$_SESSION['pri_photo'];?>" alt="avatar">
+                                                        <img src="../admin/<?= 'students/'.$_SESSION['sec_photo'];?>" alt="avatar">
                                                     </figure>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h5 class="text-white text-center text-md-left">
-														<?= $_SESSION['pri_firstname'] .' '.$_SESSION['pri_surname'];?></h5>
-                                                    <p class="text-white text-center text-md-left"><?= $_SESSION['pri_email']; ?></p>
+														<?= $_SESSION['sec_firstname'] .' '.$_SESSION['sec_surname'];?></h5>
+                                                    <p class="text-white text-center text-md-left"><?= $_SESSION['sec_email']; ?></p>
                                                     <div class="d-flex align-items-center justify-content-between info pt-2">
                                                         <div>
                                                           
@@ -470,11 +473,11 @@ echo
                                                         </div>
                                                         <div>
                                                             <p class="text-white"></p>
-															<p class="text-white"><?=$_SESSION['pri_sex'];?></p>
-															<p class="text-white"><?=$_SESSION['pri_age'];?></p>
-															<p class="text-white"><?=$_SESSION['pri_phone'];?></p>
+															<p class="text-white"><?=$_SESSION['sec_sex'];?></p>
+															<p class="text-white"><?=$_SESSION['sec_age'];?></p>
+															<p class="text-white"><?=$_SESSION['sec_phone'];?></p>
 														
-															<p class="text-white"><?=$_SESSION['pri_address'];?></p>
+															<p class="text-white"><?=$_SESSION['sec_address'];?></p>
 															
                                                            
                                                         </div>
@@ -587,7 +590,7 @@ echo
                     <?php
 
 
-$query_read = mysqli_query ($connect, "SELECT primary_test_upload_id, primary_test_upload_testname,  primary_test_upload_filename, primary_test_upload_timestamp FROM primary_test_assignment_upload WHERE primary_test_upload_class_id = '".$_SESSION['pri_class_id']."' AND primary_test_upload_class_status = 'Open' ORDER BY primary_test_upload_id DESC LIMIT 12") or die(db_conn_error);
+$query_read = mysqli_query ($connect, "SELECT secondary_test_upload_id, secondary_test_upload_testname,  secondary_test_upload_filename, secondary_test_upload_timestamp FROM secondary_test_assignment_upload WHERE secondary_test_upload_class_id = '".$_SESSION['sec_class_id']."' AND secondary_test_upload_class_status = 'Open' ORDER BY secondary_test_upload_id DESC LIMIT 12") or die(db_conn_error);
 
 //
 ?>
@@ -613,9 +616,9 @@ $query_read = mysqli_query ($connect, "SELECT primary_test_upload_id, primary_te
                                            <?php if (mysqli_num_rows($query_read) != 0){
 	while ($row_read = mysqli_fetch_array($query_read)) {
         echo ' <tr>';
-        echo '<td>'.$row_read['primary_test_upload_testname'].'</td>';
+        echo '<td>'.$row_read['secondary_test_upload_testname'].'</td>';
 
-echo '<td>'.date('M j Y g:i A', strtotime($row_read['primary_test_upload_timestamp']. OFFSET_TIME)).'</td>';
+echo '<td>'.date('M j Y g:i A', strtotime($row_read['secondary_test_upload_timestamp']. OFFSET_TIME)).'</td>';
 
 
 
@@ -623,7 +626,7 @@ echo '<td>'.date('M j Y g:i A', strtotime($row_read['primary_test_upload_timesta
 echo '<td>
     <div class="d-flex align-items-center">';
 	echo'
-	<a href="../../incs-storage/assignments/'.$row_read['primary_test_upload_filename'].'" download="'.$row_read['primary_test_upload_testname'].'">Download</a>
+	<a href="../../incs-storage/assignments/'.$row_read['secondary_test_upload_filename'].'" download="'.$row_read['secondary_test_upload_testname'].'">Download</a>
 	';
     //echo '
   
