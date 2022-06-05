@@ -55,10 +55,16 @@ if(isset($_POST['reset']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
 
 if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
 
-    $_SESSION['choose_session'] = $choose_session;
+  $common_entrance_fee = mysqli_query($connect, "SELECT secondary_common_fee_price FROM secondary_common_fee WHERE secondary_common_fee_id = '1'") or die(db_conn_error);
+  
+  while($common_entrance_fee_loop=mysqli_fetch_array($common_entrance_fee)){
+    $entrance_fees = $common_entrance_fee_loop['secondary_common_fee_price'];
+    }
 
-  $email = $_SESSION['common_entrance_email'];
-  $class_price = COMMON_ENTRANCE_FEE * 100;
+
+$_SESSION['choose_session'] = $choose_session;
+$email = $_SESSION['common_entrance_email'];
+ $class_price = $entrance_fees * 100;
   include ('../../incs-arahman/pay.php');
 
 

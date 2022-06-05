@@ -117,10 +117,16 @@ if(isset($_SESSION['common_entrance_email']) AND isset($_SESSION['choose_session
 
   $query_id = mysqli_query($connect, "SELECT secondary_id FROM secondary_school_students WHERE sec_email='".$_SESSION['common_entrance_email']."' AND sec_active_email='1' AND sec_paid = '0' AND sec_admit = '0' AND sec_class_id = '0'") or die(db_conn_error);
   if(mysqli_num_rows($query_id) == 1){
+
 while($query_id_while = mysqli_fetch_array($query_id)){
+  $common_entrance_fee = mysqli_query($connect, "SELECT secondary_common_fee_price FROM secondary_common_fee WHERE secondary_common_fee_id = '1'") or die(db_conn_error);
+  
+  while($common_entrance_fee_loop=mysqli_fetch_array($common_entrance_fee)){
+    $entrance_fees = $common_entrance_fee_loop['secondary_common_fee_price'];
+    }
 
   $q = mysqli_query($connect,"INSERT INTO secondary_common_e (secondary_common_e_students_id, secondary_common_e_session, secondary_common_e_price, secondary_common_e_reference, secondary_common_e_status) 
-  VALUES ('".$query_id_while['secondary_id']."', '".$_SESSION['choose_session']."','". COMMON_ENTRANCE_FEE ."','".  $_GET['reference']."', '1')") or die(db_conn_error);
+  VALUES ('".$query_id_while['secondary_id']."', '".$_SESSION['choose_session']."','". $entrance_fees ."','".  $_GET['reference']."', '1')") or die(db_conn_error);
 
 unset($_SESSION['choose_session']);
 unset($_SESSION['common_entrance_email']);
