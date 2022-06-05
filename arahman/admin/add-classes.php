@@ -9,7 +9,7 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 	exit();
 }
 
-if($_SESSION['admin_type'] != HEADMASTER){
+if($_SESSION['admin_type'] != ADMISSION){
 	header("Location:/".GEN_WEBSITE.'/dashboard.php');
 	exit();
 }
@@ -30,6 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
 	} else {
 		$errors['subjectname'] = 'Please enter valid class name';
 	} 
+
+    if (preg_match ('/^[a-zA-Z ]{3,30}$/i', trim($_POST['subjectname_sub']))) {		//only 30 characters are allowed to be inputted has subject name
+		$subjectname_sub = mysqli_real_escape_string ($connect, trim($_POST['subjectname_sub']));
+	} else {
+		$errors['subjectname_sub'] = 'Please enter valid class category name';
+	} 
 	 
    
 if (empty($errors)){
@@ -37,8 +43,15 @@ if (empty($errors)){
       if(mysqli_num_rows($query)== 0){
 
           mysqli_query($connect, "INSERT INTO primary_school_classes (primary_class) VALUES ('".$subjectname."')") or die(db_conn_error);
+          mysqli_query($connect, "INSERT INTO primary_school_classes_sub (primary_school_classes_sub_id_id, primary_school_classes_sub_id_name) VALUES ('".$mysqli_insert_id($connect)."', '".$subjectname_sub."')") or die(db_conn_error);
+          
+          
+          
+          
           $done = $subjectname;
           $_POST = array();		
+
+
 
       }else{
           $errors['subject_used'] = 'Class name has already been added';
@@ -133,7 +146,7 @@ if(isset($delete_errors)){
 <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Subjects taught in Primary school</h4>
+                    <h4 class="card-title">Add Classes In Primary school</h4>
                    <?php 
                    
                    $querysubject = mysqli_query($connect, "SELECT  primary_subjects_name,primary_subjects_id FROM primary_subjects ORDER BY primary_subjects_timestamp DESC ") or die(db_conn_error);
@@ -141,12 +154,12 @@ if(isset($delete_errors)){
                     <div class="template-demo">
                     <?php
                       if(isset($_GET['confirm_delete']) AND $_GET['confirm_delete'] == 1 ){
-                      echo ' <h3><span class="badge bg-primary">Subjects has been deleted</span></h3>';
+                      echo ' <h3><span class="badge bg-primary">Classes/Class category has been changed</span></h3>';
                       }
                     ?>
                      <?php
                      if(mysqli_num_rows($querysubject) == 0){
-echo '<h2 class="text-center">No subject has been added yet</h2>';
+echo '<h2 class="text-center">No class/class category has been added yet</h2>';
 
                      }else{
 while($rows = mysqli_fetch_array($querysubject)){
@@ -181,18 +194,31 @@ while($rows = mysqli_fetch_array($querysubject)){
              <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Add Primary school subject</h4>
+                    <h4 class="card-title">Add Primary school classes</h4>
                     <p class="card-description"></p>
 
                     <form class="forms-sample" method="POST" action="">
                       <div class="form-group">
-                        <label for="exampleInputName1">Subject name</label>
+                        <label for="exampleInputName1">Class name</label>
                         <?php if (array_key_exists('subjectname', $errors)) {
 				echo '<p class="text-danger">'.$errors['subjectname'].'</p>';}?>
                  <?php if (array_key_exists('subject_used', $errors)) {
 				echo '<p class="text-danger">'.$errors['subject_used'].'</p>';}?>
-                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Subject name" value="<?php if(isset($_POST['subjectname'])){echo $_POST['subjectname'];}?>" name="subjectname">
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Class name" value="<?php if(isset($_POST['subjectname'])){echo $_POST['subjectname'];}?>" name="subjectname">
                       </div>
+
+
+                      <div class="form-group">
+                        <label for="exampleInputName1">Class group name</label>
+                        <?php if (array_key_exists('subjectname_sub', $errors)) {
+				echo '<p class="text-danger">'.$errors['subjectname_sub'].'</p>';}?>
+                 <?php if (array_key_exists('subject_used_sub', $errors)) {
+				echo '<p class="text-danger">'.$errors['subject_used_sub'].'</p>';}?>
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Class group name" value="<?php if(isset($_POST['subjectname_sub'])){echo $_POST['subjectname_sub'];}?>" name="subjectname_sub">
+                      </div>
+
+
+
                       
                   <button type="submit" class="btn btn-primary me-2" name="submit">Submit</button>
                      

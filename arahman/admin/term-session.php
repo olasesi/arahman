@@ -63,7 +63,7 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
                 
                 $q_end_term = mysqli_query($connect,"UPDATE term_start_end SET term_end = '".$now->format('Y-m-d H:i:s')."' WHERE term_start_end_id = '".$_POST['hidden_start_end']."' LIMIT 1") or die(db_conn_error);
                 
-     /*         if(mysqli_affected_rows($connect, $q_end_term) === 1){
+              //if(mysqli_affected_rows($connect, $q_end_term) == 1){
            //Primary school logged out I think      
           mysqli_query($connect,"UPDATE primary_school_students SET pri_paid = '0', pri_admit = '0' WHERE pri_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
 
@@ -74,7 +74,7 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
           mysqli_query($connect, "DELETE FROM modules") or die(db_conn_error);
 
          mysqli_query($connect, "DELETE FROM primary_payment WHERE primary_payment_paid_percent = '100' AND 	primary_payment_completion_status = '1'") or die(db_conn_error);
-
+var_dump('eeee');
           
 
 
@@ -100,7 +100,7 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
            mysqli_query($connect, "DELETE FROM secondary_common_e") or die(db_conn_error);
          
    
-                }*/
+                
                 
                 
                 

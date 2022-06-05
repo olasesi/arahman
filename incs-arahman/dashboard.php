@@ -359,8 +359,8 @@
 
               <div class="collapse" id="recent-payments_common">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/common-entrance-list.php">Common entrance fee</a></li>
-               
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/common-entrance-list.php">Entrance paid list</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/entrance-fee.php">Entrance amount</a></li>
                   
                 </ul>
               </div>
@@ -401,6 +401,36 @@
             ';
 
           
+            echo   '<li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicclasses" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+              <span class="menu-title">Classes</span>
+              <i class="menu-arrow"></i>
+            </a>
+          
+          
+            <div class="collapse" id="ui-basicclasses">
+              <ul class="nav flex-column sub-menu">
+                
+              
+          
+              
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/add-classes.php">Add new classes</a>
+               
+                </li>
+              </ul>
+            </div>
+          </li>   
+              
+          ';
+          
+          
+          
+
+
+
 
 
 $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_term FROM term_start_end ORDER BY term_start_end_id DESC LIMIT 1") or die(db_conn_error);
@@ -471,32 +501,6 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
           </li>   
               
   ';
-
-  echo   '<li class="nav-item menu-items">
-  <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicclasses" aria-expanded="false" aria-controls="ui-basic">
-    <span class="menu-icon">
-      <i class="mdi mdi-laptop"></i>
-    </span>
-    <span class="menu-title">Pri. Classes</span>
-    <i class="menu-arrow"></i>
-  </a>
-
-
-  <div class="collapse" id="ui-basicclasses">
-    <ul class="nav flex-column sub-menu">
-      
-    
-
-    
-      <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/add-classes.php">Add new classes</a>
-     
-      </li>
-    </ul>
-  </div>
-</li>   
-    
-';
-
 
 
 
@@ -603,6 +607,11 @@ echo
 
 
           }
+
+
+
+
+          
           ?>
           <!-- <ul class="navbar-nav navbar-nav-right">
               <li class="nav-item dropdown d-none d-lg-block">
