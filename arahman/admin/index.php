@@ -6,7 +6,7 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 ?>
 <?php
 if(isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
-	header("Location:dashboard.php");
+	header('Location:'.GEN_WEBSITE.'/admin');
 	exit();
 }
 ?>
@@ -65,7 +65,7 @@ $_SESSION['admin_password'] = $row[6];
 
   
 
-header("Location:dashboard.php");
+header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
  exit;
 
 

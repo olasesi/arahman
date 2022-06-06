@@ -5,12 +5,12 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
-	header('Location:/'.GEN_WEBSITE.'/admin');
+	header('Location:'.GEN_WEBSITE.'/admin');
 	exit();
 }
 
 if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
-	header('Location:/'.GEN_WEBSITE.'/admin/dashboard.php');
+	header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 
 }

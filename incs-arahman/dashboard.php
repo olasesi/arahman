@@ -63,7 +63,8 @@
                   <h5 class="mb-0 font-weight-normal"><?= $_SESSION['admin_firstname'].' '.$_SESSION['admin_surname'] ?></h5>
                   <span><?= $_SESSION['admin_type']  ?></span>
                 <?php  $taking_session = mysqli_query ($connect,"SELECT school_session, choose_term FROM term_start_end ORDER BY term_start_end_id DESC  LIMIT 1") or die(mysqli_error($connect));
-            while($rows = mysqli_fetch_array($taking_session)){
+           if(mysqli_num_rows($taking_session) == 1){
+           while($rows = mysqli_fetch_array($taking_session)){
               
               echo '<br><br>';
               echo '<div class="badge badge-outline-warning">'.$the_term=$rows['choose_term'].'</div>'; 
@@ -71,6 +72,10 @@
               echo '<div class="badge badge-outline-success">'.$the_session=$rows['school_session'].'</div>';
                
             }
+          }else{
+            $the_term = 0;
+            $the_session = 0;
+          }
   ?>
                 </div>
               </div>
@@ -291,8 +296,9 @@
 
           <div class="collapse" id="recent-payments_common">
             <ul class="nav flex-column sub-menu">
-            <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/common-entrance-list.php">Common entrance fee</a></li>
            
+            <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/common-entrance-list.php">Entrance paid list</a></li>
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/entrance-fee.php">Entrance amount</a></li>
               
             </ul>
           </div>

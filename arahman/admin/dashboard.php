@@ -449,7 +449,7 @@ with modules(Sec)</h6>
 
 
 
-                $results = mysqli_query($connect,"SELECT pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students  WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' AND pri_class_id = '0' ORDER BY primary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
+                $results = mysqli_query($connect,"SELECT pri_firstname, pri_surname, pri_email, pri_phone FROM primary_school_students  WHERE pri_paid = '0' AND pri_admit = '0' AND pri_active_email = '1' ORDER BY primary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
                 echo '<div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -545,7 +545,7 @@ with modules(Sec)</h6>
 
 
 
-            $results = mysqli_query($connect,"SELECT sec_firstname, sec_surname, sec_email, sec_phone FROM secondary_school_students  WHERE sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1' AND sec_class_id = '0' ORDER BY secondary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
+            $results = mysqli_query($connect,"SELECT sec_firstname, sec_surname, sec_email, sec_phone FROM secondary_school_students  WHERE sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1' ORDER BY secondary_id DESC LIMIT 5") or die(db_conn_error); // Sec. students will be added to the select lists later.
                 
             echo '<div class="col-md-12 grid-margin stretch-card">
             <div class="card">

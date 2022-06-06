@@ -4,8 +4,8 @@ require_once ('../incs-arahman/gen_serv_con.php');
 $page_title = 'Email Verification';
 
 
- if(isset($_SESSION['user_id'])){
-header("Location:".GEN_WEBSITE);
+ if(isset($_SESSION['primary_id'])){
+    header('Location:'.GEN_WEBSITE.'/students/home.php');
 exit();}
 
 

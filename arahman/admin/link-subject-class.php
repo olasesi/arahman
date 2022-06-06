@@ -10,7 +10,7 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 }
 
 if($_SESSION['admin_type'] != HEADMASTER){
-	header("Location:".GEN_WEBSITE.'/dashboard.php');
+	header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 
