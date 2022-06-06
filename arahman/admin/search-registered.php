@@ -5,18 +5,18 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //include('../users/includes/menu.php');
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
-	header("Location:/".GEN_WEBSITE.'/admin');
+	header("Location:".GEN_WEBSITE.'/admin');
 	exit();
 }
 
 if($_SESSION['admin_type'] != ADMISSION){
-	header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
+	header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 ?>
 <?php
 if(!isset($_GET['search-registered'])){
-    header("Location:/".GEN_WEBSITE.'/admin/dashboard.php');
+    header("Location:".GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
 }
 
@@ -83,7 +83,7 @@ include_once ('../../incs-arahman/recently-registered.php');
 ?>
 
 
-                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/search-registered.php?");?> </nav>
+                  <nav aria-label="Page navigation example"> <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE."/admin/search-registered.php?search-registered=".mysqli_real_escape_string($connect, $_GET['search-registered'])."&button-search-registered=".mysqli_real_escape_string($connect, $_GET['button-search-registered'])."&");?> </nav>
                 </div>
               </div>
             </div>

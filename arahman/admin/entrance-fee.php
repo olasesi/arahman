@@ -9,10 +9,10 @@ if(!isset($_SESSION['admin_active'])){      //If you are not admin
     exit();
 }
 
-
-if($_SESSION['admin_type'] != ACCOUNTANT){      // if not headmaster
+if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
 	header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
 	exit();
+
 }
 
 

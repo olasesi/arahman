@@ -19,7 +19,7 @@ mysqli_query($connect,"UPDATE primary_school_students SET pri_cookie_session = '
 session_destroy();
 // setcookie("students_remember_me", "", time() - 31104000);		
 	
-header("Location:".GEN_WEBSITE."/school-fees-payment.php");
+header("Location:".GEN_WEBSITE."/students/school-fees-payment.php");
 exit();
 
 

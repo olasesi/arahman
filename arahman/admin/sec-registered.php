@@ -61,7 +61,7 @@ include_once ('../../incs-arahman/reject-student-status.php');
 include ('../../incs-arahman/paginate.php');
 
 
-$statement = "secondary_school_students LEFT JOIN secondary_common_e ON secondary_common_e_students_id = secondary_id WHERE (sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1' AND sec_class_id = '0') ORDER BY secondary_id DESC";
+$statement = "secondary_school_students LEFT JOIN secondary_common_e ON secondary_common_e_students_id = secondary_id WHERE (sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1') ORDER BY secondary_id DESC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
             if ($page <= 0) $page = 1;
