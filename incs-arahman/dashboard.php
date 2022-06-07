@@ -65,13 +65,15 @@
                 <?php  $taking_session = mysqli_query ($connect,"SELECT school_session, choose_term FROM term_start_end ORDER BY term_start_end_id DESC  LIMIT 1") or die(mysqli_error($connect));
            if(mysqli_num_rows($taking_session) == 1){
            while($rows = mysqli_fetch_array($taking_session)){
-              
+            $the_term=$rows['choose_term'];
+            $the_session=$rows['school_session'];
               echo '<br><br>';
-              echo '<div class="badge badge-outline-warning">'.$the_term=$rows['choose_term'].'</div>'; 
+              echo '<div class="badge badge-outline-warning">'.$the_term.'</div>'; 
               echo '<br><br>';
-              echo '<div class="badge badge-outline-success">'.$the_session=$rows['school_session'].'</div>';
-               
+              echo '<div class="badge badge-outline-success">'.$the_session.'</div>';
+             
             }
+            
           }else{
             $the_term = 0;
             $the_session = 0;

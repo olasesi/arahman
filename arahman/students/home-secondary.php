@@ -117,7 +117,7 @@ echo '
    $query_students_no = mysqli_query($connect, "SELECT secondary_payment_fees, secondary_payment_paid_percent FROM secondary_payment WHERE secondary_payment_students_id = '".$_SESSION['secondary_id']."' AND secondary_payment_paid_percent != '100' AND secondary_payment_completion_status='0'") or die(db_conn_error);		
   
   
-    if(mysqli_num_rows($query_students_no) == 1){
+    
         while($rows = mysqli_fetch_array($query_students_no)){ 
                                             
 echo
@@ -148,7 +148,7 @@ echo
 ';
 
 }
-}
+
 ?>
 
 <?php
@@ -202,7 +202,10 @@ echo ' </div>
   
    
         while($rows_paid = mysqli_fetch_array($query_inner)){ 
-                                            
+   
+            $query_modules_inner = mysqli_query($connect, "SELECT secondary_module_students, secondary_module_type_id, secondary_module_status FROM secondary_module_join_students WHERE secondary_module_type_id = '".$rows_paid['secondary_module_id']."' AND secondary_module_students = '".$_SESSION['secondary_id']."' AND secondary_module_status = '1'") or die(db_conn_error);
+
+if(mysqli_num_rows($query_modules_inner) == 0){                                           
 echo
 '<div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
@@ -212,6 +215,41 @@ echo
                                         <div>
                                             <p class="mb-2 text-md-center text-lg-left">Paid activities</p>
                                             <h1 class="mb-0 text-danger">'.$rows_paid['secondary_module_type_id'].'</h1>
+                                        </div>
+                                     
+                                    </div>
+                                   
+                                </div> 
+                            </div>
+                           
+
+                        </div>
+                       
+</div>
+
+
+';
+
+}
+        }
+?>
+
+<?php
+  $query_inner = mysqli_query($connect, "SELECT secondary_module_type, secondary_module_type_id FROM secondary_module_join_students, secondary_modules WHERE secondary_module_id=secondary_module_type_id AND secondary_module_students = '".$_SESSION['secondary_id']."'") or die(db_conn_error);
+  
+  
+   
+        while($rows_paid = mysqli_fetch_array($query_inner)){ 
+                                            
+echo
+'<div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                        <div>
+                                            <p class="mb-2 text-md-center text-lg-left">Paid activities</p>
+                                            <h1 class="mb-0 text-danger">'.$rows_paid['secondary_module_type'].'</h1>
                                         </div>
                                      
                                     </div>
@@ -431,24 +469,47 @@ echo
                                 </div>
                             </div>
                         </div> -->
-                        <div class="col-md-12 col-xl-12 grid-margin stretch-card">
-                            <div class="row">
-                               <!-- <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card newsletter-card bg-gradient-warning">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                                                <h5 class="mb-3 text-white">Newsletter</h5>
-                                                <form class="form d-flex flex-column align-items-center justify-content-between w-100">
-                                                    <div class="form-group mb-2 w-100">
-                                                        <input type="text" class="form-control" placeholder="email address">
-                                                    </div>
-                                                    <button class="btn btn-danger btn-rounded mt-1" type="submit">Subscribe</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  -->
-                                <div class="col-md-12 stretch-card">
+                        <div class="row">
+
+<div class="col-xl-8 col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body border-bottom">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Class Subjects</h6>
+                   
+                </div>
+            </div>
+            <div class="card-body"> 
+               
+               
+                <!-- <div class="d-flex justify-content-between align-items-center">-->
+<?php
+$query_class_subjects = mysqli_query($connect, "SELECT secondary_subjects_name FROM secondary_subjects, secondary_class_subjects, secondary_school_classes WHERE secondary_class_id_class = secondary_class_id AND secondary_subject_id_subject = secondary_subjects_id AND secondary_class_id_class= '".$_SESSION['sec_class_id']."'") or die(db_conn_error);		
+
+while($class_subjects = mysqli_fetch_array($query_class_subjects)){
+echo ' 
+
+ 
+
+
+
+<button type="button" class="btn btn-info btn-fw disabled">'.$class_subjects['secondary_subjects_name'].'</button>
+
+';
+
+
+}
+?>
+
+                   
+                                             </div> 
+        </div>
+    </div>
+
+                           
+                           
+                            <div class="col-md-12 col-xl-4 grid-margin stretch-card">
+                            <div class="col-md-12 stretch-card">
                                     <div class="card profile-card bg-gradient-primary">
                                         <div class="card-body">
                                             <div class="row align-items-center h-100">
@@ -493,6 +554,7 @@ echo
                                 </div>
                             </div>
                         </div>
+                            </div>
                         <!-- <div class="col-md-6 col-xl-4 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body border-bottom">

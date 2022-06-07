@@ -130,7 +130,7 @@ include("../../incs-arahman/change-admin-pass.php");
             </div>
 
             <?php    
-              if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == OWNER){?>
+              if((isset($_SESSION['admin_active'])) AND ($_SESSION['admin_type'] == OWNER || $_SESSION['admin_type'] == ACCOUNTANT )){?>
            <div class="row">
                         <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
                             <div class="card">
@@ -172,10 +172,10 @@ include("../../incs-arahman/change-admin-pass.php");
 
 
 
-                            $find = mysqli_query ($connect,"SELECT count(*) AS total FROM primary_payment WHERE primary_payment_paid_percent = '100' AND primary_payment_completion_status = '1' AND primary_payment_term = '".$the_term."' AND primary_payment_session = '".$the_session."'") or die(db_conn_error);
+                            $find = mysqli_query ($connect,"SELECT * FROM primary_payment WHERE primary_payment_paid_percent = '100' AND primary_payment_completion_status = '1' AND primary_payment_term = '".$the_term."' AND primary_payment_session = '".$the_session."'") or die(db_conn_error);
 
                                    echo mysqli_num_rows($find);
-                                   
+                                  
                                     ?>    
 
                                   </h3>
@@ -272,7 +272,7 @@ for the term(sec)</h6>
  
 
 
-                                    $find = mysqli_query ($connect,"SELECT * FROM primary_payment WHERE primary_payment_paid_percent != '100' AND primary_payment_completion_status = '0' AND primary_payment_session != '".$the_session."'") or die(db_conn_error);
+                                    $find = mysqli_query ($connect,"SELECT * FROM primary_payment WHERE (primary_payment_paid_percent != '100' AND primary_payment_completion_status = '0') AND (primary_payment_session != '".$the_session."' OR primary_payment_term != '".$the_term."')") or die(db_conn_error);
 
 
 echo mysqli_num_rows ($find);
@@ -330,7 +330,7 @@ echo mysqli_num_rows ($find);
                                     <h3 class="mb-0">
                                     <?php
   
-                             $find = mysqli_query ($connect,"SELECT * FROM secondary_payment WHERE secondary_payment_paid_percent != '100' AND secondary_payment_completion_status = '0' AND secondary_payment_session != '".$the_session."'") or die(db_conn_error);
+                             $find = mysqli_query ($connect,"SELECT * FROM secondary_payment WHERE (secondary_payment_paid_percent != '100' AND secondary_payment_completion_status = '0') AND (secondary_payment_session != '".$the_session."' OR secondary_payment_term != '".$the_term."')") or die(db_conn_error);
 
                             
                              echo mysqli_num_rows($find); 
@@ -347,8 +347,8 @@ echo mysqli_num_rows ($find);
                                     </div>
                                 </div>
                                 </div>
-                                <h6 class="text-muted font-weight-normal">All Students
-With Outstanding(Sec)</h6>
+                                <h6 class="text-muted font-weight-normal">Students
+With Outstanding from previous(sec)</h6>
                             </div>
                             </div>
                         </div>
@@ -376,7 +376,7 @@ With Outstanding(Sec)</h6>
                                 </div>
                                 </div>
                                 <h6 class="text-muted font-weight-normal">Students
-with modules(Sec)</h6>
+with at least one module(Sec)</h6>
                             </div>
                             </div>
                         </div>
@@ -1215,12 +1215,12 @@ echo '</div>
                  
             $sum = array();
                           while($result=mysqli_fetch_array ($find)){
-                          $sum[] = $result['primary_payment_fees'] - ( $result['primary_payment_fees'] * ($result['primary_payment_paid_percent']/100));
+                        $sum[] =   $result['primary_payment_fees'] * ($result['primary_payment_paid_percent']/100);
 
                          
                           }
 
-                          echo number_format(array_sum($sum));
+                         echo array_sum($sum);
 
                           
                           echo '</h2>
@@ -1260,7 +1260,7 @@ $sum = array();
                           echo '</h2>
                           <p class="text-success ms-2 mb-0 font-weight-medium"></p>
                         </div>
-                        <h6 class="text-muted font-weight-normal"> This term</h6>
+                        <h6 class="text-muted font-weight-normal"> </h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <i class="icon-lg mdi mdi-wallet-travel text-danger ms-auto"></i>
@@ -1280,7 +1280,7 @@ $sum = array();
                           &#8358;';
                           
 
-                          $find = mysqli_query ($connect,"SELECT module_price FROM module_price") or die(db_conn_error);
+                          $find = mysqli_query ($connect,"SELECT module_price FROM module_join_students LEFT JOIN module_price ON module_type_id = modules_id") or die(db_conn_error);
 
 $sum = array();
                           while($result=mysqli_fetch_array ($find)){
@@ -1329,7 +1329,7 @@ $sum = array();
                  
 $sum = array();
                         while($result=mysqli_fetch_array ($find)){
-                        $sum[] = $result['secondary_payment_fees'] - ( $result['secondary_payment_fees'] * ($result['secondary_payment_paid_percent']/100));
+                        $sum[] =  $result['secondary_payment_fees'] * ($result['secondary_payment_paid_percent']/100);
 
                        
                         }
@@ -1374,7 +1374,7 @@ $sum = array();
                         echo '</h2>
                         <p class="text-success ms-2 mb-0 font-weight-medium"></p>
                       </div>
-                      <h6 class="text-muted font-weight-normal"> This term</h6>
+                      <h6 class="text-muted font-weight-normal"></h6>
                     </div>
                     <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                       <i class="icon-lg mdi mdi-wallet-travel text-danger ms-auto"></i>

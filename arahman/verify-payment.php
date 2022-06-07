@@ -147,7 +147,7 @@ exit();
 }
 
 
-if(isset($_SESSION['primary_id'])){
+if(isset($_SESSION['primary_id']) AND !isset($_SESSION['module'])){
   mysqli_query($connect, "UPDATE primary_payment SET primary_payment_students_reference='".$_GET['reference']."', primary_payment_paid_percent = '100', primary_payment_completion_status = '1' WHERE primary_payment_students_id = '".$_SESSION['primary_id']."'") or die(db_conn_error);
 
   header('Location:'.GEN_WEBSITE.'/students/home.php?reference='.$_GET['reference']);
@@ -155,7 +155,7 @@ if(isset($_SESSION['primary_id'])){
   
 
 
-}elseif(isset($_SESSION['secondary_id'])){
+}elseif(isset($_SESSION['secondary_id']) AND !isset($_SESSION['secondary_module'])){
 
   mysqli_query($connect, "UPDATE secondary_payment SET secondary_payment_students_reference='".$_GET['reference']."', secondary_payment_paid_percent = '100', secondary_payment_completion_status = '1' WHERE secondary_payment_students_id = '".$_SESSION['secondary_id']."'") or die(db_conn_error);
 

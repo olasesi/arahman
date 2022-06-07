@@ -255,26 +255,10 @@ echo '
                    ';
 
 
-    
-    
-    //$class_subjects['primary_subjects_name'];
-
   }
 ?>
 
-                                        <!-- <div class="dropdown">
-                                            <button class="btn bg-white p-0 pb-1 pt-1 text-muted btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Last 7 days</button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
-                                                <h6 class="dropdown-header">Settings</h6>
-                                                <a class="dropdown-item" href="javascript:;">Action</a>
-                                                <a class="dropdown-item" href="javascript:;">Another action</a>
-                                                <a class="dropdown-item" href="javascript:;">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="javascript:;">Separated link</a>
-                                            </div>
-                                        </div>
-                                        <p class="mb-0">overview</p> -->
-                                    <!-- </div>-->  
+                                       
                                                                  </div> 
                             </div>
                         </div>
@@ -331,54 +315,7 @@ echo '
                         
                     </div>
 
-                    <!-- <div class="row">
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                        <div>
-                                            <p class="mb-2 text-md-center text-lg-left">Total Expenses</p>
-                                            <h1 class="mb-0">8742</h1>
-                                        </div>
-                                        <i class="typcn typcn-briefcase icon-xl text-secondary"></i>
-                                    </div>
-                                    <canvas id="expense-chart" height="80"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                        <div>
-                                            <p class="mb-2 text-md-center text-lg-left">Total Budget</p>
-                                            <h1 class="mb-0">47,840</h1>
-                                        </div>
-                                        <i class="typcn typcn-chart-pie icon-xl text-secondary"></i>
-                                    </div>
-                                    <canvas id="budget-chart" height="80"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                        <div>
-                                            <p class="mb-2 text-md-center text-lg-left">Total Balance</p>
-                                            <h1 class="mb-0">$7,243</h1>
-                                        </div>
-                                        <i class="typcn typcn-clipboard icon-xl text-secondary"></i>
-                                    </div>
-                                    <canvas id="balance-chart" height="80"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-
-
-
+                  
 
                     <div class="row">
                         <div class="col-md-12">

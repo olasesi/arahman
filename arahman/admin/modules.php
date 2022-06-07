@@ -386,14 +386,14 @@ echo ' <div class="row ">
                                                     echo '<option value="'.$sec_row_class['secondary_class_id'].'">'.$sec_row_class['secondary_class'].'</option>';
                                                  }
     
-                                                  
+                                               
                                                   ?>
                                                     
                                                    
                                                     </select>
                                                     <?php 
                                                      if (array_key_exists('sec_add_classes', $sec_errors)) { 
-                                                        echo '<p class="text-danger">'.$errors['sec_add_classes'].'</p>';
+                                                        echo '<p class="text-danger">'.$sec_errors['sec_add_classes'].'</p>';
                                                          
                                                     }
                                                 ?>
@@ -461,7 +461,7 @@ echo ' <div class="row ">
                                             </div>
                                         </div>
                                    
-                                        <button type="submit" class="btn btn-primary btn-lg" name="secondary_module_submit">Submit</button>
+                                        <button type="submit" class="btn btn-primary btn-lg" name="sec_module_submit">Submit</button>
                                    
                                     </div>
                                     <div class="row">
