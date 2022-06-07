@@ -1,7 +1,7 @@
 <?php
 require_once ('../../incs-arahman/config.php');
 require_once ('../../incs-arahman/gen_serv_con.php');
-include("../../incs-arahman/cookie_for_most-teachers.php");
+// include("../../incs-arahman/cookie_for_most-teachers.php");
 
 ?>
 <?php

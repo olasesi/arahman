@@ -114,7 +114,7 @@ echo '
    $query_students_no = mysqli_query($connect, "SELECT primary_payment_fees, primary_payment_paid_percent FROM primary_payment WHERE primary_payment_students_id = '".$_SESSION['primary_id']."' AND primary_payment_paid_percent != '100' AND primary_payment_completion_status='0'") or die(db_conn_error);		
   
   
-    if(mysqli_num_rows($query_students_no) == 1){
+    
         while($rows = mysqli_fetch_array($query_students_no)){ 
                                             
 echo
@@ -145,7 +145,7 @@ echo
 ';
 
 }
-}
+
 ?>
 
 <?php
@@ -163,9 +163,15 @@ echo
                   
               </div>';
    
+             
+
+
         while($rows_modules = mysqli_fetch_array($query_modules)){ 
        
-          		           
+          
+            $query_modules_inner = mysqli_query($connect, "SELECT module_students, module_type_id, module_status FROM module_join_students WHERE module_type_id = '".$rows_modules['module_id']."' AND module_students = '".$_SESSION['primary_id']."' AND module_status = '1'") or die(db_conn_error);
+
+if(mysqli_num_rows($query_modules_inner) == 0){
 
 echo
 '
@@ -180,7 +186,7 @@ echo
 
 ';
 
-
+        }
 
 
 }
@@ -194,7 +200,7 @@ echo ' </div>
 ';
 ?>
 <?php
-  $query_inner = mysqli_query($connect, "SELECT module_type_id, module_type_id FROM module_join_students, modules WHERE module_id=module_type_id AND module_students = '".$_SESSION['primary_id']."'") or die(db_conn_error);
+  $query_inner = mysqli_query($connect, "SELECT module_type, module_type_id FROM module_join_students, modules WHERE module_id=module_type_id AND module_students = '".$_SESSION['primary_id']."'") or die(db_conn_error);
   
   
    
@@ -208,7 +214,7 @@ echo
                                     <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
                                         <div>
                                             <p class="mb-2 text-md-center text-lg-left">Paid activities</p>
-                                            <h1 class="mb-0 text-danger">'.$rows_paid['module_type_id'].'</h1>
+                                            <h1 class="mb-0 text-danger">'.$rows_paid['module_type'].'</h1>
                                         </div>
                                      
                                     </div>
@@ -363,89 +369,58 @@ echo
                     </div>
 
                     <div class="row">
-                        <!-- <div class="col-xl-4 grid-margin stretch-card">
+
+                    <div class="col-xl-8 col-md-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body border-bottom">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Activities</h6>
-                                        <div class="dropdown">
-                                            <button class="btn bg-white p-0 pb-1 text-muted btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Last 30 days
-                                    </button> 
-                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
-                                                <h6 class="dropdown-header">Settings</h6>
-                                                <a class="dropdown-item" href="javascript:;">Action</a>
-                                                <a class="dropdown-item" href="javascript:;">Another action</a>
-                                                <a class="dropdown-item" href="javascript:;">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="javascript:;">Separated link</a>
-                                            </div>
-                                        </div>
+                                        <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Class Subjects</h6>
+                                       
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <canvas id="sales-chart-c" class="mt-2"></canvas>
-                                    <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3 mt-4">
-                                        <div class="d-flex flex-column justify-content-center align-items-center">
-                                            <p class="text-muted">Gross Sales</p>
-                                            <h5>492</h5>
-                                             <div class="d-flex align-items-baseline">
-                                                <p class="text-success mb-0">0.5%</p>
-                                                <i class="typcn typcn-arrow-up-thick text-success"></i>
-                                            </div> 
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center align-items-center">
-                                            <p class="text-muted">Purchases</p>
-                                            <h5>87k</h5>
-                                             <div class="d-flex align-items-baseline">
-                                                <p class="text-success mb-0">0.8%</p>
-                                                <i class="typcn typcn-arrow-up-thick text-success"></i>
-                                            </div> 
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center align-items-center">
-                                            <p class="text-muted">Tax Return</p>
-                                            <h5>882</h5>
-                                             <div class="d-flex align-items-baseline">
-                                                <p class="text-danger mb-0">-04%</p>
-                                                <i class="typcn typcn-arrow-down-thick text-danger"></i>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div class="dropdown">
-                                            <button class="btn bg-white p-0 pb-1 pt-1 text-muted btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Last 7 days</button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
-                                                <h6 class="dropdown-header">Settings</h6>
-                                                <a class="dropdown-item" href="javascript:;">Action</a>
-                                                <a class="dropdown-item" href="javascript:;">Another action</a>
-                                                <a class="dropdown-item" href="javascript:;">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="javascript:;">Separated link</a>
-                                            </div>
-                                        </div>
-                                        <p class="mb-0">overview</p>
-                                    </div> 
-                                </div>
+                                <div class="card-body"> 
+                                   
+                                   
+                                    <!-- <div class="d-flex justify-content-between align-items-center">-->
+<?php
+  $query_class_subjects = mysqli_query($connect, "SELECT primary_subjects_name FROM primary_subjects, primary_class_subjects, primary_school_classes WHERE primary_class_id_class = primary_class_id AND primary_subject_id_subject = primary_subjects_id AND primary_class_id_class= '".$_SESSION['pri_class_id']."'") or die(db_conn_error);		
+  
+  while($class_subjects = mysqli_fetch_array($query_class_subjects)){
+   echo ' 
+   
+                     
+
+
+                    
+   <button type="button" class="btn btn-info btn-fw disabled">'.$class_subjects['primary_subjects_name'].'</button>
+
+                   ';
+
+
+  }
+?>
+
+                                       
+                                                                 </div> 
                             </div>
-                        </div> -->
-                        <div class="col-md-12 col-xl-12 grid-margin stretch-card">
-                            <div class="row">
-                               <!-- <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card newsletter-card bg-gradient-warning">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                                                <h5 class="mb-3 text-white">Newsletter</h5>
-                                                <form class="form d-flex flex-column align-items-center justify-content-between w-100">
-                                                    <div class="form-group mb-2 w-100">
-                                                        <input type="text" class="form-control" placeholder="email address">
-                                                    </div>
-                                                    <button class="btn btn-danger btn-rounded mt-1" type="submit">Subscribe</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  -->
-                                <div class="col-md-12 stretch-card">
+                        </div>
+
+
+
+
+
+                   
+                        <div class="col-md-12 col-xl-4 grid-margin stretch-card">
+                            
+                               
+                            
+                        
+                        
+                        
+                        
+                        
+                        
+                        <div class="col-md-12 stretch-card">
                                     <div class="card profile-card bg-gradient-primary">
                                         <div class="card-body">
                                             <div class="row align-items-center h-100">
@@ -489,94 +464,9 @@ echo
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- <div class="col-md-6 col-xl-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body border-bottom">
-                                    <div class="d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-2 mb-md-0 text-uppercase font-weight-medium">Sales statistics</h6>
-                                        <div class="dropdown">
-                                             <button class="btn bg-white p-0 pb-1 text-muted btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Last 7 days
-                                        </button> 
-                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4">
-                                                <h6 class="dropdown-header">Settings</h6>
-                                                <a class="dropdown-item" href="javascript:;">Action</a>
-                                                <a class="dropdown-item" href="javascript:;">Another action</a>
-                                                <a class="dropdown-item" href="javascript:;">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="javascript:;">Separated link</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="sales-chart-d" height="320"></canvas>
-                                </div>
-                            </div>
-                        </div> -->
+                       
+                       
                     </div>
-
-                    <!-- <div class="row">
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                        <div>
-                                            <p class="mb-2 text-md-center text-lg-left">Total Expenses</p>
-                                            <h1 class="mb-0">8742</h1>
-                                        </div>
-                                        <i class="typcn typcn-briefcase icon-xl text-secondary"></i>
-                                    </div>
-                                    <canvas id="expense-chart" height="80"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                        <div>
-                                            <p class="mb-2 text-md-center text-lg-left">Total Budget</p>
-                                            <h1 class="mb-0">47,840</h1>
-                                        </div>
-                                        <i class="typcn typcn-chart-pie icon-xl text-secondary"></i>
-                                    </div>
-                                    <canvas id="budget-chart" height="80"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                                        <div>
-                                            <p class="mb-2 text-md-center text-lg-left">Total Balance</p>
-                                            <h1 class="mb-0">$7,243</h1>
-                                        </div>
-                                        <i class="typcn typcn-clipboard icon-xl text-secondary"></i>
-                                    </div>
-                                    <canvas id="balance-chart" height="80"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

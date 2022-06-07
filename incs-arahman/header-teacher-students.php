@@ -72,7 +72,33 @@
                                 let months = month[d.getMonth()];
                                 let date = d.getDate();
                                 document.write(months + ' ' + date); 
-                                </script></h6>
+                                </script> -
+                                 
+
+<?php
+if(isset($_SESSION['primary_teacher_id'])){
+$finding_class = mysqli_query($connect, "SELECT primary_class FROM primary_teachers INNER JOIN primary_school_classes ON primary_class_id = primary_teacher_class_id WHERE primary_class_id = '".$_SESSION['primary_teacher_class_id']."' AND primary_teacher_active = '1'") or die(db_conn_error);
+
+while($finding_class_single = mysqli_fetch_array($finding_class)){
+    echo $finding_class_single['primary_class'];
+
+}
+   
+}
+                            ?>
+
+<?php
+if(isset($_SESSION['secondary_teacher_id'])){
+$finding_class = mysqli_query($connect, "SELECT secondary_class FROM secondary_teachers INNER JOIN secondary_school_classes ON secondary_class_id = secondary_teacher_class_id WHERE secondary_class_id = '".$_SESSION['secondary_teacher_class_id']."' AND secondary_teacher_active = '1'") or die(db_conn_error);
+
+while($finding_class_single = mysqli_fetch_array($finding_class)){
+    echo $finding_class_single['secondary_class'];
+
+}
+   
+}
+                            ?>                            
+                            </h6>
                             <i class="typcn typcn-calendar"></i>
                         </a>
                     </li>
