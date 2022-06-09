@@ -18,6 +18,12 @@ if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them
 }
 ?>
 <?php
+$query = mysqli_query($connect, "DELETE FROM secondary_school_students WHERE sec_timestamp < '".date("Y-m-d H:i:s", strtotime("-48 hours"))."' AND sec_active_email='0'") or die(db_conn_error);
+?>
+<?php
+$query = mysqli_query($connect, "DELETE FROM primary_school_students WHERE pri_timestamp < '".date("Y-m-d H:i:s", strtotime("-48 hours"))."' AND pri_active_email='0'") or die(db_conn_error);
+?>
+<?php
 //Forceful logout of the admin by the super admin
 //Forceful password change and logout of the admin by the super admin. The super admin wonts logged out immediately if he changes password
 include("../../incs-arahman/change-admin-pass.php");
@@ -1220,7 +1226,7 @@ echo '</div>
                          
                           }
 
-                         echo array_sum($sum);
+                         echo number_format(array_sum($sum));
 
                           
                           echo '</h2>
@@ -1280,11 +1286,19 @@ $sum = array();
                           &#8358;';
                           
 
-                          $find = mysqli_query ($connect,"SELECT module_price FROM module_join_students LEFT JOIN module_price ON module_type_id = modules_id") or die(db_conn_error);
+                          $find = mysqli_query ($connect,"SELECT module_type_id FROM module_join_students") or die(db_conn_error);
 
 $sum = array();
                           while($result=mysqli_fetch_array ($find)){
-                          $sum[] = $result['module_price'];
+
+                            $find_price = mysqli_query ($connect,"SELECT DISTINCT module_price FROM module_price WHERE modules_id = '".$result['module_type_id']."' LIMIT 1") or die(db_conn_error);
+                           
+                            while($result_price=mysqli_fetch_array ($find_price)){
+                              $sum[] = $result_price['module_price'];
+
+                            }
+
+                         
 
                          
                           }
@@ -1392,13 +1406,20 @@ $sum = array();
                       <div class="d-flex d-sm-block d-md-flex align-items-center">
                         <h2 class="mb-0">
                         &#8358;';
-                        
+              
 
-                        $find = mysqli_query ($connect,"SELECT secondary_module_price FROM secondary_module_price") or die(db_conn_error);
+                        $find = mysqli_query ($connect,"SELECT secondary_module_type_id FROM secondary_module_join_students") or die(db_conn_error);
 
 $sum = array();
                         while($result=mysqli_fetch_array ($find)){
-                        $sum[] = $result['secondary_module_price'];
+
+                         $find_price = mysqli_query ($connect,"SELECT DISTINCT secondary_module_price FROM secondary_module_price WHERE secondary_modules_id = '".$result['secondary_module_type_id']."' LIMIT 1") or die(db_conn_error);
+                                                   
+                                                    while($result_price=mysqli_fetch_array ($find_price)){
+                                                      $sum[] = $result_price['secondary_module_price'];
+                        
+                                                    }
+                        
 
                        
                         }

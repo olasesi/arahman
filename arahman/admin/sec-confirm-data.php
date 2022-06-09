@@ -361,16 +361,18 @@ exit();
                        <?php        
                        
                         echo "<option>Choose school class</option>";
-                                        
+                        $query_select_class = mysqli_query($connect, "SELECT secondary_class_id, secondary_class FROM secondary_school_classes") or die(db_conn_error);
+                               
                         if(isset ($_POST['sec_class'])){
-                        foreach ($sec_class_range as $pri_sec_class=>$class_id){
-                        $sel_sec_class = ($pri_sec_class==$_POST['sec_class'])?"Selected='selected'":"";
-                        echo '<option '.$sel_sec_class. 'value="'.$class_id.'">'.$pri_sec_class.'</option>';}
+                          while($sec_class_range = mysqli_fetch_array($query_select_class)){
+                        $sel_sec_class = ($sec_class_range['secondary_class']==$_POST['sec_class'])?"Selected='selected'":"";
+                        echo '<option '.$sel_sec_class. 'value="'.$sec_class_range['secondary_class_id'].'">'.$sec_class_range['secondary_class'].'</option>';}
                         }else{
-                        foreach ($sec_class_range as $pri_sec_class=>$class_id){
-                        echo '<option value="'.$class_id.'">'.$pri_sec_class.'</option>';
+                        foreach ($sec_class_range as $sec_class_range['secondary_class']=>$sec_class_range['secondary_class_id']){
+                        echo '<option value="'.$sec_class_range['secondary_class_id'].'">'.$sec_class_range['secondary_class'].'</option>';
                         }
                         }
+
                         ?>            
                         </select>
                       </div>

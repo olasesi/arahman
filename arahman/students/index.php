@@ -280,7 +280,7 @@ include_once ('../../incs-arahman/header-admin.php');
                     </fieldset>
                   </div>
                 </div>
-                <a href="forget-password.php">forget password?</a>
+                <a href="<?php echo GEN_WEBSITE.'/students/forget-password.php'; ?>">forget password?</a>
               </form>
 
               

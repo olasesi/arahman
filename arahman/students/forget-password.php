@@ -48,7 +48,7 @@ if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
   $query = mysqli_query($connect, "SELECT * FROM primary_school_students WHERE pri_email='".$email."' AND pri_active_email='1'") or die(db_conn_error);
   
   if(mysqli_num_rows($query) == 1){
-    $hash=md5(rand(0,1000));
+    $hash=md5(rand(0,1000000));
    
     mysqli_query($connect,"UPDATE primary_school_students SET pri_email_hash = '".$hash."' WHERE pri_email='".$email."' AND pri_active_email='1'") or die(db_conn_error);
 
@@ -57,7 +57,7 @@ if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
             <div style="font-size:14px; margin-top:50px;">
             <center><h1 style="color:#f5f5f5; background-color:#161616; text-shadow:1px 1px 1px #a2a2a2; padding-top:10px; padding-bottom:10px; text-transform:uppercase;">Password Reset Link</h1></center>
             <p>Please click this link to reset your password.
-            <center><a href="'.GEN_WEBSITE.'/password-reset.php?hash='.$hash.'&school=1">Reset Password</a></center>
+            <center><a href="'.GEN_WEBSITE.'/students/password-reset.php?hash='.$hash.'&school=1">Reset Password</a></center>
             </p>
             
             
@@ -117,7 +117,7 @@ if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
   
   if(mysqli_num_rows($query) == 1){
 
-    $hash=md5(rand(0,1000));
+    $hash=md5(rand(0,1000000));
    
     mysqli_query($connect,"UPDATE secondary_school_students SET sec_email_hash = '".$hash."' WHERE sec_email='".$email."' AND sec_active_email='1'") or die(db_conn_error);
 
@@ -126,7 +126,7 @@ if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
             <div style="font-size:14px; margin-top:50px;">
             <center><h1 style="color:#f5f5f5; background-color:#161616; text-shadow:1px 1px 1px #a2a2a2; padding-top:10px; padding-bottom:10px; text-transform:uppercase;">Password Reset Link</h1></center>
             <p>Please click this link to reset your password.
-            <center><a href="'.GEN_WEBSITE.'/password-reset.php?hash='.$hash.'&school=2">Reset Password</a></center>
+            <center><a href="'.GEN_WEBSITE.'/students/password-reset.php?hash='.$hash.'&school=2">Reset Password</a></center>
             </p>
             
             
@@ -245,7 +245,7 @@ include_once ('../../incs-arahman/header-admin.php');
                     </fieldset>
                   </div>
                 </div>
-                <a href="forget-password.php">forget password?</a>
+              
               </form>
 
               
@@ -257,4 +257,4 @@ include_once ('../../incs-arahman/header-admin.php');
     </div>
     </section>
 
-    
+    <?php include ('../../incs-arahman/footer.php');?>
