@@ -14,7 +14,8 @@ if(!isset($_SESSION['primary_id'])){   //Not a student? Please leave
   if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['pay'])){
                 $class_price = $_POST['balance'] * 100;
                 $email = $_SESSION['pri_email'];
-               
+               $_SESSION['term'] = $_POST['term'];
+               $_SESSION['session'] = $_POST['session'];
                 require_once ('../../incs-arahman/pay.php');
  } ?>
 <?php 
@@ -111,7 +112,7 @@ echo '
 
 
 <?php
-   $query_students_no = mysqli_query($connect, "SELECT primary_payment_fees, primary_payment_paid_percent FROM primary_payment WHERE primary_payment_students_id = '".$_SESSION['primary_id']."' AND primary_payment_paid_percent != '100' AND primary_payment_completion_status='0'") or die(db_conn_error);		
+   $query_students_no = mysqli_query($connect, "SELECT primary_payment_fees, primary_payment_paid_percent, primary_payment_term, primary_payment_session FROM primary_payment WHERE primary_payment_students_id = '".$_SESSION['primary_id']."' AND primary_payment_paid_percent != '100' AND primary_payment_completion_status='0'") or die(db_conn_error);		
   
   
     
@@ -130,7 +131,9 @@ echo
                                         <i class="typcn typcn-briefcase icon-xl text-secondary"></i>
                                     </div>
                                     <form class="form d-flex flex-column align-items-center justify-content-between w-100" method="post" action="">
-                                           <input type="hidden" name="balance" value="'.(((100 - $rows['primary_payment_paid_percent'])/100) * $rows['primary_payment_fees']).'"/>        
+                                           <input type="hidden" name="balance" value="'.(((100 - $rows['primary_payment_paid_percent'])/100) * $rows['primary_payment_fees']).'"/>
+                                           <input type="hidden" name="term" value="'.$rows['primary_payment_term'].'"/> 
+                                           <input type="hidden" name="session" value="'.$rows['primary_payment_session'].'"/>      
                                     <button class="btn btn-danger btn-rounded mt-1" type="submit" name="pay">Pay now</button>
                                 </form>
                                 </div> 
@@ -180,7 +183,7 @@ echo
                                            
                                            <input type="hidden" name="module_price" value="'.$rows_modules['module_price'].'"/>
                                            
-                                    <button class="btn btn-success btn-rounded mt-1" type="submit" name="pay_module">'.$rows_modules['module_type'].'</button>
+                                    <button class="btn btn-success btn-rounded mt-1" type="submit" name="pay_module">'.$rows_modules['module_type'].' - Deadline: '.$rows_modules['module_end_date'].'</button>
                                 </form>
                                
 
@@ -411,16 +414,7 @@ echo
 
                    
                         <div class="col-md-12 col-xl-4 grid-margin stretch-card">
-                            
-                               
-                            
-                        
-                        
-                        
-                        
-                        
-                        
-                        <div class="col-md-12 stretch-card">
+                            <div class="col-md-12 stretch-card">
                                     <div class="card profile-card bg-gradient-primary">
                                         <div class="card-body">
                                             <div class="row align-items-center h-100">

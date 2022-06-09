@@ -148,7 +148,7 @@ exit();
 
 
 if(isset($_SESSION['primary_id']) AND !isset($_SESSION['module'])){
-  mysqli_query($connect, "UPDATE primary_payment SET primary_payment_students_reference='".$_GET['reference']."', primary_payment_paid_percent = '100', primary_payment_completion_status = '1' WHERE primary_payment_students_id = '".$_SESSION['primary_id']."'") or die(db_conn_error);
+  mysqli_query($connect, "UPDATE primary_payment SET primary_payment_students_reference='".$_GET['reference']."', primary_payment_paid_percent = '100', primary_payment_completion_status = '1' WHERE primary_payment_students_id = '".$_SESSION['primary_id']."' AND primary_payment_paid_percent != '100' AND primary_payment_completion_status = '0' AND primary_payment_term = '".$_SESSION['term']."' AND primary_payment_session = '".$_SESSION['session']."'") or die(db_conn_error);
 
   header('Location:'.GEN_WEBSITE.'/students/home.php?reference='.$_GET['reference']);
   exit();
@@ -157,7 +157,7 @@ if(isset($_SESSION['primary_id']) AND !isset($_SESSION['module'])){
 
 }elseif(isset($_SESSION['secondary_id']) AND !isset($_SESSION['secondary_module'])){
 
-  mysqli_query($connect, "UPDATE secondary_payment SET secondary_payment_students_reference='".$_GET['reference']."', secondary_payment_paid_percent = '100', secondary_payment_completion_status = '1' WHERE secondary_payment_students_id = '".$_SESSION['secondary_id']."'") or die(db_conn_error);
+  mysqli_query($connect, "UPDATE secondary_payment SET secondary_payment_students_reference='".$_GET['reference']."', secondary_payment_paid_percent = '100', secondary_payment_completion_status = '1' WHERE secondary_payment_students_id = '".$_SESSION['secondary_id']."' AND secondary_payment_paid_percent != '100' AND secondary_payment_completion_status = '0' AND secondary_payment_term = '".$_SESSION['term']."' AND secondary_payment_session = '".$_SESSION['session']."'") or die(db_conn_error);
 
   header('Location:'.GEN_WEBSITE.'/students/home-secondary.php?reference='.$_GET['reference']);
   exit();

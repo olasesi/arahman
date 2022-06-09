@@ -163,19 +163,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
                     ?>
                         <select class="form-control" id="exampleSelectclass" name="class">
                        <?php        
-                        
-                        echo '<option>Choose class</option>';
+                           $query_select_class = mysqli_query($connect, "SELECT secondary_class_id, secondary_class FROM secondary_school_classes") or die(db_conn_error);
+                    echo '<option>Choose class</option>';
                                         
                         if(isset ($_POST['class'])){
-                        foreach ($sec_class_range as $pri_class=>$class_number){
-                        $sel_class = ($pri_class==$_POST['class'])?'Selected="selected"':'';
-                        echo '<option value="'.$class_number.'" '.$sel_class.'>'.$pri_class.'</option>';}
+                          while($sec_class_range = mysqli_fetch_array($query_select_class)){
+                        $sel_class = ($sec_class_range['secondary_class']==$_POST['class'])?'Selected="selected"':'';
+                        echo '<option value="'.$sec_class_range['secondary_class_id'].'" '.$sel_class.'>'.$sec_class_range['secondary_class'].'</option>';}
                         }else{
-                            foreach ($sec_class_range as $pri_class=>$class_number){
+                            foreach ($sec_class_range as $sec_class_range['secondary_class']=>$sec_class_range['secondary_class_id']){
                               
-                                echo '<option value="'.$class_number.'">'.$pri_class.'</option>';}
+                                echo '<option value="'.$sec_class_range['secondary_class_id'].'">'.$sec_class_range['secondary_class'].'</option>';}
 
                         }
+
+                       
+                     
                         ?>            
                         </select>
                       </div>

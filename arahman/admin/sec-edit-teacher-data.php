@@ -304,18 +304,20 @@ exit();
                     ?>
                         <select class="form-control" id="exampleSelectpri_class" name="class">
                        <?php        
-                        //$sec_class = array('JSS 1', 'JSS 2', 'JSS3', 'SSS 1', 'SSS 2', 'SSS 3');    
+                        $query_select_class = mysqli_query($connect, "SELECT secondary_class_id, secondary_class FROM secondary_school_classes") or die(db_conn_error);
+
                         echo "<option>Choose school class</option>";
                        
-                        foreach($sec_class_range as $as_class=>$class_number){	
+                        while($sec_class_range = mysqli_fetch_array($query_select_class)){
                             if(!isset ($_POST['class'])){
-                                $editsel_class = ($class_number==$pri_class)?"Selected='selected'":"";
+                                $editsel_class = ($sec_class_range['secondary_class_id']==$pri_class)?"Selected='selected'":"";
                                 }else{
-                                $editsel_class = ($class_number==$_POST['class'])?"Selected='selected'":"";			
+                                $editsel_class = ($sec_class_range['secondary_class_id']==$_POST['class'])?"Selected='selected'":"";			
                                 }
-                                echo '<option '.$editsel_class.' value="'.$class_number.'">'.$as_class.'</option>';
-                        }     
-                        ?>            
+                                echo '<option '.$editsel_class.' value="'.$sec_class_range['secondary_class_id'].'">'.$sec_class_range['secondary_class'].'</option>';
+                        } 
+                        
+                                      ?>            
                         </select>
                       </div>
 

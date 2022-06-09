@@ -63,7 +63,7 @@ if(isset($_POST['post_school_fees'])){
 
  if(empty($signup_errors)){
 if($_SESSION['school_type'] == 'Primary school'){
-  $_SESSION['percentage'] = $var_fees/$_SESSION['school_fees'] * 100; 
+  $_SESSION['percentage'] = ($var_fees/$_SESSION['school_fees']) * 100; 
 
 $email = $_SESSION['email'];
  $class_price  = ceil($var_fees) * 100;
@@ -73,7 +73,7 @@ $email = $_SESSION['email'];
 
 
 }elseif($_SESSION['school_type'] == 'Secondary school'){
-  $_SESSION['percentage'] = $var_fees/$_SESSION['school_fees'] * 100;
+  $_SESSION['percentage'] = ($var_fees/$_SESSION['school_fees']) * 100;
   $email = $_SESSION['email'];
   $class_price  = ceil($var_fees) * 100;
   include ('../../incs-arahman/pay.php');

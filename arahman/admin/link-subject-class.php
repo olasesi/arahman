@@ -165,17 +165,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
                        <?php        
                         
                         echo '<option>Choose class</option>';
-                                        
+                         
+                        $query_select_class = mysqli_query($connect, "SELECT primary_class_id, primary_class FROM primary_school_classes") or die(db_conn_error);
+
+
                         if(isset ($_POST['class'])){
-                        foreach ($pri_class_range as $pri_class=>$class_number){
-                        $sel_class = ($pri_class==$_POST['class'])?'Selected="selected"':'';
-                        echo '<option value="'.$class_number.'" '.$sel_class.'>'.$pri_class.'</option>';}
+                          while($pri_class_range = mysqli_fetch_array($query_select_class)){
+                        $sel_class = ($pri_class_range['primary_class']==$_POST['class'])?'Selected="selected"':'';
+                        echo '<option value="'.$pri_class_range['primary_class_id'].'" '.$sel_class.'>'.$pri_class_range['primary_class'].'</option>';}
                         }else{
-                            foreach ($pri_class_range as $pri_class=>$class_number){
+                            foreach ($pri_class_range as $pri_class_range['primary_class']=>$pri_class_range['primary_class_id']){
                               
-                                echo '<option value="'.$class_number.'">'.$pri_class.'</option>';}
+                                echo '<option value="'.$pri_class_range['primary_class_id'].'">'.$pri_class_range['primary_class'].'</option>';}
 
                         }
+
+
+                        
                         ?>            
                         </select>
                       </div>

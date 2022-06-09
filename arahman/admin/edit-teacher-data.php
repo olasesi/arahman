@@ -306,16 +306,17 @@ exit();
                         <select class="form-control" id="exampleSelectpri_class" name="class">
                        <?php        
                         //$pri_class_range = array('Basic one', 'Basic two', 'Basic three', 'Basic four', 'Basic five', 'Basic six');    
+                        $query_select_class = mysqli_query($connect, "SELECT primary_class_id, primary_class FROM primary_school_classes") or die(db_conn_error);
+
                         echo "<option>Choose school class</option>";
-                                        
-                        foreach($pri_class_range as $as_class=>$class_number){	
-                            if(!isset ($_POST['class'])){
-                                $editsel_class = ($class_number==$pri_class)?"Selected='selected'":"";
+                  while($pri_class_range = mysqli_fetch_array($query_select_class)){
+                       if(!isset ($_POST['class'])){
+                                $editsel_class = ($pri_class_range['primary_class_id']==$pri_class)?"Selected='selected'":"";
                                 }else{
-                                $editsel_class = ($class_number==$_POST['class'])?"Selected='selected'":"";			
+                                $editsel_class = ($pri_class_range['primary_class_id']==$_POST['class'])?"Selected='selected'":"";			
                                 }
-                                echo '<option '.$editsel_class.' value="'.$class_number.'">'.$as_class.'</option>';
-                        }   
+                                echo '<option '.$editsel_class.' value="'.$pri_class_range['primary_class_id'].'">'.$pri_class_range['primary_class'].'</option>';
+                       }
                         ?>            
                         </select>
                       </div>

@@ -193,16 +193,22 @@ $_GET = array();
                        <?php        
                        
                         echo "<option>Choose school class</option>";
-                                        
+                        $query_select_class = mysqli_query($connect, "SELECT primary_class_id, primary_class FROM primary_school_classes") or die(db_conn_error);
+                                      
                         if(isset ($_POST['pri_class'])){
-                        foreach ($pri_class_range as $pri_pri_class=>$class_id){
-                        $sel_pri_class = ($pri_pri_class==$_POST['pri_class'])?"Selected='selected'":"";
-                        echo '<option '.$sel_pri_class. 'value="'.$class_id.'">'.$pri_pri_class.'</option>';}
+                          while($pri_class_range = mysqli_fetch_array($query_select_class)){
+                        $sel_pri_class = ($pri_class_range['primary_class']==$_POST['pri_class'])?"Selected='selected'":"";
+                        echo '<option '.$sel_pri_class. 'value="'.$pri_class_range['primary_class_id'].'">'.$pri_class_range['primary_class'].'</option>';}
                         }else{
-                        foreach ($pri_class_range as $pri_pri_class=>$class_id){
-                        echo '<option value="'.$class_id.'">'.$pri_pri_class.'</option>';
+                        foreach ($pri_class_range as $pri_class_range['primary_class']=>$pri_class_range['primary_class_id']){
+                        echo '<option value="'.$pri_class_range['primary_class_id'].'">'.$pri_class_range['primary_class'].'</option>';
                         }
                         }
+
+
+
+
+
                         ?>            
                         </select>
                       </div>
