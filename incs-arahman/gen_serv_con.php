@@ -24,15 +24,16 @@
 
 	$data_select=mysqli_select_db($connect,Db_Name) or die(db_conn_error);		//maximum execution time exceeded on this line
 	
-	function escape_data($data){
+	// function escape_data($data){
 	
-	global $connect;
+	// global $connect;
 	
-	if (get_magic_quotes_gpc())$data = stripslashes($data);
-	return mysqli_real_escape_string (trim ($connect, $data));
+	// if (get_magic_quotes_gpc()){
+	// 	$data = stripslashes($data);
+	// return mysqli_real_escape_string (trim ($connect, $data));
+	// }
 	
-	
-	}
+	// }
 	
 	
 	
