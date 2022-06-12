@@ -15,24 +15,19 @@ if($_SESSION['admin_type'] != ADMISSION){
 }
 
 ?>
-
-
-
-
 <?php
 
 $errors = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
 	 
-    if (preg_match ('/^[a-zA-Z ]{3,30}$/i', trim($_POST['subjectname']))) {		//only 30 characters are allowed to be inputted has subject name
+    if (preg_match ('/^.{3,30}$/i', trim($_POST['subjectname']))) {		//only 30 characters are allowed to be inputted has subject name
 		$subjectname = mysqli_real_escape_string ($connect, trim($_POST['subjectname']));
 	} else {
 		$errors['subjectname'] = 'Please enter valid class name';
 	} 
 
-      
-if (empty($errors)){
+  if (empty($errors)){
       $query = mysqli_query($connect, "SELECT primary_class_id FROM primary_school_classes WHERE primary_class='".$subjectname."'") or die(db_conn_error);
       if(mysqli_num_rows($query)== 0){
 
@@ -40,9 +35,7 @@ if (empty($errors)){
          $done = $subjectname;
           $_POST = array();		
 
-
-
-      }else{
+}else{
           $errors['subject_used'] = 'Class name has already been added';
 
       }	
@@ -51,16 +44,10 @@ if (empty($errors)){
 }	
 
 
-
-
-
-
-
-
 $errorsedit = array();
 if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submitedit'])) {
 
-  if (preg_match ('/^[a-zA-Z ]{3,30}$/i', trim($_POST['subjectnameedit']))) {		
+  if (preg_match ('/^.{3,30}$/i', trim($_POST['subjectnameedit']))) {		
 		$subjectnameedit = mysqli_real_escape_string ($connect, trim($_POST['subjectnameedit']));
 	} else {
 		$errorsedit['subjectnameedit'] = 'Please enter valid class name';
@@ -85,19 +72,77 @@ if (empty($errorsedit)){
       }
  }
  
-
- 
-  
-
-
-
-
-
-
 }
 
+ ?>
+
+
+
+<?php
+
+$errors_sec = array();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit_sec'])){
+	 
+    if (preg_match ('/^.{3,30}$/i', trim($_POST['subjectname_sec']))) {		//only 30 characters are allowed to be inputted has subject name
+		$subjectname_sec = mysqli_real_escape_string ($connect, trim($_POST['subjectname_sec']));
+	} else {
+		$errors_sec['subjectname_sec'] = 'Please enter valid class name';
+	} 
+
+  if (empty($errors_sec)){
+      $query_sec = mysqli_query($connect, "SELECT secondary_class_id FROM secondary_school_classes WHERE secondary_class='".$subjectname_sec."'") or die(db_conn_error);
+      if(mysqli_num_rows($query_sec)== 0){
+
+          mysqli_query($connect, "INSERT INTO secondary_school_classes (secondary_class) VALUES ('".$subjectname_sec."')") or die(db_conn_error);
+         $done_sec = $subjectname_sec;
+          $_POST = array();		
+
+}else{
+          $errors_sec['subject_used_sec'] = 'Class name has already been added';
+
+      }	
+ }
  
-?>
+}	
+
+
+$errorsedit_sec = array();
+if($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submitedit_sec'])) {
+
+  if (preg_match ('/^.{3,30}$/i', trim($_POST['subjectnameedit_sec']))) {		
+		$subjectnameedit_sec = mysqli_real_escape_string ($connect, trim($_POST['subjectnameedit_sec']));
+	} else {
+		$errorsedit_sec['subjectnameedit_sec'] = 'Please enter valid class name';
+	} 
+
+  $clean_hidden_sec = mysqli_real_escape_string ($connect, trim($_POST['hidden_sec']));
+     
+if (empty($errorsedit_sec)){
+      $query_sec = mysqli_query($connect, "SELECT secondary_class_id FROM secondary_school_classes WHERE secondary_class='".$subjectnameedit_sec."'") or die(db_conn_error);
+      if(mysqli_num_rows($query_sec)== 0){
+
+        mysqli_query($connect, "UPDATE secondary_school_classes SET secondary_class = '".$subjectnameedit_sec."' WHERE secondary_class_id='".$clean_hidden_sec."'") or die(db_conn_error);	
+	
+        $status_sec = 1;
+          $_POST = array();		
+
+
+
+      }elseif(mysqli_num_rows($query_sec)== 1){
+        $errorsedit_sec['alreadyused_sec'] = 'Class name has already been used';
+
+      }
+ }
+ 
+}
+
+ ?>
+
+
+
+
+
  <?php require_once ('../../incs-arahman/dashboard.php');?>  
       
         <div class="main-panel">
@@ -113,6 +158,24 @@ if (empty($errorsedit)){
    <div class="card">
      <div class="card-body">
        <h4 class="card-title text-success">'.$done.' has been added</h4>
+              
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>';
+}
+            ?>
+            <?php         
+    if(isset($done_sec)){
+           
+        echo '<div class="row">
+
+<div class="col-12 grid-margin stretch-card">
+   <div class="card">
+     <div class="card-body">
+       <h4 class="card-title text-success">'.$done_sec.' has been added</h4>
               
                     </form>
                   </div>
@@ -184,6 +247,67 @@ if (empty($errorsedit)){
          }
                      ?>
 
+<?php  
+             
+             if( array_key_exists('subjectnameedit_sec', $errorsedit_sec)  ){
+                    
+                 echo '<div class="row">
+         
+         <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title text-danger">	'.$errorsedit_sec['subjectnameedit_sec'].' </h4>
+                       
+                             </form>
+                           </div>
+                         </div>
+                       </div>
+         
+                     </div>';
+         }
+                     ?>
+         
+         
+         <?php  
+                      
+                      if( array_key_exists('alreadyused_sec', $errorsedit_sec)  ){
+                             
+                          echo '<div class="row">
+                  
+                  <div class="col-12 grid-margin stretch-card">
+                     <div class="card">
+                       <div class="card-body">
+                         <h4 class="card-title text-danger"> '.$errorsedit_sec['alreadyused_sec'].' </h4>
+                                
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                  
+                              </div>';
+                  }
+                              ?>
+                  
+                  <?php  
+                      
+                      if(isset($status_sec) AND $status_sec == 1){
+                             
+                          echo '<div class="row">
+                  
+                  <div class="col-12 grid-margin stretch-card">
+                     <div class="card">
+                       <div class="card-body">
+                         <h4 class="card-title text-success"> Class name successfully changed</h4>
+                                
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                  
+                              </div>';
+                  }
+                              ?>
+         
 
 <div class="row">
 <div class="col-12 grid-margin stretch-card">
@@ -195,11 +319,7 @@ if (empty($errorsedit)){
                    $querysubject = mysqli_query($connect, "SELECT  primary_class, primary_class_id FROM primary_school_classes ORDER BY primary_class_id DESC ") or die(db_conn_error);
                    ?>
                     <div class="template-demo">
-                    <?php
-                      if(isset($_GET['confirm_delete']) AND $_GET['confirm_delete'] == 1 ){
-                      echo ' <h3><span class="badge bg-primary">Classes/Class category has been edited</span></h3>';
-                      }
-                    ?>
+                   
                     
                      <?php
                      if(mysqli_num_rows($querysubject) == 0){
@@ -300,6 +420,133 @@ while($rows = mysqli_fetch_array($querysubject)){
               </div>
 
             </div>
+
+
+
+
+
+
+            <div class="row">
+<div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Classes In Secondary school</h4>
+                   <?php 
+                   
+                   $querysubject_sec = mysqli_query($connect, "SELECT secondary_class, secondary_class_id FROM secondary_school_classes ORDER BY secondary_class_id DESC") or die(db_conn_error);
+                   ?>
+                    <div class="template-demo">
+                    
+                     <?php
+                     if(mysqli_num_rows($querysubject_sec) == 0){
+echo '<h2 class="text-center">No class has been added yet</h2>';
+
+                     }else{
+while($rows = mysqli_fetch_array($querysubject_sec)){
+   echo '<div class="dropdown">
+          <button class="btn btn-info btn-fw dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          '.$rows['secondary_class'].'
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <form action="" method="POST">
+            <input type="hidden" name="delete-name_sec" value="'.$rows['secondary_class'].'">  
+            <button type="submit" name="delete-subject_sec" value="'.$rows['secondary_class_id'].'" class="btn btn-danger btn-lg">Edit</button>
+            
+            </form>
+          </div>
+        </div>';
+}
+                     }
+                     ?>
+                     
+                     
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
+</div>
+
+<?php 
+if(isset($_POST['delete-subject_sec'])){
+  
+  $querysubject_sec = mysqli_query($connect, "SELECT secondary_class_id, secondary_class FROM secondary_school_classes WHERE secondary_class_id='".mysqli_real_escape_string ($connect, $_POST['delete-subject_sec'])."'") or die(db_conn_error);
+while($rows = mysqli_fetch_array($querysubject_sec)){
+  $single_sec = $rows['secondary_class'];
+  $hidden_sec = $rows['secondary_class_id'];
+}
+
+  echo '
+<div class="row">
+
+<div class="col-12 grid-margin stretch-card">
+   <div class="card">
+     <div class="card-body">
+       <h4 class="card-title">Edit Secondary school classes</h4>
+       <p class="card-description"></p>
+
+       <form class="forms-sample" method="POST" action="">
+         <div class="form-group">
+           <label for="exampleInputName1">Class name</label>';
+          
+ 
+         echo  '<input type="text" class="form-control" id="exampleInputName1" placeholder="Class name" value="'; if(isset($_POST['subjectnameedit_sec'])){echo $_POST['subjectnameedit_sec'];}else{echo $single_sec;} echo '" name="subjectnameedit_sec">
+         </div>
+<input type="hidden" name="hidden_sec" value = "'.$hidden_sec.'" >
+
+         
+     <button type="submit" class="btn btn-primary me-2" name="submitedit_sec">Submit</button>
+        
+       </form>
+     </div>
+   </div>
+ </div>
+
+</div>';
+    }
+?>
+
+
+
+
+            <div class="row">
+
+             <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Add Secondary school classes</h4>
+                    <p class="card-description"></p>
+
+                    <form class="forms-sample" method="POST" action="">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Class name</label>
+                        <?php if (array_key_exists('subjectname_sec', $errors_sec)) {
+				echo '<p class="text-danger">'.$errors_sec['subjectname_sec'].'</p>';}?>
+              
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Class name" value="<?php if(isset($_POST['subjectname_sec'])){echo $_POST['subjectname_sec'];}?>" name="subjectname_sec">
+                      </div>
+
+
+                      
+                  <button type="submit" class="btn btn-primary me-2" name="submit_sec">Submit</button>
+                     
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+
+
+            
+
+
+
 
            <?php require_once ('../../incs-arahman/dashboard-footer.php'); ?>
 
