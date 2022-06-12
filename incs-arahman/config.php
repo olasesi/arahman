@@ -92,30 +92,3 @@ function genReference($qtd){
         return $reference;
     }
 
-
-
-
-//Cron jobs
-//CREATE EVENT foo ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 3 HOUR
-//DO DELETE FROM my_table WHERE id = 123
-
-
-
-
-
-
-//Techcrunch or Medium.
-
-
-/*This directory is that of a folder behind the root directory */
-//if ( ! defined( 'ABSPATH' ) ) {
-//	define( 'ABSPATH', __DIR__ );
-//}
-
-//define( 'ROOT', 'arahman');
-
-//require_once ("../arahman/autoloader/autoloader.php");
-
-
-
-/*Loading contents of the user folder*/

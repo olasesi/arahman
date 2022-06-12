@@ -24,19 +24,23 @@
 
 	$data_select=mysqli_select_db($connect,Db_Name) or die(db_conn_error);		//maximum execution time exceeded on this line
 	
-	// function escape_data($data){
-	
-	// global $connect;
-	
-	// if (get_magic_quotes_gpc()){
-	// 	$data = stripslashes($data);
-	// return mysqli_real_escape_string (trim ($connect, $data));
-	// }
-	
-	// }
 	
 	
+
+	    
+    $querysubject = mysqli_query($connect, "SELECT * FROM primary_school_classes") or die(mysqli_error($connect));
+if(mysqli_num_rows($querysubject) == 0){
+    mysqli_query($connect, "INSERT INTO `primary_school_classes` (`primary_class_id`, `primary_class`, `primary_class_fees`) VALUES 
+    (1, 'Basic one', '1000'), (2, 'Basic two', '2000'), (3, 'Basic three', '3000'), (4, 'Basic four', '4000'), (5, 'Basic five', '5000'),
+    (6, 'Basic six', '6000')");
+
+}
 	
+$querysubjectsec = mysqli_query($connect, "SELECT * FROM secondary_school_classes") or die(mysqli_error($connect));
+if(mysqli_num_rows($querysubjectsec) == 0){
+    mysqli_query($connect, "INSERT INTO `secondary_school_classes` (`secondary_class_id`, `secondary_class`, `secondary_class_fees`) VALUES (1, 'JSS 1', '1000'), (2, 'JSS 2', '2000'), (3, 'JSS 3', '3000'), (4, 'SSS 1', '4000'), (5, 'SSS 2', '5000'), (6, 'SSS 3', '6000')");
+
+}
 	
 
 
