@@ -1,7 +1,7 @@
 <?php
 require_once ('../../incs-arahman/config.php');
 require_once ('../../incs-arahman/gen_serv_con.php');
-//include("../incs_shop/cookie_for_most.php");
+include("../../incs-arahman/cookie_for_most_students.php");
 //include('../users/includes/menu.php');
 ?>
 <?php
@@ -294,7 +294,9 @@ echo
                                                 <?php $query_all_students = mysqli_query($connect, "SELECT primary_id FROM primary_school_students WHERE pri_paid='1' AND pri_admit='1'") or die(db_conn_error);	
 ?>
                                                 
-                                                <h3 class="mb-"><?= floor((mysqli_num_rows($query_students_no)/mysqli_num_rows($query_all_students))*100) ?>%</h3>
+                                                <h3 class="mb-"><?php if(mysqli_num_rows($query_students_no) > 0){ echo floor((mysqli_num_rows($query_students_no)/mysqli_num_rows($query_all_students))*100);}else{
+                                                    echo 0;
+                                                } ?>%</h3>
                                             </div>
                                             <canvas id="sales-chart-b" class="mt-auto" height="38"></canvas>
                                         </div>

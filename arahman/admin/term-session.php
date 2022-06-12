@@ -65,7 +65,7 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
                 
               //if(mysqli_affected_rows($connect, $q_end_term) == 1){
            //Primary school logged out I think      
-          mysqli_query($connect,"UPDATE primary_school_students SET pri_paid = '0', pri_admit = '0' WHERE pri_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
+          mysqli_query($connect,"UPDATE primary_school_students SET pri_paid = '0', pri_admit = '0', pri_cookie_session = '' WHERE pri_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
 
           mysqli_query($connect, "DELETE FROM module_join_students") or die(db_conn_error);
       
@@ -86,7 +86,7 @@ while($rows_position = mysqli_fetch_array($toggle_position_session)){
 
 
            //Secondary school be logged out I think      
-           mysqli_query($connect,"UPDATE secondary_school_students SET sec_paid = '0', sec_admit = '0' WHERE sec_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
+           mysqli_query($connect,"UPDATE secondary_school_students SET sec_paid = '0', sec_admit = '0', sec_cookie_session = '' WHERE sec_active_email = '1'") or die(db_conn_error); //It just has to be this way. Perhaps the admission will promote the kids knowing that they were present last term. This period, admission will go to the portal and promote the students and put him to the appropriate class 
 
            mysqli_query($connect, "DELETE FROM secondary_module_join_students") or die(db_conn_error);
        
