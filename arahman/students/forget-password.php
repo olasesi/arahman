@@ -204,7 +204,7 @@ if(isset($_POST['submit']) AND $_SERVER['REQUEST_METHOD'] == "POST"){
 
 <?php
 include_once ('../../incs-arahman/header-admin.php');
-
+include_once ('../../incs-arahman/menu-admin.php');
 ?>
 
 

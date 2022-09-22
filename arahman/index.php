@@ -10,7 +10,7 @@ include ('../incs-arahman/header.php');
             <div class="row">
                 <div class="col-lg-8 col-sm-8">
                     <div class="left-content">
-                        <p>This is an educational <em>HTML CSS</em> template by TemplateMo website.</p>
+                        <p></p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-4">
@@ -35,30 +35,25 @@ include ('../incs-arahman/header.php');
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
-                          Edu Meeting
+                        <a href="/" class="logo">
+                        SchooL Portal
                       </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                            <li><a href="meetings.html">Meetings</a></li>
-                            <li class="scroll-to-section"><a href="#apply">Apply Now</a></li>
+                        <li><a href="<?php echo GEN_WEBSITE.'/prospective-students'; ?>">Prospective Students</a></li>
+                        <li><a href="<?php echo GEN_WEBSITE.'/students'; ?>">Returning Students</a></li>
+                        <li><a href="<?php echo GEN_WEBSITE.'/admin'; ?>">Admin</a></li>
 
-                            <li class="scroll-to-section"><a href="#courses">Courses</a></li>
-                            <li class="has-sub">
+                        <li><a href="<?php echo GEN_WEBSITE.'/teachers'; ?>">Teachers</a></li>
+                            <!-- <li class="has-sub">
                                 <a href="javascript:void(0)">Portals</a>
                                 <ul class="sub-menu">
-                                    <li><a href="<?php echo GEN_WEBSITE.'/prospective-students'; ?>">Prospective Students</a></li>
-                                    <li><a href="<?php echo GEN_WEBSITE.'/students'; ?>">Returning Students</a></li>
-                                   
-                                    <li><a href="<?php echo GEN_WEBSITE.'/admin'; ?>">Admin</a></li>
-                                    <li><a href="<?php echo GEN_WEBSITE.'/teachers'; ?>">Teachers</a></li>
-
+                                
                                 </ul>
                             </li>
 
-                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li> -->
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -84,10 +79,10 @@ include ('../incs-arahman/header.php');
                         <div class="caption">
                             <h6>Hello Students</h6>
                             <h2>Welcome to Education</h2>
-                            <p>This is an edu meeting HTML CSS template provided by <a rel="nofollow" href="https://templatemo.com/page/1" target="_blank">TemplateMo website</a>. This is a Bootstrap v5.1.3 layout. The video background is taken from Pexels
+                            <p>This is a student portal/e-learning website</a>. This frontend is made with Bootstrap v5.1.3 layout. The video background is taken from Pexels
                                 website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
                             <div class="main-button-red">
-                                <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
+                                <div class="scroll-to-section"><a href="#">Join Us Now!</a></div>
                             </div>
                         </div>
                     </div>
@@ -159,7 +154,7 @@ include ('../incs-arahman/header.php');
         </div>
     </section>
 
-    <section class="upcoming-meetings" id="meetings">
+    <!-- <section class="upcoming-meetings" id="meetings">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -264,9 +259,9 @@ include ('../incs-arahman/header.php');
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <section class="apply-now" id="apply">
+    <!-- <section class="apply-now" id="apply">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 align-self-center">
@@ -353,9 +348,9 @@ include ('../incs-arahman/header.php');
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <section class="our-courses" id="courses">
+    <!-- <section class="our-courses" id="courses">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -630,9 +625,9 @@ include ('../incs-arahman/header.php');
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <section class="our-facts">
+    <!-- <section class="our-facts">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -681,10 +676,10 @@ include ('../incs-arahman/header.php');
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
      <section class="contact-us" id="contact">
-        <div class="container">
+        <!-- <div class="container">
             <div class="row">
                 <div class="col-lg-9 align-self-center">
                     <div class="row">
@@ -747,11 +742,12 @@ include ('../incs-arahman/header.php');
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="footer">
-            <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved.
-                <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
-        </div>
+   
+   <p>Copyright © <span id="copyright-year"></span> , Ltd. All Rights Reserved.
+      
+</div>
     </section>
 
 
@@ -791,6 +787,11 @@ include ('../incs-arahman/header.php');
     <script src="assets/js/video.js"></script>
     <script src="assets/js/slick-slider.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script>
+        var copy_year = new Date();
+    document.getElementById("copyright-year").innerHTML= copy_year.getFullYear();
+
+    </script>
     <script>
         //according to loftblog tut
         $('.nav li:first').addClass('active');
