@@ -18,7 +18,7 @@ define( 'DB_PASSWORD', '' );
 define( 'DB_HOST', 'localhost' );
 
 
-define ('GEN_WEBSITE', 'http://localhost/arahman/arahman');	//
+define ('GEN_WEBSITE', '');	//  http://localhost/arahman/arahman
 date_default_timezone_set('UTC');
 session_start();
 
