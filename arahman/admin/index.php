@@ -12,7 +12,7 @@ if(isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
 ?>
 <?php
 include ('../../incs-arahman/header-admin.php');
-
+include ('../../incs-arahman/menu-admin.php');
 ?>
 
 <?php
@@ -141,12 +141,17 @@ header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
     </section>
 
 
+   
+
     <section class="contact-us" id="contact">
-    <div class="footer">
-            <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved.
-                <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
-        </div>
-    </section>
+   
+   <div class="footer">
+
+<p>Copyright © <span id="copyright-year"></span> , Ltd. All Rights Reserved.
+  <!-- <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p> -->
+</div>
+</section>
+
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -158,6 +163,11 @@ header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
     <script src="assets/js/video.js"></script>
     <script src="assets/js/slick-slider.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script>
+        var copy_year = new Date();
+    document.getElementById("copyright-year").innerHTML = copy_year.getFullYear();
+
+    </script>
     <script>
         //according to loftblog tut
         $('.nav li:first').addClass('active');

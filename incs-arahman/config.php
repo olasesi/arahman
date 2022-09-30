@@ -53,7 +53,7 @@ $now = new DateTime();
 
 /*Age range*/
 
-for($i=7;$i<70;$i++){
+for($i=7;$i<100;$i++){
     $age_range[] = $i;
 }
 

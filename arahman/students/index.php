@@ -232,14 +232,14 @@ exit;
 
 <?php
 include_once ('../../incs-arahman/header-admin.php');
-
+include('../../incs-arahman/menu.php');
 ?>
 
 
 <section class="contact-us" id="contact">
     <div class="container">
       <div class="row">
-        <div class="col-lg-9 align-self-center center-block">
+        <div class="col-lg-9 align-self-center center-block mt-5 mb-5">
           <div class="row">
             <div class="col-lg-12">
               <form id="contact" action="" method="post">
@@ -264,13 +264,13 @@ include_once ('../../incs-arahman/header-admin.php');
                   </fieldset>
 </div>
   
-
+<?php if(array_key_exists('school_type', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['school_type'].'</small>';}?>        
 <label for="gridRadios2">Primary school</label>
         <input class="form-check-input" type="radio" name="school_type" id="gridRadios2" value="Primary school" <?php if(isset($_POST['school_type']) && $_POST['school_type'] =='Primary school'){echo 'checked="checked"';} ?>>
         
         <label for="gridRadios3">Secondary school</label>
         <input class="form-check-input" type="radio" name="school_type" id="gridRadios3" value="Secondary school" <?php if(isset($_POST['school_type']) && $_POST['school_type'] == 'Secondary school'){echo 'checked="checked"';} ?>>
-        <?php if(array_key_exists('school_type', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['school_type'].'</small>';}?>        
+       
 
 
         
@@ -280,7 +280,7 @@ include_once ('../../incs-arahman/header-admin.php');
                     </fieldset>
                   </div>
                 </div>
-                <a href="<?php echo GEN_WEBSITE.'/students/forget-password.php'; ?>">forget password?</a>
+                <a href="<?php echo GEN_WEBSITE.'/students/forget-password.php'; ?>" class="forget-password">forget password?</a>
               </form>
 
               
@@ -292,4 +292,4 @@ include_once ('../../incs-arahman/header-admin.php');
     </div>
     </section>
 
-    
+    <?php include ('../../incs-arahman/footer.php'); ?>

@@ -118,30 +118,6 @@
                         ?>
               
 
-
-                <!-- <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-onepassword  text-info"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-calendar-today text-success"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
-                  </div>
-                </a> -->
-                      
               </div>
             </div>
           </li>
@@ -157,100 +133,7 @@
             </a>
           </li>
          
-          <?php
-      //       if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == OWNER){
-      //  echo   '<li class="nav-item menu-items">
-      //       <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-      //         <span class="menu-icon">
-      //           <i class="mdi mdi-laptop"></i>
-      //         </span>
-      //         <span class="menu-title">Admins</span>
-      //         <i class="menu-arrow"></i>
-      //       </a>
-      //       <div class="collapse" id="ui-basic">
-      //         <ul class="nav flex-column sub-menu">
-      //           <li class="nav-item"> <a class="nav-link" href="forms.php">Create admins</a></li>
-      //           <li class="nav-item"> <a class="nav-link" href="show-admin.php">Show admins</a></li>
-               
-      //         </ul>
-      //       </div>
-      //     </li>';
-      //       }
-            ?>
-          
-          
-
-
-
-
-          <?php
-      //       if(isset($_SESSION['admin_active'])){
-      //  echo   '<li class="nav-item menu-items">
-      //       <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-      //         <span class="menu-icon">
-      //           <i class="mdi mdi-laptop"></i>
-      //         </span>
-      //         <span class="menu-title">Primary school</span>
-      //         <i class="menu-arrow"></i>
-      //       </a>
-      //       <div class="collapse" id="ui-basic">
-      //         <ul class="nav flex-column sub-menu">
-      //           <li class="nav-item"> <a class="nav-link" href="forms.php">Students</a></li>
-      //           <li class="nav-item"> <a class="nav-link" href="show-admin.php">School details</a></li>
-               
-      //         </ul>
-      //       </div>
-      //     </li>';
-      //       }
-            ?>
-          
-
-          <?php
-      //       if(isset($_SESSION['admin_active'])){
-      //  echo   '<li class="nav-item menu-items">
-      //       <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
-      //         <span class="menu-icon">
-      //           <i class="mdi mdi-laptop"></i>
-      //         </span>
-      //         <span class="menu-title">Secondary school</span>
-      //         <i class="menu-arrow"></i>
-      //       </a>
-
-
-            
-      //       <div class="collapse" id="ui-basic2">
-      //         <ul class="nav flex-column sub-menu">
-      //           <li class="nav-item"> <a class="nav-link" href="forms.php">Students</a></li>
-      //           <li class="nav-item"> <a class="nav-link" href="show-admin.php">School details</a></li>
-               
-      //         </ul>
-      //       </div>
-      //     </li>';
-      //       }
-            ?>
-          
-
-
-
-
-
-
-
-          <?php
-            // if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == OWNER){
-            //   echo  '<li class="nav-item menu-items">
-            //     <a class="nav-link" href="term-session.php">
-            //       <span class="menu-icon">
-            //         <i class="mdi mdi-alarm"></i>
-            //       </span>
-            //       <span class="menu-title">Begin or end term</span>
-            //     </a>
-            //   </li>';
-      
-      
-            // }
-              
-            ?>
+   
 <?php
  if(isset($_SESSION['admin_active']) AND $_SESSION['admin_type'] == OWNER){
        echo   '<li class="nav-item menu-items">
@@ -511,7 +394,29 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
   ';
 
 
+  echo   '<li class="nav-item menu-items">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basicteacher" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+              </span>
+              <span class="menu-title">Pri. Teachers</span>
+              <i class="menu-arrow"></i>
+            </a>
 
+
+            <div class="collapse" id="ui-basicteacher">
+              <ul class="nav flex-column sub-menu">
+                
+              
+         
+              
+                <li class="nav-item"><a class="nav-link" href="'.GEN_WEBSITE.'/admin/add-teacher.php">Add new teacher</a>
+                </li>
+              </ul>
+            </div>
+          </li>   
+              
+  ';
 
 
  }       

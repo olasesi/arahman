@@ -8,12 +8,35 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
     $start_var = $term_rows['term_start'];
     $end_var = $term_rows['term_end'];
     $choose_term_var = $term_rows['choose_term'];
-
   }
   if(empty($start_var) || empty($end_var) || $choose_term_var != 'Third term'){ 
     include ('../../incs-arahman/header-gen.php');
 include('../../incs-arahman/menu.php');
-   echo 'Registration for new session is closed';
+ 
+
+ echo '<section class="section main-banner" id="top" data-section="section1">
+   <video autoplay muted loop id="bg-video">
+     <source src="assets/images/course-video.mp4" type="video/mp4"/>
+ </video>
+
+   <div class="video-overlay header-text">
+       <div class="container">
+           <div class="row">
+               <div class="col-lg-12">
+                   <div class="caption">
+                       <h6></h6>
+                       <h2>Registration for new session is closed</h2>
+                       <p></a></a></p>
+                       <div class="main-button-red">
+                           <div class="scroll-to-section"></div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>';
+
    include ('../../incs-arahman/footer.php');
    exit();
 
