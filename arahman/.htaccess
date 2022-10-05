@@ -1,0 +1,4 @@
+RewriteEngine on
+ErrorDocument 403 /errorpages/403.php
+ErrorDocument 404 /errorpages/404.php
+ErrorDocument 503 /errorpages/503.php

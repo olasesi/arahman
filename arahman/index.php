@@ -35,8 +35,8 @@ include ('../incs-arahman/header.php');
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
-                        SchooL Portal
+                        <a href="<?php echo GEN_WEBSITE ?>" class="logo">
+                        Portal
                       </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->

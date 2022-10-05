@@ -19,7 +19,7 @@ include_once ('../../incs-arahman/paginate.php');
 $statement = "secondary_school_students, secondary_school_classes WHERE (secondary_class_id = sec_class_id AND sec_active_email = '1' AND sec_paid = '1' AND sec_admit = '1') AND secondary_class_id = '".$_SESSION['secondary_teacher_class_id']."' AND (sec_firstname LIKE '%".mysqli_real_escape_string ($connect,$_GET['students_name'])."%' OR sec_surname LIKE '%".mysqli_real_escape_string ($connect,$_GET['students_name'])."%') ORDER BY secondary_id DESC"; 
 
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
         		
             $startpoint = ($page * $per_page) - $per_page;
            

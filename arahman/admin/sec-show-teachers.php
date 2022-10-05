@@ -125,7 +125,7 @@ $_GET = array();
               $statement = "secondary_teachers INNER JOIN secondary_school_classes ON secondary_class_id =  secondary_teacher_class_id ORDER BY secondary_teacher_id ASC";
                         
               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-              if ($page <= 0) $page = 1;
+              if ($page <= 0) $page = 10;
                	// Set how many records do you want to display per page. Image alt tag to be put too
                 $startpoint = ($page * $per_page) - $per_page;
                 $results = mysqli_query($connect,"SELECT secondary_class, secondary_class_id, secondary_teacher_timestamp, secondary_teacher_id, secondary_teacher_active, secondary_teacher_firstname, secondary_teacher_surname, secondary_teacher_email, secondary_teacher_sex, secondary_teacher_age, secondary_teacher_qualification, secondary_teacher_image FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));

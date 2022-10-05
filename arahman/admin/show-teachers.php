@@ -125,7 +125,7 @@ $_GET = array();
               $statement = "primary_teachers INNER JOIN primary_school_classes ON primary_class_id =  primary_teacher_class_id ORDER BY primary_teacher_id ASC";
                         
               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-              if ($page <= 0) $page = 1;
+              if ($page <= 0) $page = 10;
                	// Set how many records do you want to display per page. Image alt tag to be put too
                 $startpoint = ($page * $per_page) - $per_page;
                 $results = mysqli_query($connect,"SELECT primary_class, primary_class, primary_teacher_timestamp, primary_teacher_id, primary_teacher_active, primary_teacher_firstname, primary_teacher_surname, primary_teacher_email, primary_teacher_sex, primary_teacher_age, primary_teacher_qualification, primary_teacher_image FROM ".$statement." LIMIT $startpoint, $per_page") or die(db_conn_error);

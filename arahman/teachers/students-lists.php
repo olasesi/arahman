@@ -31,7 +31,7 @@ include ('../../incs-arahman/paginate.php');
 $statement = "primary_school_students, primary_school_classes WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' AND primary_class_id = pri_class_id AND pri_class_id = '".$_SESSION['primary_teacher_class_id']."' ORDER BY primary_id ASC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
             $per_page = 15; 								// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
             $results = mysqli_query($connect,"SELECT primary_id, pri_year, pri_firstname, pri_surname, pri_age, pri_sex, pri_email, pri_photo, pri_phone, pri_address, primary_class FROM primary_school_students, primary_school_classes WHERE pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1' AND primary_class_id = pri_class_id AND pri_class_id = '".$_SESSION['primary_teacher_class_id']."' ORDER BY primary_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);

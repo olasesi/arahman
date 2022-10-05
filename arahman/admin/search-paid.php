@@ -112,7 +112,7 @@ $_GET = array();
                               $statement = "primary_school_students INNER JOIN primary_payment ON primary_payment_students_id = primary_id  WHERE (pri_paid = '1' AND pri_admit = '1' AND pri_active_email = '1') AND (pri_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%' OR pri_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-paid'])."%') ORDER BY primary_id ASC";
                                         
                               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-                                          if ($page <= 0) $page = 1;
+                                          if ($page <= 0) $page = 10;
                                                         // Set how many records do you want to display per page.
                                           $startpoint = ($page * $per_page) - $per_page;
                                           $results = mysqli_query($connect,"SELECT primary_payment_fees, primary_payment_session, primary_payment_term,  primary_payment_paid_percent, primary_payment_timestamp,  primary_id, pri_paid, pri_firstname, primary_payment_completion_status, pri_surname, pri_email, pri_phone FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));

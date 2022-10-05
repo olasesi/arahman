@@ -31,7 +31,7 @@ $statement = "secondary_test_assignment_submit, secondary_school_students WHERE 
 
 <?php
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
         		
             $startpoint = ($page * $per_page) - $per_page;
 

@@ -1,10 +1,10 @@
 <?php
 	//move to outside of the root folder
 	//variables
-	define("Host","us-cdbr-east-06.cleardb.net");
-	define("User","b3ba2e68377492");
-	define("Password","b5b1af39");//a password sure will be put when finally ready, and  i am yet to know the effect of the TRUE on it
-	define("Db_Name","heroku_d312c7c5a7544bc");
+	define("Host","localhost"); //us-cdbr-east-06.cleardb.net
+	define("User","root"); //b3ba2e68377492
+	define("Password",""); //b5b1af39
+	define("Db_Name","arahman_portal"); //heroku_d312c7c5a7544bc
 	define("Conn_error","could not connect to server at this time"); // all of the rest below may be defined later
 	define("db_conn_error","<div id='oops'>
 							<h1 id='oops_h1'>Oops!!!</h1>

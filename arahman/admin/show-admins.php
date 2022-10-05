@@ -107,7 +107,7 @@ include ('../../incs-arahman/paginate.php');
 $statement = "admin ORDER BY admin_id ASC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
           		// Set how many records do you want to display per page. Image alt tag to be put too
             $startpoint = ($page * $per_page) - $per_page;
             $results = mysqli_query($connect,"SELECT admin_id, admin_active, type, admin_firstname, admin_firstname, admin_lastname, admin_email, admin_timestamp FROM admin ORDER BY admin_id ASC LIMIT $startpoint, $per_page") or die(db_conn_error);
@@ -117,7 +117,7 @@ $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
                     $active = ($row['admin_active'] == 1)?'active':'inactive'; 
                     echo '<tr>
                     <td>
-                    <img src="" alt=""/>    
+                    <i class="mdi mdi-account-outline"></i>    
                     <span class="ps-2">'.$row['type'].'</span>
                   </td>
                     
