@@ -10,7 +10,7 @@ require_once ('../../incs-arahman/gen_serv_con.php');
 //}
 // $no_many_copy = mysqli_query($connect, "SELECT choose_term, school_session FROM term_start_end WHERE choose_term = '".$chooseterm."' AND school_session = '".$pri_session."'") or die(db_conn_error);
 // 
-      
+    
 
 if(!isset($_SESSION['admin_active'])){   //This is for all admins. Every of them.
 	header("Location:".GEN_WEBSITE.'/admin');
@@ -889,14 +889,14 @@ echo '  </div>
                           <div class="preview-item border-bottom">
                             <div class="preview-thumbnail">
                               <div class="preview-icon bg-primary">
-                                <i class="mdi mdi-file-document"></i>
+                                <i class="mdi mdi-account-outline"></i>
                               </div>
                             </div>
 
                      
                             <div class="preview-item-content d-sm-flex flex-grow">
                               <div class="flex-grow">
-                              <a href="'.GEN_WEBSITE.'/admin/show-admins.php"><h6 class="preview-subject">'.$row['admin_firstname'].' '.$row['admin_lastname'].'</h6>  </a>
+                              <a href="'.GEN_WEBSITE.'/admin/show-admins.php" style="text-decoration:none;"><h6 class="preview-subject">'.$row['admin_firstname'].' '.$row['admin_lastname'].'</h6>  </a>
                                 
                               </div>
                               <div class="me-auto text-sm-right pt-2 pt-sm-0">
@@ -1235,7 +1235,7 @@ echo '</div>
                         <h6 class="text-muted font-weight-normal">This term</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
+                        <i class="icon-lg mdi mdi-cash text-primary ms-auto"></i>
                       </div>
                     </div>
                   </div>
@@ -1357,7 +1357,7 @@ $sum = array();
                       <h6 class="text-muted font-weight-normal">This term</h6>
                     </div>
                     <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                      <i class="icon-lg mdi mdi-codepen text-primary ms-auto"></i>
+                      <i class="icon-lg mdi mdi-cash text-primary ms-auto"></i>
                     </div>
                   </div>
                 </div>
@@ -1473,7 +1473,7 @@ $sum = array();
                     <h6 class="text-muted font-weight-normal">This term</h6>
                   </div>
                   <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                    <i class="icon-lg mdi mdi-monitor text-success ms-auto"></i>
+                    <i class="icon-lg mdi mdi-cash text-success ms-auto"></i>
                   </div>
                 </div>
               </div>

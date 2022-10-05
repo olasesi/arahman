@@ -7,7 +7,7 @@
     Copyright © 2010<script>if (new Date().getFullYear() > 2010){document.write("-" + new Date().getFullYear());}</script>
        
             </span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Made by <a href="https://www.duromedia.com.ng/" target="_blank">Duromedia.com.ng</a> </span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Made by <a href="#" target="_blank">School Portal</a> </span>
             </div>
           </footer>
           <!-- partial -->

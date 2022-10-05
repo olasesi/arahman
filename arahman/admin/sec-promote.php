@@ -59,7 +59,7 @@ include ('../../incs-arahman/paginate.php');
 $statement = "secondary_school_students WHERE (sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1' AND sec_class_id != '0') ORDER BY secondary_id DESC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
             							// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
           

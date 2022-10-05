@@ -1,0 +1,22 @@
+ .navbar .navbar-menu-wrapper .search input{
+        color:white;
+ }
+
+ input:focus{
+    color:white !important;
+
+ }
+
+ .pagination{
+
+     /* 
+     To be fixed
+     display:inline-block;
+     border:2px solid red; */
+ }
+
+ .page-link{
+
+   
+    border:0;
+ }
