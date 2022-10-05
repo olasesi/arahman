@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ARRAHMAN SCHOOL</title>
+    <title>SCHOOL PORTAL</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
     <link rel="stylesheet" href="assets/vendors/select2/select2.min.css">
     <link rel="stylesheet" href="assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
-      
+    <link rel="stylesheet" href="assets/vendors/css/custom.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -48,8 +48,8 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand brand-logo" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><h3 class="mb-0">ARRAHMAN SCHOOL</h3><!--<img src="assets/images/logo.svg" alt="logo" />--></a>
-          <a class="sidebar-brand brand-logo-mini" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><!--<img src="assets/images/logo-mini.svg" alt="logo" />--><h3 class="mb-0">ARRAHMAN SCHOOL</h3></a>
+          <a class="sidebar-brand brand-logo" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"  style="color:white; text-decoration:none;"><h3 class="mb-0">PORTAL</h3><!--<img src="assets/images/logo.svg" alt="logo" />--></a>
+          <a class="sidebar-brand brand-logo-mini" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"  style="color:white;  text-decoration:none;"><!--<img src="assets/images/logo-mini.svg" alt="logo" />--><h3 class="mb-0">PORTAL</h3></a>
         </div>
         <ul class="nav">
           <li class="nav-item profile">
@@ -462,7 +462,7 @@ $query_term_start = mysqli_query($connect, "SELECT term_start, term_end, choose_
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="<?=GEN_WEBSITE.'/admin/dashboard.php';?>"><h1 style="color:white;">P</h1></a>
           </div>
           <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
            

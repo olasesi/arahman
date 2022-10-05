@@ -1,5 +1,5 @@
 section.contact-us #contact {
-    border:2px solid red !important;
+    /*border:2px solid red !important;*/
   }
   
   
@@ -11,5 +11,6 @@ section.contact-us #contact {
 
     section.contact-us #contact input{
 
-        border:2px solid red;
+       /* border:2px solid red;*/
     }
+

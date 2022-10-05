@@ -56,7 +56,7 @@ if($_SESSION['admin_type'] != ACCOUNTANT && $_SESSION['admin_type'] != OWNER){
                               $statement = "secondary_common_e INNER JOIN secondary_school_students ON secondary_common_e_students_id = secondary_id ORDER BY secondary_id ASC";
                                         
                               $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-                                          if ($page <= 0) $page = 1;
+                                          if ($page <= 0) $page = 10;
                                                         // Set how many records do you want to display per page.
                                           $startpoint = ($page * $per_page) - $per_page;
                                           $results = mysqli_query($connect,"SELECT secondary_common_e_session, secondary_common_e_price, secondary_common_e_reference, secondary_common_e_status, sec_firstname, sec_surname, secondary_common_e_timestamp FROM ".$statement." LIMIT $startpoint, $per_page") or die(mysqli_error($connect));

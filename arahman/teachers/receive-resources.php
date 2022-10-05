@@ -31,7 +31,7 @@ $statement = "primary_test_assignment_submit, primary_school_students WHERE prim
 
 <?php
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
         		
             $startpoint = ($page * $per_page) - $per_page;
 

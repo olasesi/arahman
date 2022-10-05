@@ -38,7 +38,7 @@ include_once ('../../incs-arahman/paginate.php');
 $statement = "primary_test_assignment_upload, primary_school_classes WHERE primary_class_id = primary_test_upload_class_id AND primary_test_upload_class_id='".$_SESSION['primary_teacher_class_id']."'ORDER BY primary_test_upload_id DESC";
 
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
         		
             $startpoint = ($page * $per_page) - $per_page;
 

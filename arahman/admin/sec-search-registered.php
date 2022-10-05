@@ -64,7 +64,7 @@ include ('../../incs-arahman/paginate.php');
 $statement = "secondary_school_students LEFT JOIN secondary_common_e ON secondary_common_e_students_id = secondary_id WHERE (sec_paid = '0' AND sec_admit = '0' AND sec_active_email = '1') AND (sec_firstname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-registered-sec'])."%' OR sec_surname LIKE '%".mysqli_real_escape_string($connect, $_GET['search-registered-sec'])."%') ORDER BY secondary_id DESC";
            
 $page = (int)(!isset($_GET["page"]) ? 1 : $_GET["page"]);
-            if ($page <= 0) $page = 1;
+            if ($page <= 0) $page = 10;
             							// Set how many records do you want to display per page.
             $startpoint = ($page * $per_page) - $per_page;
           
