@@ -158,12 +158,13 @@ if($pri_school_type == 'Primary school'){
                                       <div class="text-center">
                   
               <div class="home-content">
+              </br></br></br></br>
                 <h3 class="text-success">Congratulations for the Successful Application</h3>
                 
                 </br>
                 A link has been sent to your email to continue the process. If you do not find the mail in your inbox, please check the spam mails.
               
-              
+              </br></br></br>
 		
 		</div>
                             
