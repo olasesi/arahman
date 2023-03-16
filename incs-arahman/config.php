@@ -12,13 +12,13 @@ define( 'DB_NAME', 'arahman_portal');
 define( 'DB_USER', 'root' );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', '' );
+define( 'DB_PASSWORD', '/z9]%NuXLe$=&LSV' );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );
 
 
-define ('GEN_WEBSITE', 'https://myschoolportals.herokuapp.com');	// http://localhost/arahman/arahman /
+define ('GEN_WEBSITE', 'https://sketchy-reasons.000webhostapp.com');	// http://localhost/arahman/arahman /
 date_default_timezone_set('UTC');
 session_start();
 
