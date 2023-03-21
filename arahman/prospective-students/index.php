@@ -325,39 +325,39 @@ if($pri_school_type == 'Primary school'){
                   <div class="col-lg-12">
                     <h2>Prospective students</h2>
                   </div>
-                  <div class="col-lg-4">
-                  <?php if(array_key_exists('firstname', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['firstname'].'</small>';}?> 
+                  <div class="col-lg-4"><div style="height:30px;">
+                  <?php if(array_key_exists('firstname', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['firstname'].'</small>';}?> </div>
                   <fieldset>
                       <input name="firstname" type="text" id="firstname" placeholder="Firstname"  value="<?php if(isset($_POST['firstname'])){echo $_POST['firstname'];} ?>">
                     </fieldset>
                   </div>
-                  <div class="col-lg-4">
-                  <?php if(array_key_exists('surname', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['surname'].'</small>';}?> 
+                  <div class="col-lg-4"><div style="height:30px;">
+                  <?php if(array_key_exists('surname', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['surname'].'</small>';}?> </div>
                   <fieldset>
                       <input name="surname" type="text" id="surname" placeholder="Surname" value="<?php if(isset($_POST['surname'])){echo $_POST['surname'];} ?>">
                     </fieldset>
                   </div>
-                  <div class="col-lg-4">
-                  <?php if(array_key_exists('email', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['email'].'</small>';}?>   
+                  <div class="col-lg-4"><div style="height:30px;">
+                  <?php if(array_key_exists('email', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['email'].'</small>';}?>  </div> 
                   <fieldset>
                     <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Email address" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>">
                   </fieldset>
                   </div>
-                  <div class="col-lg-4">
-                  <?php if(array_key_exists('phone', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['phone'].'</small>';}?>   
+                  <div class="col-lg-4"><div style="height:30px;">
+                  <?php if(array_key_exists('phone', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['phone'].'</small>';}?> </div>  
                   <fieldset>
                       <input name="phone" type="phone" id="number" placeholder="Phone number" value="<?php if(isset($_POST['phone'])){echo $_POST['phone'];} ?>">
                     </fieldset>
                   </div>
                   <div class="col-lg-4">
-                  <?php if(array_key_exists('password', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password'].'</small>';}?>  
-                  <?php if(array_key_exists('password_match', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password_match'].'</small>';}?>
+                  <div style="height:30px;"><?php if(array_key_exists('password', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password'].'</small>';}?>  
+                  <?php if(array_key_exists('password_match', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password_match'].'</small>';}?></div>
                   <fieldset>
                     <input name="password" type="password" id="password" placeholder="Password" >
                   </fieldset>
 </div>
                   
-                  <div class="col-lg-4">
+                  <div class="col-lg-4"><div style="height:30px;"></div>
                     <fieldset>
                     <input name="confirm_password" type="password" id="confirm_password" placeholder="Confirm Password" >
                   </fieldset>
