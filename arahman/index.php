@@ -79,10 +79,9 @@ include ('../incs-arahman/header.php');
                         <div class="caption">
                             <h6>Hello Students</h6>
                             <h2>Welcome to Education</h2>
-                            <p>This is a student portal/e-learning website</a>. This frontend is made with Bootstrap v5.1.3 layout. The video background is taken from Pexels
-                                website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
+                            <p>Welcome to our school! We are a dynamic and inclusive learning community committed to providing high-quality education to our students.</p>
                             <div class="main-button-red">
-                                <div class="scroll-to-section"><a href="#">Join Us Now!</a></div>
+                                <div class="scroll-to-section"><a href="<?php echo GEN_WEBSITE.'/prospective-students'; ?>">Join Us Now!</a></div>
                             </div>
                         </div>
                     </div>
@@ -104,7 +103,7 @@ include ('../incs-arahman/header.php');
                             </div>
                             <div class="down-content">
                                 <h4>Best Education</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                                <p>Our mission is to empower students to achieve their full potential and become lifelong learners who are prepared to meet any challenge. </p>
                             </div>
                         </div>
 
@@ -114,7 +113,7 @@ include ('../incs-arahman/header.php');
                             </div>
                             <div class="down-content">
                                 <h4>Best Teachers</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                                <p>Our teachers provide personalized attention to students, ensuring that each student receives the support they need to succeed.</p>
                             </div>
                         </div>
 
@@ -124,7 +123,7 @@ include ('../incs-arahman/header.php');
                             </div>
                             <div class="down-content">
                                 <h4>Best Students</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                                <p>We produce outstanding students who consistently demonstrate a strong work ethic and dedication to their studies</p>
                             </div>
                         </div>
 
@@ -133,8 +132,8 @@ include ('../incs-arahman/header.php');
                                 <img src="assets/images/service-icon-02.png" alt="">
                             </div>
                             <div class="down-content">
-                                <h4>Online Meeting</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                                <h4>Facilities</h4>
+                                <p>we are proud to offer a range of top-notch facilities that support the academic, athletic, and artistic pursuits of our students.</p>
                             </div>
                         </div>
 
@@ -144,7 +143,7 @@ include ('../incs-arahman/header.php');
                             </div>
                             <div class="down-content">
                                 <h4>Best Networking</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                                <p>We have a strong network of support that includes students, parents, faculty members, and the wider community.</p>
                             </div>
                         </div>
 

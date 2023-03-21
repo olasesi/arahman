@@ -110,14 +110,15 @@ header('Location:'.GEN_WEBSITE.'/admin/dashboard.php');
                  
                  
                   <div class="col-lg-4">
-                  <?php if(array_key_exists('email', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['email'].'</small>';}?>   
+                  <div style="height:30px;">
+                    <?php if(array_key_exists('email', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['email'].'</small>';}?> </div>  
                   <fieldset>
                     <input name="email" type="text" id="email" placeholder="Username" value="<?php if(isset($_POST['email'])){echo $_POST['email'];} ?>">
                   </fieldset>
                   </div>
                   
-                  <div class="col-lg-4">
-                  <?php if(array_key_exists('password', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password'].'</small>';}?>  
+                  <div class="col-lg-4"><div style="height:30px;">
+                  <?php if(array_key_exists('password', $signup_errors)){echo '<small class="text-danger">'.$signup_errors['password'].'</small>';}?>  </div>
                  
                   <fieldset>
                     <input name="password" type="password" id="password" placeholder="Password" value="<?php if(isset($_POST['password'])){echo '';} ?>" >
